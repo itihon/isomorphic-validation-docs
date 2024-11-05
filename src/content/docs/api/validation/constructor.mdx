@@ -1,0 +1,106 @@
+---
+title: Validation() constructor
+description: Validation constructor.
+---
+
+The Validation() constructor creates `Validation` objects.
+
+## Syntax
+
+```js
+Validation()
+Validation(validatableObject)
+Validation(validatableObject, path)
+Validation(validatableObject, path, initialValue)
+```
+
+### Parameters
+
+- `validatableObject` <sup>optional</sup>
+<br/> An object with an accessible by the `path` value to be validated.
+<br/> **Default**: Empty object `{}`.
+
+- `path` <sup>optional</sup>
+<br/> A string path to the validatable value with dots `.` as separators.
+<br/> **Default**: string `'value'`.
+
+- `initialValue` <sup>optional</sup>
+<br/> The initial value is used while validating constraints [added](/api/validation/instance-methods/constraint#parameters) with parameters `keepValid=true` or `optional=true`.
+<br/> **Default**: empty string `''`.
+
+### Return value
+
+A new `Validation` instance. 
+
+## Description
+
+Creates a new `Validation` instance bound to the `validatableObject`. The `path` evaluates while the [.validate()](/api/validation/instance-methods/validate) method is being called or when the created instance is being invoked as a [middleware](/api/validation/callable-object/middleware) or [event handler](/api/validation/callable-object/event-handler). So it is acceptable for the property that is being accessed by the `path` to not exist at the creation time. This may be useful for example when validating file meta data on a file input element `<input type="file" />` since particular properties do not exist until a file is opened.
+
+## Examples
+
+### Default path
+
+```js
+const validatableObject = {
+    value: '42',
+};
+
+// will validate validatableObject.value
+const validation = Validation(validatableObject);
+```
+
+### Specified path
+
+```js
+const validatableObject = {
+    meaningOfLife: '42',
+};
+
+// will validate validatableObject.meaningOfLife
+const validation = Validation(validatableObject, 'meaningOfLife');
+```
+
+### Dot separated path
+
+```js
+const obj = {
+    a: [
+        {
+            b: 'b', // obj.a[0].b
+        },
+    ],
+};
+
+// will validate obj.a[1].c - which does not exist yet
+const validation = Validation(obj, 'a.1.c');
+
+// ...
+
+// later
+obj.a.push({ c: 'c' });
+```
+
+### Binding to a file input element
+
+```html
+<form name="form">
+    <input type="file" name="file">
+</form>
+```
+
+```js
+const inputFile = document.form.file;
+
+// will validate metadata of inputFile.files[0] - which does not exist yet
+const fileValidation = Validation(inputFile, 'files.0');
+
+// ... add file type and size constraints
+
+// validate on change
+inputFile.addEventListener('change', (e) => {
+    // now inputFile.files[0] exists
+    if (inputFile.files.length) {
+        fileValidation.validate();
+    }
+});
+```

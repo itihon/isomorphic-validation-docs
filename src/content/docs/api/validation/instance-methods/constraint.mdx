@@ -1,0 +1,43 @@
+---
+title: Validation().constraint() method
+description: Adds predicates as constraints to a Validation instance.
+---
+
+Adds `Predicates` or predicate functions as constraints to a `Validation` instance.
+
+## Syntax
+
+```js
+Validation().constraint(predicateFunction)
+Validation().constraint(Predicate(predicateFunction))
+Validation().constraint(predicateFunction, options)
+Validation().constraint(Predicate(predicateFunction), options)
+```
+
+### Parameters
+
+- `predicateFunction`
+<br/> A function which returns a Boolean value or a Promise of a Boolean value.
+
+- `options` <sup>optional</sup>
+<br/> An object that specifies predicate execution features. The available options are:
+
+    - `next` <sup>optional</sup>
+    <br/> Defines execution of the next predicate. When set to `false`, the next predicate will not be executed and will be invalidated and canceled (if its execution was deferred by the `debounce` option) until the current predicate is valid.
+    <br/> **Default**: `true`.
+
+    - `debounce` <sup>optional</sup>
+    <br/> Deferres execution of the current predicate by the specified time in milliseconds.
+    <br/> **Default**: `0`.
+    
+    - `keepValid` <sup>optional</sup>
+    <br/> When set to `true`, assigns a previous valid value or the [initial value](/api/validation/constructor#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor#parameters) of the [validatable object](/api/validation/constructor#parameters).
+    <br/> **Default**: `false`.
+    
+    - `optional` <sup>optional</sup>
+    <br/> When set to `true`, the current predicate will be executed only if the validatable value is not equal to the [initial value](/api/validation/constructor#parameters) or `undefined` otherwise returns `true` representing a valid state, in other words, making the [initial value](/api/validation/constructor#parameters) and `undefined` valid values.
+    <br/> **Default**: `false`.
+    
+    - `anyData` <sup>optional</sup>
+    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property.
+    <br/> **Default**: `undefined`.
