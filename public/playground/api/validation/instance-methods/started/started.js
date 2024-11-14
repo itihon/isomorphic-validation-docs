@@ -18,8 +18,8 @@ Validation(validatableObject)
     .constraint(predicate1)
     .constraint(predicate2)
     .constraint(predicate3)
-    .started(callback1)
-    .started(callback2, callback3)
+    .started(callback1)             // adding state callbacks
+    .started(callback2, callback3)  // adding state callbacks
     .validate();
 
 // Output:
