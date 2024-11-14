@@ -3,6 +3,10 @@ title: Predicate() constructor
 description: Predicate constructor.
 ---
 
+import { Code } from '@astrojs/starlight/components';
+import passCallbacksExample from '../../../../../public/playground/api/predicate/constructor/pass-callbacks.js?raw';
+import clonePredicateExample from '../../../../../public/playground/api/predicate/constructor/clone-predicate.js?raw';
+
 The Predicate() constructor creates `Predicate` objects.
 
 ## Syntax
@@ -29,73 +33,10 @@ Creates a new `Predicate` instance. It is just a container for a predicate funct
 
 ### Passing a predicate function with state callbacks
 
-```js
-import { Validation, Predicate } from "isomorphic-validation";
-
-// predicate function
-const isMeaningOfLife = (value) => value === 42;
-
-// state callbacks
-const logValid = () => console.log('Right.');
-const logInvalid = () => console.log('Sorry, return in 7.5 milliones years.');
-
-const validatableObject = {
-    value: 42,
-};
-
-Validation(validatableObject)
-    .constraint(
-        Predicate(isMeaningOfLife)
-            .valid(logValid)
-            .invalid(logInvalid)
-    )
-    .validate(); // -> "Right."
-```
+<Code code={passCallbacksExample} lang='js' />
 
 ### Cloning a `Predicate`
 
 In this example there are two `Predicates` which have the same predicate function and [valid](/api/predicate/instance-methods/valid) and [invalid](/api/predicate/instance-methods/invalid) state callbacks. But the second one additinaly have [started](/api/predicate/instance-methods/started) and [validated](/api/predicate/instance-methods/validated) state callbacks added. In other words the second one has everything what the first one has plus two more state callbacks. So we clone the first one and add two extra state callbacks. It spares us from writing a pair of lines of code, but there could be much more.
 
-```js
-import { Validation, Predicate } from "isomorphic-validation";
-
-// predicate function
-const isMeaningOfLife = (value) => value === 42;
-
-// state callbacks
-const logValid = () => console.log('Right.');
-const logInvalid = () => console.log('Sorry, return in 7.5 milliones years.');
-const logStarted = () => console.log('Start processing...')
-const logValidated = () => console.log('Processing ended.');
-
-const obj1 = { value: 42 };
-const obj2 = { value: null };
-
-const p1 = Predicate(isMeaningOfLife)
-            .valid(logValid)
-            .invalid(logInvalid);
-
-// We could rewrite the code of p1 and add two more callbacks
-// const p2 = Predicate(isMeaningOfLife)
-//             .valid(logValid)
-//             .invalid(logInvalid)
-//             .started(logStarted)
-//             .validated(logValidated);
-
-// But instead
-const p2 = Predicate(p1)                // we clone p1 with its predicate function and state callbacks,
-            .started(logStarted)        // add started state callback
-            .validated(logValidated);   // and validated state callback
-
-const v1 = Validation(obj1)
-            .constraint(p1);
-
-const v2 = Validation(obj2)
-            .constraint(p2);
-
-v1.validate();  // -> "Right."
-
-v2.validate();  // -> "Start processing..."
-                // -> "Sorry, return in 7.5 milliones years."
-                // -> "Processing ended."
-```
+<Code code={clonePredicateExample} lang='js' />

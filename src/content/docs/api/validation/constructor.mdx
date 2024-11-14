@@ -3,6 +3,13 @@ title: Validation() constructor
 description: Validation constructor.
 ---
 
+import { Code } from '@astrojs/starlight/components';
+import defaultPathExample from '../../../../../public/playground/api/validation/constructor/default-path.js?raw';
+import specifiedPathExample from '../../../../../public/playground/api/validation/constructor/specified-path.js?raw';
+import dotSeparatedPathExample from '../../../../../public/playground/api/validation/constructor/dot-separated-path.js?raw';
+import bindFileInputHtmlExample from '../../../../../public/playground/api/validation/constructor/bind-file-input.html?raw';
+import bindFileInputJsExample from '../../../../../public/playground/api/validation/constructor/bind-file-input.js?raw';
+
 The Validation() constructor creates `Validation` objects.
 
 ## Syntax
@@ -40,75 +47,17 @@ Creates a new [single](/concept/single-validation) `Validation` instance bound t
 
 ### Default path
 
-```js
-import { Validation } from "isomorphic-validation";
-
-const validatableObject = {
-    value: '42',
-};
-
-// will validate validatableObject.value
-const validation = Validation(validatableObject);
-```
+<Code code={defaultPathExample} lang='js' />
 
 ### Specified path
 
-```js
-import { Validation } from "isomorphic-validation";
-
-const validatableObject = {
-    meaningOfLife: '42',
-};
-
-// will validate validatableObject.meaningOfLife
-const validation = Validation(validatableObject, 'meaningOfLife');
-```
+<Code code={specifiedPathExample} lang='js' />
 
 ### Dot separated path
 
-```js
-import { Validation } from "isomorphic-validation";
-
-const obj = {
-    a: [
-        {
-            b: 'b', // obj.a[0].b
-        },
-    ],
-};
-
-// will validate obj.a[1].c - which does not exist yet
-const validation = Validation(obj, 'a.1.c');
-
-// ...
-
-// later
-obj.a.push({ c: 'c' });
-```
+<Code code={dotSeparatedPathExample} lang='js' />
 
 ### Binding to a file input element
 
-```html
-<form name="form">
-    <input type="file" name="file">
-</form>
-```
-
-```js
-import { Validation } from "isomorphic-validation";
-
-const inputFile = document.form.file;
-
-// will validate metadata of inputFile.files[0] - which does not exist yet
-const fileValidation = Validation(inputFile, 'files.0');
-
-// ... add file type and size constraints
-
-// validate on change
-inputFile.addEventListener('change', (e) => {
-    // now inputFile.files[0] exists
-    if (inputFile.files.length) {
-        fileValidation.validate();
-    }
-});
-```
+<Code code={bindFileInputHtmlExample} lang='html' />
+<Code code={bindFileInputJsExample} lang='js' />
