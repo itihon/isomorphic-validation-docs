@@ -1,6 +1,37 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().invalid() method
+description: Adds invalid state callbacks.
+sidebar:
+    label: .invalid()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Code } from '@astrojs/starlight/components';
+import invalidCode from '../../../../../../public/playground/api/validation/instance-methods/invalid/invalid.js?raw';
+
+Adds state callbacks which will be invoked during the execution of the [`Validation().validate()`](/api/validation/instance-methods/validate) method when at least one predicate in the predicate groups of the `Validation` becomes "invalid", in other words at least one predicate function returns `false` or a `Promise` that fulfills with `false`. 
+
+## Syntax
+
+```js
+Validation().invalid(callback1, callback2, /* ..., */ callbackN)
+```
+
+### Parameters
+
+- `callback1, ..., callbackN`
+<br/> Functions to add. If anything other than a function is passed in it will be ignored and no error thrown. The callback functions will be called with the following arguments:
+
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result) object. 
+
+### Return value
+
+The `Validation` object. 
+
+## Description
+
+Adds state callbacks to the `Validation` object. Once the `Validation` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result) object is passed into state callbacks.
+
+## Examples
+
+<Code code={invalidCode} lang='js'/>
