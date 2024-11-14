@@ -30,6 +30,8 @@ Creates a new `Predicate` instance. It is just a container for a predicate funct
 ### Passing a predicate function with state callbacks
 
 ```js
+import { Validation, Predicate } from "isomorphic-validation";
+
 // predicate function
 const isMeaningOfLife = (value) => value === 42;
 
@@ -55,6 +57,8 @@ Validation(validatableObject)
 In this example there are two `Predicates` which have the same predicate function and [valid](/api/predicate/instance-methods/valid) and [invalid](/api/predicate/instance-methods/invalid) state callbacks. But the second one additinaly have [started](/api/predicate/instance-methods/started) and [validated](/api/predicate/instance-methods/validated) state callbacks added. In other words the second one has everything what the first one has plus two more state callbacks. So we clone the first one and add two extra state callbacks. It spares us from writing a pair of lines of code, but there could be much more.
 
 ```js
+import { Validation, Predicate } from "isomorphic-validation";
+
 // predicate function
 const isMeaningOfLife = (value) => value === 42;
 

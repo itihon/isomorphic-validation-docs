@@ -1,6 +1,107 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().validate() method
+description: Validates constraints added by the .constraint() method.
+sidebar:
+    label: .validate()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+Validates a [`Validation`](/api/validation/constructor) object against constraints added by the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method. Runs [state callbacks](/concept/state-callbacks).
+
+## Syntax
+
+```js
+Validation().validate()
+Validation().validate(validatableObject)
+```
+
+### Parameters
+
+- `validatableObject` <sup>optional</sup>
+<br/> An object to which a `Validation` is bound during [creation time](/api/validation/constructor#parameters) or via the [`Validation().bind()`](/api/validation/instance-methods/bind) method.
+<br/> **Default**: `undefined`.
+
+### Return value
+
+A `Promise` that fufills/rejects depending on the success/fail of the operation: 
+
+- In case of successful execution of the method the `Promise` will be fulfilled with a [`ValidationResult`](/api/validation-result) object no matter valid or invalid. 
+
+- If the `Validation` object does not contain predicate groups associated with the `validatableObject` passed in, the `Promise` will be rejected with the error message.
+
+- If an `async` predicate function returns a `Promise` that fulfills with any value other than `Boolean`, the `Promise` returned by this method will be rejected with the error message.
+
+- If an error occurs in an `async` predicate function, the `Promise` will be rejected with the error message.
+
+### Exceptions
+
+Any synchronous error that occurs in a predicate function or a [state callback](/concept/state-callbacks) will be thrown synchronously unless an [error state callback](/concept/error-handling) was added, in this case the error will be catched.
+
+## Description
+
+For a [grouping](/concept/grouping-validations) `Validation`, when a `validatableObject` is passed in only the predicate group associated with this object will be executed. When nothing is passed in all predicate groups will be executed. For a [single](/concept/single-validation) `Validation`, it doesn't matter whether that object is passed or not, since it contains only one predicate group.
+
+This method is performed under the hood when a `Validation` object is used as a [middleware](/api/validation/callable-object/middleware) and [event handler](/api/validation/callable-object/event-handler).
+
+## Examples
+
+This example demonstrates the logic described above.
+
+```js
+// predicate functions
+const isString = (value) => {
+    console.log('isString(), value:', value);
+    return typeof value === 'string';
+};
+const isObj = (num) => (value) => {
+    console.log(`isObj(${num}), value:`, value);
+    return value === `isObj${num}`;
+};
+
+// validatable objects
+const obj1 = { value: 'obj1' };
+const obj2 = { value: 'obj2' };
+
+const v = Validation.group( 
+
+    Validation(obj1)
+        .constraint(isObj(1)), 
+
+    Validation(obj2) 
+        .constraint(isObj(2))
+)
+.constraint(isString);
+
+console.log('\n--> executing a predicate group, associated with obj1');
+const { target: target1 } = await v.validate(obj1); 
+
+console.log('\n--> executing a predicate group, associated with obj2');
+const { target: target2 } = await v.validate(obj2);
+
+console.log('\n--> executing all predicate groups');
+const { target: target3 } = await v.validate();
+
+console.log('\n--> no predicate group associated with this object');
+await v.validate({ value: 'dummy' }).catch(err => console.log(err.message));
+
+console.log('\n--> targets:', target1, target2, target3);
+```
+```
+--> executing a predicate group, associated with obj1
+isObj(1), value: obj1
+isString(), value: obj1
+
+--> executing a predicate group, associated with obj2
+isObj(2), value: obj2
+isString(), value: obj2
+
+--> executing all predicate groups
+isObj(1), value: obj1
+isString(), value: obj1
+isObj(2), value: obj2
+isString(), value: obj2
+
+--> no predicate group associated with this object
+There are no predicates assosiated with the target {"value":"dummy"}
+
+--> targets: { value: 'obj1' } { value: 'obj2' } undefined
+```

@@ -1,7 +1,11 @@
 ---
 title: Validation().constraint() method
 description: Adds predicates as constraints to a Validation instance.
+sidebar:
+    label: .constraint()
 ---
+
+import Playground from '../../../../../components/Playground.jsx';
 
 Adds `Predicates` or predicate functions as constraints to a `Validation` instance.
 
@@ -17,13 +21,13 @@ Validation().constraint(Predicate(predicateFunction), options)
 ### Parameters
 
 - `predicateFunction`
-<br/> A function which returns a Boolean value or a Promise of a Boolean value.
+<br/> A function which returns either a `Boolean` value or a `Promise` of a `Boolean` value. Instead of a function a [`Predicate`](/api/predicate/constructor) object which wraps the function can be passed in. If anything other than those types is passed in it will be ignored and no error thrown.
 
 - `options` <sup>optional</sup>
 <br/> An object that specifies predicate execution features. The available options are:
 
     - `next` <sup>optional</sup>
-    <br/> Defines execution of the next predicate. When set to `false`, the next predicate will not be executed and will be invalidated and canceled (if its execution was deferred by the `debounce` option) until the current predicate is valid.
+    <br/> Defines execution of the predicates following after the current one. When set to `false`, the predicates added after this will not be executed and will be invalidated and canceled (if their execution was deferred by the `debounce` option) until the current predicate is valid.
     <br/> **Default**: `true`.
 
     - `debounce` <sup>optional</sup>
@@ -31,13 +35,112 @@ Validation().constraint(Predicate(predicateFunction), options)
     <br/> **Default**: `0`.
     
     - `keepValid` <sup>optional</sup>
-    <br/> When set to `true`, assigns a previous valid value or the [initial value](/api/validation/constructor#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor#parameters) of the [validatable object](/api/validation/constructor#parameters).
+    <br/> When set to `true`, assigns (restores) a previous valid value or the [initial value](/api/validation/constructor#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor#parameters) of the [validatable object](/api/validation/constructor#parameters). Since a [`Predicate`](/api/predicate/constructor) added with this option set to `true` cannot be in invalid state when there is a previous valid value to restore, it runs [restored](/api/predicate/instance-methods/restored) state callbacks instead.
     <br/> **Default**: `false`.
     
     - `optional` <sup>optional</sup>
-    <br/> When set to `true`, the current predicate will be executed only if the validatable value is not equal to the [initial value](/api/validation/constructor#parameters) or `undefined` otherwise returns `true` representing a valid state, in other words, making the [initial value](/api/validation/constructor#parameters) and `undefined` valid values.
+    <br/> When set to `true`, the current predicate will be executed only if the validatable value is not equal to the [initial value](/api/validation/constructor#parameters) or `undefined` otherwise returns `true` representing a valid state, in other words, making the [initial value](/api/validation/constructor#parameters) and `undefined` valid values for the `Predicate` but any other value is required to be validated. A `Validation` in which all constraints are optional is valid by default if the validatable value is equal to the [initial value](/api/validation/constructor#parameters) or `undefined`.
     <br/> **Default**: `false`.
     
     - `anyData` <sup>optional</sup>
-    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property.
+    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property and in [`ValidationResult`](/api/validation-result).
     <br/> **Default**: `undefined`.
+
+### Return value
+
+The `Validation` object. 
+
+## Description
+
+Adds a predicate function to the predicate group associated with the bound [`validatableObject`](/api/validation/constructor#parameters) of the [single](/concept/single-validation) `Validation`. When invoked on a [grouping](/concept/grouping-validations) `Validation`, does it for each predicate group of the `Validation`. A predicate function must return either a `Boolean` value, if it is synchronous, or a `Promise` that fulfills with a `Boolean` value, if it is asynchronous, otherwise the [`Validation().validate()`](/api/validation/instance-methods/validate) method will throw an error or return a rejected `Promise` respectively.
+
+## Examples
+
+### Parameter "next"
+
+Suppose, an e-mail is needed to be validated and checked for being registered. It doesn't make sense to perform a relatively costly operation such as making a request to the server and therefore making the server to query an email record from a database if the typed in data does not conform to the basic requirement - to be a valid e-mail. This case illustrates the main purpose of the `next` parameter - performing further constraints validation only when previous constraints are met.
+
+Start typing an email and watch the console. First, only `isEmail` will be getting invoked, but once you've typed a valid e-mail, `isEmailRegistered` starts getting invoked. 
+
+<Playground client:visible client:only 
+            fileUrls={{ 
+                js: '/api/validation/instance-methods/constraint/next.js',
+                html: '/api/validation/instance-methods/constraint/next.html',
+            }} 
+            params={{console: 'open'}}
+            height="500px"
+            width="100%"
+/>
+
+### Parameters "next" and "debounce"
+
+This example extends the previous one in a way that now predicate execution following after the constraint added with the parameter `next` is deferred by the `debounce` parameter. As it is shown in the previous example, `isEmailRegistered` gets invoked on every change of the e-mail field once the typed in e-mail becomes a valid e-mail. This may lead to excessive requests to the server. Applying the `debounce` parameter solves this issue.
+
+#### Invalidate predicates following after
+
+A constraint added with the parameter `next=false` when invalid invalidates all the constraints added after it.
+
+Start typing an e-mail address. Watch the console. While `isEmail` is invalid, `isEmailRegistered` gets invalidated.
+
+#### Cancel deferred execution
+
+Once an e-mail address is entered in the proper format `isEmailRegistered` starts getting deferred on further changes of the e-mail field. If one of these further changes introduces an e-mail address that does not conform to the E-mail format the execution of `isEmailRegistered` that was deferred earlier should be canceled. Otherwise it will be performed with irrelevant data, asuming it makes a request to the server, it will make an unnecessary request and get an irrelevant response. So deferred execution of predicates following after the one added with the parameter `next=false` is canceled automatically in case that one is invalid.
+
+Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which appears after `isEmailRegistered` execution gets deferred. Make a change to the e-mail incompatible with the proper format. You will see in the console that the actual deferred predicate was not executed. Its execution was canceled.
+
+<Playground client:visible client:only 
+            fileUrls={{ 
+                js: '/api/validation/instance-methods/constraint/next-debounce.js',
+                html: '/api/validation/instance-methods/constraint/next-debounce.html',
+            }} 
+            params={{console: 'open'}}
+            height="500px"
+            width="100%"
+/>
+
+### Passing a message as anyData
+
+This example keeps bulding up on the previous one. Here validator messages are passed as `msg` while adding constraints and then they are accessed through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property and [`ValidationResult`](/api/validation-result).
+ 
+
+<Playground client:visible client:only 
+            fileUrls={{ 
+                js: '/api/validation/instance-methods/constraint/next-debounce-anydata.js',
+                html: '/api/validation/instance-methods/constraint/next-debounce-anydata.html',
+            }} 
+            params={{console: 'open'}}
+            height="500px"
+            width="100%"
+/>
+
+### Parameter "keepValid" 
+
+This option allows to completely prevent input of certain characters. It can be used to restrict input fields to accept only allowed characters or ignore unwanted characters.
+
+In this example the input field is restricted to accept only letter characters. Additionaly, [`Predicate().started()`](/api/predicate/instance-methods/started) and [`Predicate().restored()`](/api/predicate/instance-methods/restored) state callbacks can be used to perform some side effects like saving and restoring the caret position.
+
+<Playground client:visible client:only 
+            fileUrls={{ 
+                js: '/api/validation/instance-methods/constraint/keepvalid.js',
+                html: '/api/validation/instance-methods/constraint/keepvalid.html',
+            }} 
+            params={{console: 'none'}}
+            height="500px"
+            width="100%"
+/>
+
+### Parameter "optional"
+
+Some libraries offer marking form fields as "required" in one way or another. HTML input elements have the [`required`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required) attribute. In fact, in most cases form fields are required to be filled out. This library has the opposite approach. Instead of marking almost every field as "required", it offers making only needed constraints "optional". 
+
+In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
+
+<Playground client:visible client:only 
+            fileUrls={{ 
+                js: '/api/validation/instance-methods/constraint/optional.js',
+                html: '/api/validation/instance-methods/constraint/optional.html',
+            }} 
+            params={{console: 'none'}}
+            height="500px"
+            width="100%"
+/>

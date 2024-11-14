@@ -34,13 +34,15 @@ A new `Validation` instance.
 
 ## Description
 
-Creates a new `Validation` instance bound to the `validatableObject`. The `path` evaluates while the [.validate()](/api/validation/instance-methods/validate) method is being called or when the created instance is being invoked as a [middleware](/api/validation/callable-object/middleware) or [event handler](/api/validation/callable-object/event-handler). So it is acceptable for the property that is being accessed by the `path` to not exist at the creation time. This may be useful for example when validating file meta data on a file input element `<input type="file" />` since particular properties do not exist until a file is opened.
+Creates a new [single](/concept/single-validation) `Validation` instance bound to the `validatableObject`. The `path` evaluates while the [`Validation().validate()`](/api/validation/instance-methods/validate) method is being called or when the created instance is being invoked as a [middleware](/api/validation/callable-object/middleware) or [event handler](/api/validation/callable-object/event-handler). So it is acceptable for the property that is being accessed by the `path` to not exist at the creation time. This may be useful for example when validating file meta data on a file input element `<input type="file" />` since particular properties do not exist until a file is opened.
 
 ## Examples
 
 ### Default path
 
 ```js
+import { Validation } from "isomorphic-validation";
+
 const validatableObject = {
     value: '42',
 };
@@ -52,6 +54,8 @@ const validation = Validation(validatableObject);
 ### Specified path
 
 ```js
+import { Validation } from "isomorphic-validation";
+
 const validatableObject = {
     meaningOfLife: '42',
 };
@@ -63,6 +67,8 @@ const validation = Validation(validatableObject, 'meaningOfLife');
 ### Dot separated path
 
 ```js
+import { Validation } from "isomorphic-validation";
+
 const obj = {
     a: [
         {
@@ -89,6 +95,8 @@ obj.a.push({ c: 'c' });
 ```
 
 ```js
+import { Validation } from "isomorphic-validation";
+
 const inputFile = document.form.file;
 
 // will validate metadata of inputFile.files[0] - which does not exist yet

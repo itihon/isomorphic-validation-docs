@@ -1,0 +1,29 @@
+<html>
+    <body>
+        <style>
+            h5 {
+                margin-top: 8px;
+                margin-bottom: 4px;
+            }
+            p {
+                font-size: 14px;
+            }
+        </style>
+        <form name="form" autocomplete="off">
+            <h5>First name</h5>
+            <input type="text" name="firstName" placeholder="First name" /> * 
+
+            <h5>Last name</h5>
+            <input type="text" name="lastName" placeholder="Last name" /> * 
+
+            <h5>Age</h5> 
+            <input type="number" name="age" placeholder="Age" />
+
+            <br><br>
+            <input type="submit" name="submitBtn" disabled />
+        </form>
+        <p>"First name" and "Last name" fields should be filled in with only letter characters.</p>
+        <p>The "Age" field is optional and should be filled in with a natural number between 21 and 45.</p>
+        <p class="note"><b>Note:</b> There is a quirk in Google Chrome, Firefox and maybe in other browsers. If you type in an input field with type="number" something like "1234+" or "1234-" it transforms into an <b>empty string</b>, which is valid as a value.</p>
+    </body>
+</html>
