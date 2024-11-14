@@ -17,7 +17,9 @@ const defaultEmbedOptions = {
 };
 
 
-const Playground = ({fileUrls = {}, params, config, width, height}) => {
+const Playground = ({
+    fileUrls = {}, params, config, width, height, pathPrefix = '/playground',
+}) => {
     const [state, setState] = useState(<div>Playground</div>);
     const embedOptions = {
         params: {
@@ -33,6 +35,7 @@ const Playground = ({fileUrls = {}, params, config, width, height}) => {
     useEffect(() => {
         Promise.all(
             Object.values(fileUrls)
+                .map(url => pathPrefix + url)
                 .map(url => fetch(url))
                 .map(req => req.then(res => res.text()))
         ).then(resArr => resArr.forEach(
