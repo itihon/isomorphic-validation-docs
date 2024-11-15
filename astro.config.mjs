@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'http://localhost:4321',
+    site: 'https://itihon.github.io/isomorphic-validation-docs',
     integrations: [starlight({
         title: 'ISOMORPHIC-VALIDATION',
         logo: {
