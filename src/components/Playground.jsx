@@ -1,6 +1,6 @@
 import LiveCodes from "livecodes/react";
 import { useEffect, useState } from "react";
-import { LIVECODES_URL } from "../../config.mjs";
+import { LIVECODES_URL, BASE_URL } from "../../config.mjs";
 
 /** @typedef {import('livecodes').EmbedOptions} LifecodesParams*/
 
@@ -35,7 +35,8 @@ const Playground = ({
     useEffect(() => {
         Promise.all(
             Object.values(fileUrls)
-                .map(url => pathPrefix + url)
+                .map(url => '/' + BASE_URL + pathPrefix + url)
+                .map(url => (console.log(url), url))
                 .map(url => fetch(url))
                 .map(req => req.then(res => res.text()))
         ).then(resArr => resArr.forEach(
