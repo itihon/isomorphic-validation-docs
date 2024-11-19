@@ -1,11 +1,10 @@
 import { visit } from 'unist-util-visit';
+import { isRelativeURL, addPrefix } from './src/utils/utils.js';
 
 export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
 
-    const base = basePath.replace('/', '').padStart(basePath.length + 1, '/');
+    const base = addPrefix(basePath, '/');
 
-    const isRelativeURL = (value = '') => value.startsWith('/');
-    const hasBaseUrl = (value = '') => new RegExp(`^${base}`).test(value);
     const isUrlContainingType = (node) => 
         ['link', 'image'].some(type => type === node.type);
 
@@ -17,16 +16,16 @@ export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
 
             if (image) {
                 const { file } = image;
-                if (isRelativeURL(file) && !hasBaseUrl(file)) {
-                    image.file = `${base}${file}`;
+                if (isRelativeURL(file)) {
+                    image.file = addPrefix(file, base);
                 }
             }
 
             if (actions) {
                 actions.forEach(action => {
                     const { link } = action;
-                    if (isRelativeURL(link) && !hasBaseUrl(link)) {
-                        action.link = `${base}${link}`;
+                    if (isRelativeURL(link)) {
+                        action.link = addPrefix(link, base);
                     }
                 });
             }
@@ -38,8 +37,8 @@ export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
                 const { url } = node;
 
                 if (url) {
-                    if (isRelativeURL(url) && !hasBaseUrl(url)) {
-                        node.url = `${base}${url}`;
+                    if (isRelativeURL(url)) {
+                        node.url = addPrefix(url, base);
                     }
                 }
             }
