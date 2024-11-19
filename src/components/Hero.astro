@@ -1,0 +1,22 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Hero.astro';
+import { isRelativeURL, addPrefix } from '../utils/utils.js';
+import { BASE_URL } from "../../config.mjs";
+
+const base = addPrefix(BASE_URL, '/');
+const modifiedProps = { ...Astro.props };
+const { actions }:any = modifiedProps.entry.data.hero;
+
+if (actions) {
+    actions.forEach((action: any) => {
+        const { link } = action;
+        if (isRelativeURL(link)) {
+            action.link = addPrefix(link, base);
+        }
+    });
+}
+---
+
+<Default {...modifiedProps}><slot /></Default>
+

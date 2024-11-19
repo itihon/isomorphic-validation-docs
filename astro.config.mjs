@@ -33,6 +33,9 @@ export default defineConfig({
             editLink: {
                 baseUrl: 'https://github.com/itihon/isomorphic-validation/edit/main',
             },
+            components: {
+                Hero: './src/components/Hero.astro',
+            },
             credits: true,
             sidebar: [
                 {

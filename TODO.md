@@ -22,4 +22,5 @@
 - [x] API
     - [ ] ValidationResult
 
-- [ ] Use <Code> component from Starlight instead of markdown code blocks
+- [x] Use <Code> component from Starlight instead of markdown code blocks
+- [x] Override Starlight's Hero component so it renders links with regard to the base url
