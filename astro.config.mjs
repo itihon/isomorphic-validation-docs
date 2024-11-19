@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
-import mdx from '@astrojs/mdx';
+// import mdx from '@astrojs/mdx';
 import baseUrlModifierRemarkPlugin from './base-links-remark-plugin.mjs';
 import { BASE_URL } from './config.mjs';
 
@@ -130,10 +130,12 @@ export default defineConfig({
             ],
 		}), 
         react(),
-        mdx({
-            remarkPlugins: [ 
-                [baseUrlModifierRemarkPlugin, { basePath: BASE_URL }],
-            ],
-        }),
+        // this overrides mdx integration with added remark plugins in @astrojs/starlight/index.ts
+        // starlightAsides in particular
+        // mdx({
+        //     remarkPlugins: [ 
+        //         [baseUrlModifierRemarkPlugin, { basePath: BASE_URL }],
+        //     ],
+        // }),
     ],
 });
