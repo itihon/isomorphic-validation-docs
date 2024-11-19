@@ -1,6 +1,38 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Predicate().restored() method
+description: Adds restored state callbacks.
+sidebar:
+    label: .restored()
 ---
+import { Code } from '@astrojs/starlight/components';
+import restoredCode from '../../../../../../public/playground/api/predicate/instance-methods/restored/restored.js?raw';
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+Adds state callbacks which will be invoked in place of ["invalid"](/api/predicate/instance-methods/invalid) state callbacks after the predicate function execution when it returns `false` or a `Promise` that fulfills with `false` if the predicate function was added with the parameter `keepValid=true` of the [`Validation().constraint()`](/api/validation/instance-methods/constraint#parameters) method.
+
+## Syntax
+
+```js
+Predicate().restored(callback1, callback2, /* ..., */ callbackN)
+```
+
+### Parameters
+
+- `callback1, ..., callbackN`
+<br/> Functions to add. If anything other than a function is passed in it will be ignored and no error thrown. The callback functions will be called with the following arguments:
+
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result) object. 
+
+### Return value
+
+The `Predicate` object. 
+
+## Description
+
+Adds state callbacks to the `Predicate` object. Once the `Predicate` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result) object is passed into state callbacks.
+
+## Examples
+
+<Code code={restoredCode} lang='js'/>
+
+Also see the example of using the parameter [`keepValid`](/api/validation/instance-methods/constraint/#parameter-keepvalid).
