@@ -1,11 +1,10 @@
 ## Bugs
 
-- [ ] index.html in the url of the 'Edit in LiveCodes' button.
+- [ ] index.html in the url of the 'Edit in LiveCodes' button, (on localhost).
 - [ ] http://localhost:4321/api/validation/instance-methods/constraint/#parameter-keepvalid
         http://localhost:4321/api/validation/instance-methods/constraint/#optional
     in Firefox the html renders twice in the playground
 - [ ] The edit page link in every page's footer should lead to the docs repository whereas the social link should lead to the library's repository
-- [ ] Incorrect page scrolling to an anchor when referred by a url with the hash sign e.g. /api/validation/instance-methods/constraint/#parameter-keepvalid
 
 ## Docs
 

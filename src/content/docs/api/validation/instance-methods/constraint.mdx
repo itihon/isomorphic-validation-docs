@@ -62,7 +62,7 @@ Suppose, an e-mail is needed to be validated and checked for being registered. I
 
 Start typing an email and watch the console. First, only `isEmail` will be getting invoked, but once you've typed a valid e-mail, `isEmailRegistered` starts getting invoked. 
 
-<Playground client:visible client:only 
+<Playground client:visible  
             fileUrls={{ 
                 js: '/api/validation/instance-methods/constraint/next.js',
                 html: '/api/validation/instance-methods/constraint/next.html',
@@ -88,7 +88,7 @@ Once an e-mail address is entered in the proper format `isEmailRegistered` start
 
 Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which appears after `isEmailRegistered` execution gets deferred. Make a change to the e-mail incompatible with the proper format. You will see in the console that the actual deferred predicate was not executed. Its execution was canceled.
 
-<Playground client:visible client:only 
+<Playground client:visible  
             fileUrls={{ 
                 js: '/api/validation/instance-methods/constraint/next-debounce.js',
                 html: '/api/validation/instance-methods/constraint/next-debounce.html',
@@ -103,7 +103,7 @@ Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which ap
 This example keeps bulding up on the previous one. Here validator messages are passed as `msg` while adding constraints and then they are accessed through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property and [`ValidationResult`](/api/validation-result).
  
 
-<Playground client:visible client:only 
+<Playground client:visible  
             fileUrls={{ 
                 js: '/api/validation/instance-methods/constraint/next-debounce-anydata.js',
                 html: '/api/validation/instance-methods/constraint/next-debounce-anydata.html',
@@ -119,7 +119,7 @@ This option allows to completely prevent input of certain characters. It can be 
 
 In this example the input field is restricted to accept only letter characters. Additionaly, [`Predicate().started()`](/api/predicate/instance-methods/started) and [`Predicate().restored()`](/api/predicate/instance-methods/restored) state callbacks can be used to perform some side effects like saving and restoring the caret position.
 
-<Playground client:visible client:only 
+<Playground client:visible  
             fileUrls={{ 
                 js: '/api/validation/instance-methods/constraint/keepvalid.js',
                 html: '/api/validation/instance-methods/constraint/keepvalid.html',
@@ -135,7 +135,7 @@ Some libraries offer marking form fields as "required" in one way or another. HT
 
 In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
 
-<Playground client:visible client:only 
+<Playground client:visible  
             fileUrls={{ 
                 js: '/api/validation/instance-methods/constraint/optional.js',
                 html: '/api/validation/instance-methods/constraint/optional.html',

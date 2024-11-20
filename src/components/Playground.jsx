@@ -21,6 +21,10 @@ const defaultEmbedOptions = {
     },
 };
 
+const defaultStyle = {
+    marginTop: '10px'
+};
+
 const host = import.meta.env.DEV ? HOST : PROD_HOST;
 const base = addPrefix(BASE_URL, '/');
 const appDir = addPrefix(LIVECODES_APP_DIR, '/');
@@ -30,7 +34,12 @@ const appUrl = `${host}${base}${appDir}/index.html`;
 const Playground = ({
     fileUrls = {}, params, config, width, height,
 }) => {
-    const [state, setState] = useState(<div>Playground</div>);
+    const style = { width, height, ...defaultStyle };
+
+    const [state, setState] = useState(
+        <div style={style}>Playground</div>
+    );
+
     const embedOptions = {
         params: {
             ...defaultEmbedOptions.params,
@@ -54,8 +63,7 @@ const Playground = ({
             }
         )).then(() => {
             setState(
-                <>
-                    <br />
+                <div style={style}>
                     <LiveCodes 
                         appUrl={appUrl}
                         config={embedOptions.config} 
@@ -63,7 +71,7 @@ const Playground = ({
                         width={width}
                         height={height}
                     />
-                </>
+                </div>
             );
         });
             
