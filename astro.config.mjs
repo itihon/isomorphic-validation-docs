@@ -35,6 +35,7 @@ export default defineConfig({
             },
             components: {
                 Hero: './src/components/Hero.astro',
+                PageSidebar: './src/components/PageSidebar.astro',
             },
             credits: true,
             sidebar: [
