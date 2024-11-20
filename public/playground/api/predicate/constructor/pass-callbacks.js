@@ -14,7 +14,7 @@ const validatableObject = {
 Validation(validatableObject)
     .constraint(
         Predicate(isMeaningOfLife)
-            .valid(logValid)
-            .invalid(logInvalid)
+            .valid(logValid)        // adding state callbacks
+            .invalid(logInvalid)    // adding state callbacks
     )
     .validate(); // -> "Right."

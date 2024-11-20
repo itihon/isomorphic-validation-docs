@@ -16,7 +16,7 @@ const p1 = Predicate(isMeaningOfLife)
             .valid(logValid)
             .invalid(logInvalid);
 
-// We could rewrite the code of p1 and add two more callbacks
+// We could repeat the code of p1 and add two more callbacks
 // const p2 = Predicate(isMeaningOfLife)
 //             .valid(logValid)
 //             .invalid(logInvalid)
