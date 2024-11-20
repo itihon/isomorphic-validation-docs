@@ -3,11 +3,11 @@ import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
 // import mdx from '@astrojs/mdx';
 import baseUrlModifierRemarkPlugin from './base-links-remark-plugin.mjs';
-import { BASE_URL } from './config.mjs';
+import { BASE_URL, PROD_HOST } from './config.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://itihon.github.io',
+    site: PROD_HOST,
     base: BASE_URL,
     markdown: {
         remarkPlugins: [ 

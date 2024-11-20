@@ -1,6 +1,11 @@
 import LiveCodes from "livecodes/react";
 import { useEffect, useState } from "react";
-import { LIVECODES_URL, BASE_URL } from "../../config.mjs";
+import { 
+    LIVECODES_EXAMPLES_DIR, 
+    LIVECODES_APP_DIR, HOST, 
+    PROD_HOST, BASE_URL 
+} from "../../config.mjs";
+import { addPrefix } from "../utils/utils";
 
 /** @typedef {import('livecodes').EmbedOptions} LifecodesParams*/
 
@@ -16,9 +21,14 @@ const defaultEmbedOptions = {
     },
 };
 
+const host = import.meta.env.DEV ? HOST : PROD_HOST;
+const base = addPrefix(BASE_URL, '/');
+const appDir = addPrefix(LIVECODES_APP_DIR, '/');
+const examplesDir = addPrefix(LIVECODES_EXAMPLES_DIR, '/');
+const appUrl = `${host}${base}${appDir}/index.html`;
 
 const Playground = ({
-    fileUrls = {}, params, config, width, height, pathPrefix = '/playground',
+    fileUrls = {}, params, config, width, height,
 }) => {
     const [state, setState] = useState(<div>Playground</div>);
     const embedOptions = {
@@ -35,8 +45,7 @@ const Playground = ({
     useEffect(() => {
         Promise.all(
             Object.values(fileUrls)
-                .map(url => '/' + BASE_URL + pathPrefix + url)
-                .map(url => (console.log(url), url))
+                .map(relUrl => base + examplesDir + relUrl)
                 .map(url => fetch(url))
                 .map(req => req.then(res => res.text()))
         ).then(resArr => resArr.forEach(
@@ -48,7 +57,7 @@ const Playground = ({
                 <>
                     <br />
                     <LiveCodes 
-                        appUrl={LIVECODES_URL}
+                        appUrl={appUrl}
                         config={embedOptions.config} 
                         params={embedOptions.params}
                         width={width}
