@@ -7,7 +7,7 @@ sidebar:
 import { Code } from '@astrojs/starlight/components';
 import restoredCode from '../../../../../../public/playground/api/predicate/instance-methods/restored/restored.js?raw';
 
-Adds state callbacks which will be invoked in place of ["invalid"](/api/predicate/instance-methods/invalid) state callbacks after the predicate function execution when it returns `false` or a `Promise` that fulfills with `false` if the predicate function was added with the parameter `keepValid=true` of the [`Validation().constraint()`](/api/validation/instance-methods/constraint#parameters) method.
+Adds state callbacks which will be invoked after the predicate function execution when it returns `false` or a `Promise` that fulfills with `false` after restoration of the previous valid value if the predicate function was added with the parameter `keepValid=true` of the [`Validation().constraint()`](/api/validation/instance-methods/constraint#parameters) method.
 
 ## Syntax
 
@@ -33,6 +33,9 @@ Adds state callbacks to the `Predicate` object. Once the `Predicate` in the spec
 
 ## Examples
 
-<Code code={restoredCode} lang='js'/>
+Until there is a valid value to restore, the validatable value is restored back to the [initial value](/api/validation/constructor#parameters) and since it is not valid, ["invalid"](/api/predicate/instance-methods/invalid) state callbacks are called after the value restoration. Once the validatable value gets valid, it is saved and any attempt to assign an invalid value leads to restoration to that previous valid value and calling ["valid"](/api/predicate/instance-methods/valid) state callbacks. The only invalid value that is possible to assign after that is the initial value which causes resetting of the previously saved valid value.
 
 Also see the example of using the parameter [`keepValid`](/api/validation/instance-methods/constraint/#parameter-keepvalid).
+
+<Code code={restoredCode} lang='js'/>
+

@@ -29,6 +29,8 @@
 - [x] API
     - [ ] ValidationResult
 
+- [ ] .restored() docs: isValid property of the passed in ValidationResult object is always `false`.
+
 - [x] Use <Code> component from Starlight instead of markdown code blocks
 - [x] Override Starlight's Hero component so it renders links with regard to the base url
 - [ ] Use Vite's `raw` parameter to pass examples to Playground instead of fetching them.
