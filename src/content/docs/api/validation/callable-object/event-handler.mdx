@@ -1,6 +1,55 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Event handler
+description: Allows using a Validation object as an event handler.
+sidebar:
+    label: Event handler
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Code } from '@astrojs/starlight/components';
+import eventHandlerExample from '../../../../../../public/playground/api/validation/callable-object/event-handler/event-handler.js?raw';
+import eventHandlerExample2 from '../../../../../../public/playground/api/validation/callable-object/event-handler/event-handler2.js?raw';
+
+A `Validation` object can be used as an event handler. When executed on the client side, it is just a wrapper over the [`Validation().validate()`](/api/validation/instance-methods/validate/) method and can be passed directly into the <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" target="_blank">`addEventListener()`</a> method.
+
+## Syntax
+
+```js
+Validation()()
+Validation()(event)
+element.addEventListener(type, Validation())
+```
+
+### Parameters
+
+- `event` <sup>optional</sup>
+<br/> An <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">`Event`</a> object. (Only the property <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/target" target="_blank">`target`</a> is used to validate predicate groups associated with the object it refers to.)
+<br/> **Default**: `undefined`.
+
+### Return value
+
+See "Return value" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#return-value) method.
+
+### Exceptions
+
+See "Exceptions" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#exceptions) method.
+
+
+## Description
+
+Using a `Validation` object as an event handler is intended to reduce boilerplate.  
+
+## Examples
+
+### `Validation` as an event handler
+
+Consider the code below. The grouping `Validation` object was added as an event handler 
+> `form.addEventListener('input', validation);` 
+
+instead of creating an event handler function 
+> `form.addEventListener('input', (event) => validation.validate(event.target));`
+
+<Code code={eventHandlerExample} lang='js' />
+
+Depending on your code style, you could even define the whole `Validation` without assigning it to a variable and instead pass it right immediately into the `addEventListener()` method:
+
+<Code code={eventHandlerExample2} lang='js' />
