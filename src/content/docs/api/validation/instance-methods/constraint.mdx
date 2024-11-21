@@ -6,6 +6,16 @@ sidebar:
 ---
 
 import Playground from '../../../../../components/Playground.jsx';
+import nextExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next.js?raw';
+import nextExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next.html?raw';
+import nextDebounceExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce.js?raw';
+import nextDebounceExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce.html?raw';
+import nextDebounceAnydataExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata.js?raw';
+import nextDebounceAnydataExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata.html?raw';
+import keepValidExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/keepvalid.js?raw';
+import keepValidExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/keepvalid.html?raw';
+import optionalExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/optional.js?raw';
+import optionalExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/optional.html?raw';
 
 Adds `Predicates` or predicate functions as constraints to a `Validation` instance.
 
@@ -63,13 +73,13 @@ Suppose, an e-mail is needed to be validated and checked for being registered. I
 Start typing an email and watch the console. First, only `isEmail` will be getting invoked, but once you've typed a valid e-mail, `isEmailRegistered` starts getting invoked. 
 
 <Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/constraint/next.js',
-                html: '/api/validation/instance-methods/constraint/next.html',
-            }} 
-            params={{console: 'open'}}
-            height="500px"
-            width="100%"
+    params={{
+        console: 'open',
+        js: nextExampleJS,
+        html: nextExampleHTML,
+    }}
+    height="500px"
+    width="100%"
 />
 
 ### Parameters "next" and "debounce"
@@ -89,13 +99,13 @@ Once an e-mail address is entered in the proper format `isEmailRegistered` start
 Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which appears after `isEmailRegistered` execution gets deferred. Make a change to the e-mail incompatible with the proper format. You will see in the console that the actual deferred predicate was not executed. Its execution was canceled.
 
 <Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/constraint/next-debounce.js',
-                html: '/api/validation/instance-methods/constraint/next-debounce.html',
-            }} 
-            params={{console: 'open'}}
-            height="500px"
-            width="100%"
+    params={{
+        console: 'open',
+        js: nextDebounceExampleJS,
+        html: nextDebounceExampleHTML,
+    }}
+    height="500px"
+    width="100%"
 />
 
 ### Passing a message as anyData
@@ -104,13 +114,13 @@ This example keeps bulding up on the previous one. Here validator messages are p
  
 
 <Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/constraint/next-debounce-anydata.js',
-                html: '/api/validation/instance-methods/constraint/next-debounce-anydata.html',
-            }} 
-            params={{console: 'open'}}
-            height="500px"
-            width="100%"
+    params={{
+        console: 'open',
+        js: nextDebounceAnydataExampleJS,
+        html: nextDebounceAnydataExampleHTML,
+    }}
+    height="500px"
+    width="100%"
 />
 
 ### Parameter "keepValid" 
@@ -120,13 +130,13 @@ This option allows to completely prevent input of certain characters. It can be 
 In this example the input field is restricted to accept only letter characters. Additionaly, [`Predicate().started()`](/api/predicate/instance-methods/started) and [`Predicate().restored()`](/api/predicate/instance-methods/restored) state callbacks can be used to perform some side effects like saving and restoring the caret position.
 
 <Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/constraint/keepvalid.js',
-                html: '/api/validation/instance-methods/constraint/keepvalid.html',
-            }} 
-            params={{console: 'none'}}
-            height="500px"
-            width="100%"
+    params={{
+        console: 'closed',
+        js: keepValidExampleJS,
+        html: keepValidExampleHTML,
+    }}
+    height="500px"
+    width="100%"
 />
 
 ### Parameter "optional"
@@ -136,11 +146,11 @@ Some libraries offer marking form fields as "required" in one way or another. HT
 In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
 
 <Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/constraint/optional.js',
-                html: '/api/validation/instance-methods/constraint/optional.html',
-            }} 
-            params={{console: 'none'}}
-            height="500px"
-            width="100%"
+    params={{
+        console: 'closed',
+        js: optionalExampleJS,
+        html: optionalExampleHTML,
+    }}
+    height="500px"
+    width="100%"
 />
