@@ -30,6 +30,11 @@
     - [ ] logo svg icons https://www.svgrepo.com
     - [ ] inspiration
 
+- [ ] /api/concept/grouping-validations `Validation.group().changed()`, "changed" state callbacks of a grouping validations doesn't require the `Validation().validate()` method to be invoked
+    in comparison to the rest state callbacks
+
+- [ ] /api/concept/state-callbacks started, valid, invalid, validated state callbacks can be thought of as "hooks" whereas changed callbacks are more like a notification for subscribers.
+
 - [x] API
     - [ ] ValidationResult
 

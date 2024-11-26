@@ -8,7 +8,7 @@ sidebar:
 import { Code } from '@astrojs/starlight/components';
 import changedCode from '../../../../../../public/playground/api/validation/instance-methods/changed/changed.js?raw';
 
-Adds state callbacks which will be invoked every time the state of the `Validation` changes from valid to invalid and backwards.
+Adds state callbacks which will be invoked every time the state of the `Validation` changes from valid to invalid and backwards. For a ["grouping"](/concept/grouping-validations) `Validation`, since its state depends on the grouped (nested) `Validation` objects, these callbacks will run every time the state of a nested `Validation` changes even without invoking the [`Validation().validate()`](/api/validation/instance-methods/validate) method on it directly.
 
 ## Syntax
 
