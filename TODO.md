@@ -21,7 +21,7 @@
     - [ ] cloning Predicates
     - [ ] middleware and event handler
     - [ ] isomorphic api and execution environment separation
-    - [ ] chaining and conditional executing validations as state callbacks
+    - [x] chaining and conditional execution validations as state callbacks
 
 - [ ] credits
     - [ ] astro 
