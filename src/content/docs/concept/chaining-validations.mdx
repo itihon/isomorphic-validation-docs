@@ -168,7 +168,13 @@ Validity of data in the fields are checked with `ageV` and `experienceV` validat
     width="100%"
 />
 
-It might look irrational to validate data against field constraints first and after all validations perform the initial value check, but the problem is one of the fields is optional and its initial value (empty) is valid by default. If we put `initValueV` first and then perform the rest validations, the experience field will paint green instead of gray when it is empty since it gets revalidated on the age field change. So the order of the validations in the chains makes sense. The next example below shows how the validation chaines can be recomposed. 
+It might look irrational to validate data against field constraints first and after all validations perform the initial value check. But if we put `initValueV` first and then will be performing the rest validations **unconditionally**, the fields will never paint gray when they are empty. So the order of the validations in the chains makes sense.  
+
+:::caution 
+Performing actual form data validation should not depend on other validations introduced for side effects. It should either precede in a chain or be performed **unconditionally**.
+:::
+
+The next example below shows how the validation chains could have been recomposed and the problem it entails.
 
 ### Chaining grouping validations
 
@@ -218,3 +224,6 @@ Now `initValueV` serves as the entry point of the form validation process and st
     height="500px"
     width="100%"
 />
+
+Although the order of validations now may look more sound, the **problem** with this example after recomposing the chains is that now actual form data validation `formV` depends on the validation `initValueV` which is performed merely for the sake of side effects. Now after transition from "invalid" to empty state the experience field remains "invalid" (though it should be "valid", it is optional) and the submit button doesn't get enabled. The opposite true for the age field. This is because `formV` is performed **conditionally**.
+
