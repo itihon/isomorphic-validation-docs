@@ -41,7 +41,11 @@ Any synchronous error that occurs in a predicate function or a [state callback](
 
 ## Description
 
-For a [grouping](/concept/grouping-validations) `Validation`, when a `validatableObject` is passed in only the predicate group associated with this object will be executed. When nothing is passed in all predicate groups will be executed. For a [single](/concept/single-validation) `Validation`, it doesn't matter whether that object is passed or not, since it contains only one predicate group.
+For a [grouping](/concept/grouping-validations) `Validation`, when a `validatableObject` is passed in only the predicate group associated with this object will be executed. When nothing is passed in all predicate groups will be executed. The passed in `validatableObject` is assigned to the property `target` of the [`ValidationResult`](/api/validation-result) object. 
+
+For a [single](/concept/single-validation) `Validation`, it doesn't matter whether `validatableObject` is passed or not, since it contains only one predicate group, and the property `target` in this case is always set to the object `Validation` is bound to.  
+
+For the reason that predicate functions can be asynchronous with deferred execution, validatable values can be possibly changed during execution of predicate groups, so before running them it preserves current validatable values to ensure data consistency. This means, all predicate functions will be supplied with that data which were at the momement validation process started regardless of their delay.
 
 This method is performed under the hood when a `Validation` object is used as a [middleware](/api/validation/callable-object/middleware) and [event handler](/api/validation/callable-object/event-handler).
 
