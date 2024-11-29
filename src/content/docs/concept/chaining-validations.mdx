@@ -17,16 +17,49 @@ import chainingDiffObjExample2JS from '../../../../public/playground/concept/cha
 
 ### `Validation` as a state callback
 
-Since `Validation` objects are callable and, while executing on the client side, they are [`event handler`](/api/validation/callable-object/event-handler) functions it is possible to chain their execution by adding them as [`state callbacks`](/concept/state-callbacks) and run conditionally: one depending on the state of another.
+Since `Validation` objects are callable and, while executing on the client side, they are [`event handler`](/api/validation/callable-object/event-handler) functions, it is possible to chain their execution by adding them as [`state callbacks`](/concept/state-callbacks) and run conditionally: one depending on the state of another.
 
 ```js
 const validation1 = Validation();
 const validation2 = Validation();
+// validation2 will run when validation1 becomes "invalid"
 validation1.invalid(validation2);
 ```
 
+Or unconditionally (sequentially), just one after another:
+
+```js
+const validation1 = Validation();
+const validation2 = Validation();
+// validation2 will run after validation1
+validation1.validated(validation2);
+```
+
+So when `validation1` gets validated the code snippets above are roughly equivalient to this:
+
+```js
+const validation1 = Validation();
+const validation2 = Validation();
+
+// conditional execution
+validation1.validate().then((res1) => {
+    if (!res.isValid) {
+        validation2.validate(); 
+    }
+    return res1;
+});
+
+// unconditional execution
+validation1.validate().then((res1) => {
+    validation2.validate(); 
+    return res1;
+});
+```
+
+The result of `validation2` is not "awaited" and does not affect the result of `validation1`.
+
 :::note
-    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware) function. If you need to implement such logic on the server side you will have to call the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly:
+    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware) function. If you need to implement such logic on the server side you will have to wrap a validaiton into an arrow function and call the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly:
 ```js
 const validation1 = Validation();
 const validation2 = Validation();
@@ -187,6 +220,7 @@ const validation3 = Validation(element2);
 const validationGr23 = Validation.group(validation2, validation3);
 
 // runs predicates added to validation2
+validation1.invalid(validationGr23); // validationGr23({ target: element1 }) 
 validation1.invalid(() => validationGr23.validate(element1)); 
 validation1.invalid(() => validationGr23({ target: element1 })); 
 
