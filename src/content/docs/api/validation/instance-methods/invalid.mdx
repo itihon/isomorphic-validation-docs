@@ -19,7 +19,7 @@ Validation().invalid(callback1, callback2, /* ..., */ callbackN)
 ### Parameters
 
 - `callback1, ..., callbackN`
-<br/> Functions to add. If anything other than a function is passed in it will be ignored and no error thrown. The callback functions will be called with the following arguments:
+<br/> Functions to add. The callback functions will be called with the following arguments:
 
     - `validationResult` 
     <br/> A [`ValidationResult`](/api/validation-result) object. 
@@ -27,6 +27,10 @@ Validation().invalid(callback1, callback2, /* ..., */ callbackN)
 ### Return value
 
 The `Validation` object. 
+
+### Exceptions
+
+If anything other than a function is passed in the corresponding error will be thrown. 
 
 ## Description
 

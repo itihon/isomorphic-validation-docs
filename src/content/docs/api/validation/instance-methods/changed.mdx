@@ -8,7 +8,7 @@ sidebar:
 import { Code } from '@astrojs/starlight/components';
 import changedCode from '../../../../../../public/playground/api/validation/instance-methods/changed/changed.js?raw';
 
-Adds state callbacks which will be invoked every time the state of the `Validation` changes from valid to invalid and backwards. For a ["grouping"](/concept/grouping-validations) `Validation`, since its state depends on the grouped (nested) `Validation` objects, these callbacks will run every time the state of a nested `Validation` changes even without invoking the [`Validation().validate()`](/api/validation/instance-methods/validate) method on it directly.
+Adds state callbacks which will be invoked every time the state of the `Validation` changes from "valid" to "invalid" and backwards. For a ["grouping"](/concept/grouping-validations) `Validation`, since its state depends on the grouped (nested) `Validation` objects, these callbacks will run even without invoking the [`Validation().validate()`](/api/validation/instance-methods/validate) method on it directly.
 
 ## Syntax
 
@@ -19,7 +19,7 @@ Validation().changed(callback1, callback2, /* ..., */ callbackN)
 ### Parameters
 
 - `callback1, ..., callbackN`
-<br/> Functions to add. If anything other than a function is passed in it will be ignored and no error thrown. The callback functions will be called with the following arguments:
+<br/> Functions to add. The callback functions will be called with the following arguments:
 
     - `validationResult` 
     <br/> A [`ValidationResult`](/api/validation-result) object. 
@@ -27,6 +27,10 @@ Validation().changed(callback1, callback2, /* ..., */ callbackN)
 ### Return value
 
 The `Validation` object. 
+
+### Exceptions
+
+If anything other than a function is passed in the corresponding error will be thrown. 
 
 ## Description
 
