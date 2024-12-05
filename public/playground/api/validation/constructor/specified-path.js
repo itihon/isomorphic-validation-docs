@@ -5,4 +5,4 @@ const validatableObject = {
 };
 
 // will validate validatableObject.meaningOfLife
-const validation = Validation(validatableObject, 'meaningOfLife');
+const validation = Validation(validatableObject, { path: 'meaningOfLife' });

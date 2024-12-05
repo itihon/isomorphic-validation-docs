@@ -28,19 +28,10 @@ document.form.addEventListener(
         )
         .constraint(isOnlyLetters),
 
-        Validation(age)
-            .constraint(
-                isNaturalNumber,
-                { optional: true }
-            )
-            .constraint( 
-                isGreaterOrEqual(21), 
-                { optional: true } 
-            )
-            .constraint( 
-                isLessOrEqual(45), 
-                { optional: true } 
-            )
+        Validation(age, { optional: true })
+            .constraint(isNaturalNumber)
+            .constraint(isGreaterOrEqual(21))
+            .constraint(isLessOrEqual(45))
             .validated(paintBackground),
     )
     .changed(enableElement(submitBtn))

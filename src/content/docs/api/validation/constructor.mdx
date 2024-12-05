@@ -3,12 +3,15 @@ title: Validation() constructor
 description: Validation constructor.
 ---
 
+import Playground from '../../../../components/Playground.jsx';
 import { Code } from '@astrojs/starlight/components';
 import defaultPathExample from '../../../../../public/playground/api/validation/constructor/default-path.js?raw';
 import specifiedPathExample from '../../../../../public/playground/api/validation/constructor/specified-path.js?raw';
 import dotSeparatedPathExample from '../../../../../public/playground/api/validation/constructor/dot-separated-path.js?raw';
 import bindFileInputHtmlExample from '../../../../../public/playground/api/validation/constructor/bind-file-input.html?raw';
 import bindFileInputJsExample from '../../../../../public/playground/api/validation/constructor/bind-file-input.js?raw';
+import optionalExampleJS from '../../../../../public/playground/api/validation/constructor/optional.js?raw';
+import optionalExampleHTML from '../../../../../public/playground/api/validation/constructor/optional.html?raw';
 
 The Validation() constructor creates `Validation` objects.
 
@@ -17,23 +20,30 @@ The Validation() constructor creates `Validation` objects.
 ```js
 Validation()
 Validation(validatableObject)
-Validation(validatableObject, path)
-Validation(validatableObject, path, initialValue)
+Validation(validatableObject, options)
 ```
 
 ### Parameters
 
 - `validatableObject` <sup>optional</sup>
-<br/> An object with an accessible by the `path` value to be validated.
+<br/> An object with an accessible by the `options.path` value to be validated.
 <br/> **Default**: Empty object `{}`.
 
-- `path` <sup>optional</sup>
-<br/> A string path to the validatable value with dots `.` as separators.
-<br/> **Default**: string `'value'`.
+- `options` <sup>optional</sup>
+<br/> An object that specifies validation options. The available options are:
 
-- `initialValue` <sup>optional</sup>
-<br/> The initial value is used while validating constraints [added](/api/validation/instance-methods/constraint#parameters) with parameters `keepValid=true` or `optional=true`.
-<br/> **Default**: empty string `''`.
+    - `path` <sup>optional</sup>
+    <br/> A string path to the validatable value with dots `.` as separators.
+    <br/> **Default**: string `'value'`.
+
+    - `initValue` <sup>optional</sup>
+    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
+    <br/> **Default**: empty string `''`.
+    
+    - `optional` <sup>optional</sup>
+    <br/> When set to `true`, the predicate group will be executed only if the validatable value is not equal to `initValue` or `undefined` otherwise it will be in "valid" state, in other words, making `initValue` and `undefined` valid values but any other value is required to be validated. An optional `Validation` by default is in "valid" state after creation.
+    <br/> **Default**: `false`.
+    
 
 ### Return value
 
@@ -61,3 +71,19 @@ Creates a new [single](/concept/single-validation) `Validation` instance bound t
 
 <Code code={bindFileInputHtmlExample} lang='html' />
 <Code code={bindFileInputJsExample} lang='js' />
+
+### Parameter "optional"
+
+Some libraries offer marking form fields as "required" in one way or another. HTML input elements have the [`required`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required) attribute. In fact, in most cases form fields are required to be filled out. This library has the opposite approach. Instead of marking almost every field as "required", it offers making only needed validations "optional". 
+
+In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: optionalExampleJS,
+        html: optionalExampleHTML,
+    }}
+    height="500px"
+    width="100%"
+/>

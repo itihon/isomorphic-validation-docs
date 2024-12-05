@@ -9,9 +9,11 @@ const obj = {
 };
 
 // will validate obj.a[1].c - which does not exist yet
-const validation = Validation(obj, 'a.1.c');
+const validation = Validation(obj, { path: 'a.1.c' });
 
 // ...
 
 // later
 obj.a.push({ c: 'c' });
+
+validation.validate();
