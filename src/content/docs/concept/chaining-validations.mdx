@@ -189,6 +189,14 @@ In this example there are three chains of validations:
 
 The third chain is a part of the first one because validity of data in the experience field depends on data in the age field that is possible experience can not be greater than the entered age minus the start career age which is 21 in this example. Therefore, the experience field needs to be revalidated every time data in the age field changes.
 
+:::note 
+In this example `isPossibleExperience` predicate function accepts the experience field value as the only argument and directly addresses the age field value which in this particular case is safe because all predicate functions here are synchronous. In case of asynchronous predicate functions (especially if the same validation logic is performed on the server side) a better solution would be to make `isPossibleExperience` accept both values as arguments by adding it as a constraint to "glued" validations.
+
+See the same example but with ["glued"](/api/validation/static-methods/glue#validating-one-field-depending-on-another) validations.
+
+Also see the description of the [`Validation().validate()`](/api/validation/instance-methods/validate#description) method for details.
+:::
+
 Validity of data in the fields are checked with `ageV` and `experienceV` validations which are grouped into `formV` that serves as the entry point of the form validation process and controls access to the submit button. `initValueV` is used to paint the fields gray when they are empty. The experience field gets enabled with `careerYearsV` and `experienceV` gets revalidated with it. Since `careerYearsV` and `experienceV` are bound to different fields the latter is wrapped into an arrow function when added as ["validated"](/api/validation/instance-methods/validated) state callback of the former.
 
 <Playground client:visible  
