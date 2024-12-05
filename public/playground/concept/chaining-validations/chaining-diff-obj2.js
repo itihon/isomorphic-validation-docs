@@ -23,9 +23,9 @@ const ageV = Validation(age)
     .constraint(isGreaterOrEqual(16))
     .constraint(isLessOrEqual(60));
 
-const experienceV = Validation(experience)
-    .constraint(isNaturalNumber, { optional: true })
-    .constraint(isPossibleExperience, { optional: true });
+const experienceV = Validation(experience, { optional: true })
+    .constraint(isNaturalNumber)
+    .constraint(isPossibleExperience);
 
 // side effects
 
