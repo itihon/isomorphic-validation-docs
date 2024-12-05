@@ -1,6 +1,107 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation.glue() method
+description: Used for validations which validity state depend on each other.
+sidebar:
+    label: .glue()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import Playground from '../../../../../components/Playground.jsx';
+import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+import glueExample from '../../../../../../public/playground/api/validation/static-methods/glue/glue.js?raw';
+import groupExample from '../../../../../../public/playground/api/validation/static-methods/glue/group.js?raw';
+import mutuallyDependantExampleHTML from '../../../../../../public/playground/api/validation/static-methods/glue/mutually-dependant.html?raw';
+import mutuallyDependantExampleJS from '../../../../../../public/playground/api/validation/static-methods/glue/mutually-dependant.js?raw';
+import oneDependsOnAnotherExampleHTML from '../../../../../../public/playground/api/validation/static-methods/glue/one-depends-on-another.html?raw';
+import oneDependsOnAnotherExampleJS from '../../../../../../public/playground/api/validation/static-methods/glue/one-depends-on-another.js?raw';
+
+Groups `Validation` objects into one to add shared validators which when invoked on one of them invoke the rest.
+
+## Syntax
+
+```js
+Validation.glue(validation1, validation2, /* ..., */ validationN)
+Validation.glue([validation1, validation2, /* ..., */ validationN])
+Validation.glue([validation1, validation2], /* ..., */ validationN)
+Validation.glue(validation1, [validation2, /* ..., */ validationN])
+Validation.glue([[validation1, validation2], /* ..., */ validationN])
+Validation.glue(validation1, [[validation2], /* ..., */ validationN])
+Validation.glue(validation1, [validation2], /* ..., */ [validationN])
+```
+
+### Parameters
+
+- `validation1, ..., validationN`
+<br/> A `Validation` object. 
+
+### Return value
+
+A new grouping `Validation` object. 
+
+### Exceptions
+
+If not a `Validation` was passed in or an `Array` that contains not a `Validation`, throws the corresponding error.
+
+## Description
+
+Accepts `Validation` objects or arrays of `Validation` objects of any nesting level or both in any combination. The `Validation` objects passed in can be [single](/concept/single-validation) as well as other [grouping](/concept/grouping-validations) `Validation` objects. Repetitive `Validation` objects will be ignored, only the unique ones will be grouped. The returned grouping `Validation` object "subscribes" to state changes of the grouped `Validation` objects and its validity state depends on them.
+
+The resulting grouping `Validation` object differs from the one created with the [`Validation.group()`](/api/validation/static-methods/group) method in the way of adding constraints and passing validatable values to executed predicate functions. That is, when a predicate function is added to it with the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method, validity states of all the grouped `Validation` objects start depending on the result of that function execution no matter which one is being validated and validatable values of them all are passed as arguments to the function. 
+
+The main purpose of this method is to group mutually dependant validations. A typical use case is validating equality of a password and password confirmation.
+
+## Examples
+
+### Comparison of .glue() and .group() methods
+
+Consider these two code samples.
+
+`validation1` and `validation2` are bound to `obj1` and `obj2` respectively. Then they are "glued" in the first and grouped in the second sample. `predicate` is added to them through the "gluing"/grouping `Validation` object.
+Then they get validated one after another. 
+
+When added to the "glued" validations, `predicate` accepts their both validatable values while being executed whereas on the grouped validations it accepts the only one corresponding value. When invoked on `validation1` it makes its counterpart from `validation2` invoked and vice versa.
+
+In case of "glued" validations, when `validation1` gets validated first time, both `validation1` and `validation2` become "valid", so do `validationGr` as a result. In other words the predicate function executed on one of them also makes the other one execute which affects both validations, **that is why they are "glued"**.
+
+In case of grouped validations, the predicate function affects only that `Validation` object it is being called on.
+
+
+<Tabs>
+    <TabItem label="Validation.glue()">
+        <Code code={glueExample} lang='js' mark={['glue', 'obj1', 'obj2', 'true', 'false']} />
+    </TabItem>
+    <TabItem label="Validation.group()">
+        <Code code={groupExample} lang='js' mark={['group', 'obj1', 'obj2', 'true', 'false']} />
+    </TabItem>
+</Tabs>
+
+:::tip 
+Since every "glued" `Validation` depends on the result of its own execution of a "glued" predicate it makes possible to "glue" [optional](/api/validation/constructor#parameters) validaitons with the non-optional (required).
+:::
+
+### Validating password and password confirmation
+
+In this example `areTwoEqual` predicate function accepts values from both password and password confirmation fields and changes their both validity status regardless which one is being validated.
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: mutuallyDependantExampleJS,
+        html: mutuallyDependantExampleHTML,
+    }}
+    height="500px"
+    width="100%"
+/>
+
+### Validating one field depending on another
+
+Unlike the previous example where validity of data in password and password confirmation fields is mutually dependent, in this example the dependency is unidirectional, so that validity of data in the experience field depends on data in the age field. Here `experienceV` is "glued" to an auxiliary validation object bound to the age field and `isPossibleExperience` accepts data from both fields.
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: oneDependsOnAnotherExampleJS,
+        html: oneDependsOnAnotherExampleHTML,
+    }}
+    height="500px"
+    width="100%"
+/>

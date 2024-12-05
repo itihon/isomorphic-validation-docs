@@ -1,0 +1,18 @@
+<style>
+    input {
+        display: block;
+        margin-top: 20px;
+    }
+    input:disabled {
+        opacity: .5;
+    }
+</style>
+<form name="form">
+    <input type="text" name="login" placeholder="Login">
+    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="pwdconfirm" placeholder="Password confirmation">
+    <input type="submit" name="submitBtn" disabled>
+</form>
+
+<p>Login field minimal length: 3.</p>
+<p>Password field minimal length: 6.</p>

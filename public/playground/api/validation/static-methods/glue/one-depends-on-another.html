@@ -1,0 +1,29 @@
+<style>
+  input {
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 250px;
+  }
+  input:disabled {
+    opacity: 0.5;
+  }
+  input[type=submit] {
+    margin-top: 25px;
+  }
+  label {
+    margin-left: 10px;
+    font-size: small;
+    font-weight: bold;
+  }
+</style>
+<form name="form">
+  <label>Age *</label>
+  <input type="text" name="age" placeholder="Age">
+  <label>Experience</label>
+  <input type="text" name="experience" placeholder="Years of experience without internship" disabled>
+  <input type="submit" name="submitBtn" disabled>
+</form>
+<p>Both fields accept only numbers.</p>
+<p>The age must be between 16 and 60.</p>
+<p>The second field is optional and will be enabled when the age is between 21 and 60.</p>
