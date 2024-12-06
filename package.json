@@ -1,12 +1,12 @@
 {
-  "name": "",
+  "name": "isomorphic-validation-docs",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run prebuild && astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "prebuild": "echo 'build isomorphic-validation...' && rollup node_modules/isomorphic-validation/dist/esm/index.esm.js --file public/isomorphic-validation/index.js --format esm",
+    "prebuild": "echo 'prebuild overriden' && exit 0; echo 'build isomorphic-validation...' && rollup node_modules/isomorphic-validation/dist/esm/index.esm.js --file public/isomorphic-validation/index.js --format esm",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -16,10 +16,12 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "astro": "^4.15.3",
-    "isomorphic-validation": "^0.1.2",
     "livecodes": "^0.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.32.5"
+  },
+  "devDependencies": {
+    "isomorphic-validation": "^0.3.0"
   }
 }
