@@ -1,6 +1,46 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation.group() method
+description: Used to group validations into one.
+sidebar:
+    label: .group()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Code } from '@astrojs/starlight/components';
+import groupExampleJS from '../../../../../../public/playground/api/validation/static-methods/group/group.js?raw';
+
+Groups `Validation` objects into one.
+
+## Syntax
+
+```js
+Validation.group(validation1, validation2, /* ..., */ validationN)
+Validation.group([validation1, validation2, /* ..., */ validationN])
+Validation.group([validation1, validation2], /* ..., */ validationN)
+Validation.group(validation1, [validation2, /* ..., */ validationN])
+Validation.group([[validation1, validation2], /* ..., */ validationN])
+Validation.group(validation1, [[validation2], /* ..., */ validationN])
+Validation.group(validation1, [validation2], /* ..., */ [validationN])
+```
+
+### Parameters
+
+- `validation1, ..., validationN`
+<br/> A `Validation` object. 
+
+### Return value
+
+A new grouping `Validation` object. 
+
+### Exceptions
+
+If not a `Validation` was passed in or an `Array` that contains not a `Validation`, throws the corresponding error.
+
+## Description
+
+Accepts `Validation` objects or arrays of `Validation` objects of any nesting level or both in any combination. The `Validation` objects passed in can be [single](/concept/single-validation) as well as other [grouping](/concept/grouping-validations) `Validation` objects. Repetitive `Validation` objects will be ignored, only the unique ones will be grouped. The returned grouping `Validation` object "subscribes" to state changes of the grouped `Validation` objects and its validity state depends on them.
+
+## Examples
+
+Here `validation1` and `validation2` are grouped into `validationGr` and have the same set of predicate functions. First `isGreaterOrEqual(1)` and `isGreaterOrEqual(2)` are added to them respectively, then `isNaturalNumber` is added to them both through the grouping validation `validationGr`. See how a particular predicate group can be validated by passing its associated object into the [`Validation.validate()`](/api/validation/instance-methods/validate) method. When both `validation1` and `validation2` are in "valid" state, `validationGr` also changes its state to "valid" even though not having been validated directly. 
+
+<Code code={groupExampleJS} lang='js' mark={['group']} />
