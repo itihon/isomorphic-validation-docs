@@ -1,6 +1,44 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation.clone() method
+description: Clones a validation object.
+sidebar:
+    label: .clone()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Code } from '@astrojs/starlight/components';
+import cloneExampleJS from '../../../../../../public/playground/api/validation/static-methods/clone/clone.js?raw';
+
+Clones a `Validation` object.
+
+## Syntax
+
+```js
+Validation.clone(validation)
+```
+
+### Parameters
+
+- `validation`
+<br/> A `Validation` object to be cloned. 
+
+### Return value
+
+A new `Validation` object. 
+
+### Exceptions
+
+If not a `Validation` was passed in, throws the corresponding error.
+
+## Description
+
+Clones a passed in `Validation` object with its earlier added constraints and state callbacks. The passed in object can be a [single](/concept/single-validation) or a [grouping](/concept/grouping-validations) `Validation`. In case of grouping `Validation`, all grouped (nested) `Validation` objects will be cloned recursively with their constraints and state callbacks.
+
+The main purpose of this method is to clone validations with shared set of predicates that are used on the same kind of fields but on different forms, in order to add extra predicates, mostly on the server side, to avoid mutations. For example, sign-in and sign-up forms may have an e-mail field, but on sign-up form, this field may have additional predicate that checks an e-mail for being already registered. Also sign-in and sign-up forms usually have a password field, but on sign-up form, there is a check for password and password confirmation equality. 
+
+You will probably need to use this method explicitly in rare occasions. This method is used under the hood in the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+
+## Examples
+
+### Cloned grouping validation
+
+<Code code={cloneExampleJS} lang='js' mark={['clone']} />
