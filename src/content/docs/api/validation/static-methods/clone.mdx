@@ -31,7 +31,7 @@ If not a `Validation` was passed in, throws the corresponding error.
 
 ## Description
 
-Clones a passed in `Validation` object with its earlier added constraints and state callbacks. The passed in object can be a [single](/concept/single-validation) or a [grouping](/concept/grouping-validations) `Validation`. In case of grouping `Validation`, all grouped (nested) `Validation` objects will be cloned recursively with their constraints and state callbacks.
+Clones a passed in `Validation` object with its earlier added [constraints](/api/validation/instance-methods/constraint) and [state callbacks](/concept/state-callbacks). The passed in object can be a [single](/concept/single-validation) or a [grouping](/concept/grouping-validations) `Validation`. In case of grouping `Validation`, all grouped (nested) `Validation` objects will be cloned recursively with their constraints and state callbacks.
 
 The main purpose of this method is to clone validations with shared set of predicates that are used on the same kind of fields but on different forms, in order to add extra predicates, mostly on the server side, to avoid mutations. For example, sign-in and sign-up forms may have an e-mail field, but on sign-up form, this field may have additional predicate that checks an e-mail for being already registered. Also sign-in and sign-up forms usually have a password field, but on sign-up form, there is a check for password and password confirmation equality. 
 
