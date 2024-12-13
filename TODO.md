@@ -35,6 +35,8 @@
 
 - [ ] /api/concept/state-callbacks started, valid, invalid, validated state callbacks can be thought of as "hooks" whereas changed callbacks are more like a notification for subscribers.
 
+- [ ] /api/validation/instance-methods/constraint parameter anyData: names should not clash with the api method and property names.
+
 - [x] API
     - [ ] ValidationResult
 
@@ -43,3 +45,10 @@
 - [x] Use <Code> component from Starlight instead of markdown code blocks
 - [x] Override Starlight's Hero component so it renders links with regard to the base url
 - [x] Use Vite's `raw` parameter to pass examples to Playground instead of fetching them.
+- [ ] keywords: functional
+
+- [ ] Validation() example: validating a particular string character: Validation('asdf', { path: '0'}).constraint(function isCharA(value){ return value === 'a'; });
+
+## Examples
+   
+    - [ ] add `.error()` state callbacks to all playground examples

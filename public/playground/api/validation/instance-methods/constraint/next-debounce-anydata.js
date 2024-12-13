@@ -24,10 +24,9 @@ const isEmailRegistered = (value) => new Promise(res => {
 
 const emailField = document.form.email;
 
-const log = (mark) => 
-    // ValidationResult destructuring
-    ([[,[[res]]]]) => console.log(
-        mark, res[Symbol.toStringTag], res.msg, res.isValid,
+const log = (mark) => ([[,validator]]) => 
+    console.log(
+        mark, validator[Symbol.toStringTag], validator.msg, validator.isValid,
     );
 
 const [showInitialIcon, /* not used */]     = iconAfter(emailField, '✔');
@@ -52,10 +51,7 @@ const emailV = Validation(emailField)
     .valid(showValidIcon())
     .invalid(showInvalidIcon(500)); // delayed icon show
 
-// .constraints property destructuring
-const [[,[constraints]]] = emailV.constraints;
-
-constraints.forEach(constraint => {
+emailV.constraints.forEach(constraint => {
     console.log('Added:', constraint[Symbol.toStringTag], constraint.msg);
 });
 
