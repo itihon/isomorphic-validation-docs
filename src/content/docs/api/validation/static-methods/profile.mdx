@@ -1,6 +1,85 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation.profile() method
+description: Creates a validation profile.
+sidebar:
+    label: .profile()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import Playground from '../../../../../components/Playground.jsx';
+import signInSignUpExampleHTML from '../../../../../../public/playground/api/validation/static-methods/profile/signin-signup.html?raw';
+import signInSignUpExampleJS from '../../../../../../public/playground/api/validation/static-methods/profile/signin-signup.js?raw';
+
+Creates a validation profile object which contains a validatable form and a grouping `Validation` object with validations bound to the form's fields.
+
+## Syntax
+
+```js
+Validation.profile(selector, fieldNames, validations);
+```
+
+### Parameters
+
+- `selector`
+<br/> A CSS selector string that matches a form.
+
+- `fieldNames`
+<br/> An array of the form's field names.
+
+- `validations`
+<br/> An array of `Validation` objects to bind to the form fields.
+
+### Return value
+
+A validation profile object. 
+
+### Exceptions
+
+- On the client side: if nothing matches to the specified `selector`, throws the corresponding error. In case the `selector` is invalid see the [`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) method's documentation.
+
+- On both sides: If not a `Validation` was passed in the `validations` array, throws the corresponding error.
+
+## Description
+
+On the client side: tries to access a form element via the [`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) method.
+
+On the server side: creates an object with the specified field names which serves as a form with fields for the validations to be bound to and to provide a way of writing "isomorphic" code. Any attempt to access a non existing property or method on this object or its fields will be ignored and no error thrown. 
+
+This method [clones](/api/validation/static-methods/clone) passed in the `validations` array `Validation` objects, [binds](/api/validation/instance-methods/bind) them to the form field elements specified in the passed in `fieldNames` array, and [groups](/api/validation/static-methods/group) them into one `Validation` object. The grouped validations are accessible on this resulting `Validation` object by the respective name passed in `fieldNames` array. The resulting `Validation` object is intended to be used as a [`middleware`](/api/validation/callable-object/middleware) function on the server side and as an [`event handler`](/api/validation/callable-object/event-handler) function on the client side and its validity state represents validity of data in all fields on the form.
+
+This method was introduced for convinience to hide all the described boilerplate code.
+
+## Examples
+
+In this example login and password fields are shared by both sign-in and sign-up forms. The sign-up form additionally has a password confirmation field. 
+
+First, `Validation` objects corresponding to these three fields are created and constraints shared between both forms are added to them (once in one place **without being duplicated** for both forms).
+
+Then two validation profiles corresponding to the forms are created and sign-up form-specific constraints are added to the cloned login, password, and password confirmation validations that are accessed by the respective field name. 
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: signInSignUpExampleJS,
+        html: signInSignUpExampleHTML,
+    }}
+    height="500px"
+    width="100%"
+/>
+
+After having set up client side validations, you can just export `signinV` and `signupV` and use them on the server side as [`middleware`](/api/validation/callable-object/middleware) functions:
+
+```js 
+import express from 'express';
+import bodyParser from 'body-parser';
+import { signinV,  signupV } from 'your-validations-file-name.js';
+import { signinRequestHandler, signupRequestHandler } from 'your-file-name.js';
+
+const app = express();
+const urlencodeParser = bodyParser.urlencoded({extended: false});
+
+// validations are added as middleware functions
+app.post('/signin', urlencodeParser, signinV, signinRequestHandler);
+app.post('/signup', urlencodeParser, signupV, signupRequestHandler);
+```
+
+The UI side effects functions added as [`state callbacks`](/concept/state-callbacks) are isolated here with the [`Validation().client`](/api/validation/instance-properties/client) and [`Predicate().client`](/api/predicate/instance-properties/client) properties and will be ignored on the server side. Invocations of the `form.addEventListener()` and `input.addEventListener()` methods will be ignored on the server side as well.

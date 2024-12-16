@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                font-family: sans-serif;
+                --active-tab-bg-color: whitesmoke;
+            }
+            body { padding: 8px; }
+            .description { font-size: 11px; }
+            .description li { margin-left: 16px; }
+            .description > strong { display: inline-block; padding: 4px; }
+            form {
+                font-size: 14px;
+                display: none;
+                flex-direction: column;
+                background-color: var(--active-tab-bg-color);
+                padding: 8px;
+                border-radius: 0 0 4px 4px;
+            }
+            form input { height: 24px; }
+            form label { margin-top: 4px; }
+            .tabbed-control {
+                padding: 4px;
+                width: min-content;
+                display: flex;
+                flex-wrap: wrap;
+                background-color: slategray;
+                border-radius: 8px 8px;
+            }
+            .tabbed-control .tab {
+                padding: 4px;
+                order: -1;
+                color: var(--active-tab-bg-color);
+                border-radius: 4px 4px 0 0;
+            }
+            .tabbed-control input[type="radio"]:checked+form {
+                display: flex;
+            }
+            .tabbed-control input[type="radio"]:checked+form+.tab {
+                background-color: var(--active-tab-bg-color);
+                color: black;
+            }
+            .msg-box {
+                height: 32px;
+                font-size: 10px;
+                color: palevioletred;
+            }
+            .invisible { display: none; }
+        </style>
+    </head>
+    <body>
+        <div class="tabbed-control">
+            <input type="radio" name="show-form" id="sign-in-show" class="invisible" checked>
+            <form action="/signin" name="signinForm">
+                <label>Login</label>
+                <input type="text" name="login" />
+                <div class="msg-box"></div>
+
+                <label>Password</label>
+                <input type="password" name="password" />
+                <div class="msg-box"></div>
+
+                <label>↪</label>
+                <input type="submit" name="submitBtn" value="Sign in" disabled />
+            </form>
+            <label for="sign-in-show" class="tab" tabindex="1" onkeydown="if (event.key==='Enter')this.click()">SIGN IN</label>
+
+            <input type="radio" name="show-form" id="sign-up-show" class="invisible">
+            <form action="/signup" name="signupForm">
+                <label>Login</label>
+                <input type="text" name="login" />
+                <div class="msg-box"></div>
+
+                <label>Password</label>
+                <input type="password" name="password" />
+                <div class="msg-box"></div>
+
+                <label>Password confirmation</label>
+                <input type="password" name="pwdConfirm" />
+                <div class="msg-box"></div>
+
+                <label>↪</label>
+                <input type="submit" name="submitBtn" value="Sign in" disabled />
+            </form>
+            <label for="sign-up-show" class="tab" tabindex="1" onkeydown="if (event.key==='Enter')this.click()">SIGN UP</label>
+        </div>
+
+        <div class="description">
+            <strong>Login:</strong>
+            <ul>
+                <li><strong>On both forms:</strong> Allowed characters are: letters, numbers, ".", "_", "-".</li>
+                <li><strong>On both forms:</strong> Minimal length is 5 characters.</li>
+                <li><strong>On both forms:</strong> Maximum length is 32 characters.</li>
+                <li><strong>On the sign-up form:</strong> Login must not be already registered. ("admin" is registered)</li>
+            </ul>
+
+            <strong>Password:</strong>
+            <ul>
+                <li><strong>On both forms:</strong> Should contain at least 1 capital letter, 1 number, and 1 special character ("!", "@", "#", etc).</li>
+                <li><strong>On both forms:</strong> Minimal length is 8 characters.</li>
+                <li><strong>On the sign-up form:</strong> Password and password confirmation must be the same.</li>
+            </ul>
+        </div>
+    </body>
+</html>
