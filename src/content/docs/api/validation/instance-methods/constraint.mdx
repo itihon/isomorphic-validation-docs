@@ -62,7 +62,7 @@ Adds a predicate function to the predicate group associated with the bound [`val
 
 ### Parameter "next"
 
-Suppose, an e-mail is needed to be validated and checked for being registered. It doesn't make sense to perform a relatively costly operation such as making a request to the server and therefore making the server to query an email record from a database if the typed in data does not conform to the basic requirement - to be a valid e-mail. This case illustrates the main purpose of the `next` parameter - performing further constraints validation only when previous constraints are met.
+Suppose, an e-mail is needed to be validated and checked for being registered. It doesn't make sense to perform a relatively costly operation such as making a request to the server and therefore making the server to query an email record from a database if the typed in data does not conform to the basic requirement - to be a valid e-mail. This case illustrates the main purpose of the `next` parameter - performing further constraints validation only when previous constraints are met. In other words, if predicates added after the parameter `next` set to `false` can not return "valid" without the previous one having returned "valid" there is no point to execute them, especially if they are "costly". 
 
 Start typing an email and watch the console. First, only `isEmail` will be getting invoked, but once you've typed a valid e-mail, `isEmailRegistered` starts getting invoked. 
 
