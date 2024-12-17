@@ -13,6 +13,15 @@ const defaultEmbedOptions = {
     },
     config: {
         activeEditor: 'script',
+        script: {
+            language: 'javascript',
+        },
+        markup: {
+            language: 'html',
+        },
+        style: {
+            language: 'css',
+        },
     },
 };
 
@@ -28,10 +37,14 @@ const appUrl = `${host}${base}${appDir}/index.html`;
 const Playground = ({ params, config, width, height }) => {
     const style = { ...defaultStyle, width, height };
 
+    // override prefilling through query params with prefilling through the config property
+    const { js, html, css, ...restParams } = params;
+    
+    /** @type {LifecodesParams} */
     const embedOptions = {
         params: {
             ...defaultEmbedOptions.params,
-            ...params,
+            ...restParams,
         },
         config: {
             ...defaultEmbedOptions.config,
@@ -39,12 +52,19 @@ const Playground = ({ params, config, width, height }) => {
         },
     };
 
+    const mergedConfig = embedOptions.config;
+    const mergedParams = embedOptions.params;
+
+    mergedConfig.script.content = mergedConfig.script.content || js;
+    mergedConfig.markup.content = mergedConfig.markup.content || html;
+    mergedConfig.style.content =  mergedConfig.style.content  || css;
+
     return  (
         <div style={style}>
             <LiveCodes 
                 appUrl={appUrl}
-                config={embedOptions.config} 
-                params={embedOptions.params}
+                config={mergedConfig} 
+                params={mergedParams}
                 width={width}
                 height={height}
             />
