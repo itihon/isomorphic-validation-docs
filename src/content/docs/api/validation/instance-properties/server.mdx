@@ -1,7 +1,20 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().server
+description: A property which marks all the methods invokations following after it as being invoked on the server side only.
+sidebar: 
+    label: .server
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+The `Validation().server` property "marks" all the methods invokations following after it as being invoked on the server side only and ignored on the client side.
 
+## Value
+
+The `Validation` object.
+
+## Description
+
+The purpose of this property is to provide a way of [adding constraints](/api/validation/instance-methods/constraint) and [state callbacks](/concept/state-callbacks) to a `Validation` object separately for the client and server side.
+
+## Examples
+
+See ["Execution environment separation"](/concept/execution-environment-separation).
