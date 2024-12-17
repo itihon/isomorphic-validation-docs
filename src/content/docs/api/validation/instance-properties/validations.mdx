@@ -1,0 +1,24 @@
+---
+title: Not created yet.
+description: Will be available soon.
+---
+
+This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+
+
+--
+Also, instead of passing an array into the `.group()` method you can use the `Validation().validations` property:
+
+```js
+const initValueV = Validation.group(
+    Validation.group(
+        Validation(age), Validation(experience)
+    )
+    .constraint(isInitValue)
+    .validations.map(
+        validation => validation
+            .valid(paintFieldGray)      // paint a field gray if it is empty
+            .invalid(formV)             // otherwise validate against field constraints
+    )
+);
+```
