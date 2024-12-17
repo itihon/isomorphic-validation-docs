@@ -4,8 +4,8 @@ import { addPrefix } from "../utils/utils";
 
 /** @typedef {import('livecodes').EmbedOptions} LifecodesParams*/
 
-/** @type {LifecodesParams} */
-const defaultEmbedOptions = {
+/** @returns {LifecodesParams} */
+const defaultEmbedOptions = () => ({
     params: {
         console: 'open',
         compiled: 'none',
@@ -23,7 +23,7 @@ const defaultEmbedOptions = {
             language: 'css',
         },
     },
-};
+});
 
 const defaultStyle = {
     marginTop: '10px'
@@ -40,20 +40,8 @@ const Playground = ({ params = {}, config = {}, width, height }) => {
     // override prefilling through query params with prefilling through the config property
     const { js, html, css, ...restParams } = params;
     
-    /** @type {LifecodesParams} */
-    const embedOptions = {
-        params: {
-            ...defaultEmbedOptions.params,
-            ...restParams,
-        },
-        config: {
-            ...defaultEmbedOptions.config,
-            ...config,
-        },
-    };
-
-    const mergedConfig = embedOptions.config;
-    const mergedParams = embedOptions.params;
+    const mergedConfig = { ...defaultEmbedOptions().config, ...config };
+    const mergedParams = { ...defaultEmbedOptions().params, ...restParams };
 
     mergedConfig.script.content = mergedConfig.script.content || js;
     mergedConfig.markup.content = mergedConfig.markup.content || html;
