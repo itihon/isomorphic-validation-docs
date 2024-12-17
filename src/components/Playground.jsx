@@ -34,7 +34,7 @@ const base = addPrefix(BASE_URL, '/');
 const appDir = addPrefix(LIVECODES_APP_DIR, '/');
 const appUrl = `${host}${base}${appDir}/index.html`;
 
-const Playground = ({ params, config, width, height }) => {
+const Playground = ({ params = {}, config = {}, width, height }) => {
     const style = { ...defaultStyle, width, height };
 
     // override prefilling through query params with prefilling through the config property
