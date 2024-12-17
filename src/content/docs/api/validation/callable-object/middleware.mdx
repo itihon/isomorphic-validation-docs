@@ -1,6 +1,78 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Middleware
+description: Allows using a Validation object as a middleware function on the server side.
+sidebar:
+    label: Middleware
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+A `Validation` object created with the [`Validation.profile()`](/api/validation/static-methods/profile) method can be used as a middleware function on the server side.
+
+## Syntax
+
+```js
+Validation()(req, res, next)
+
+// as Express middleware
+app.post(url, Validation())
+```
+
+### Parameters
+
+Please refer to [`Express`](https://expressjs.com/en/guide/writing-middleware.html) documentation.
+
+### Return value
+
+None (`undefined`).
+
+### Exceptions
+
+If invoked without having created a [validation profile](/api/validation/static-methods/profile), throws the corresponding error. Also see "Exceptions" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#exceptions) method.
+
+## Description
+
+When invoked on the server side, runs a [data mapper](/api/validation/instance-methods/datamapper) function and the [`Validation().validate()`](/api/validation/instance-methods/validate) method. Assigns a [validation result](/api/validation-result) to the incoming request object which can be accessed in the next executed middleware. Only validations created with the [`Validation.profile()`](/api/validation/static-methods/profile) method can be used as middleware functions.
+
+Using a `Validation` object as a middleware function is intended to reduce boilerplate code.  
+
+## Examples
+
+```js 
+import express from 'express';
+import bodyParser from 'body-parser';
+
+// validations created with the `Validation.profile()` method
+import { signinV,  signupV } from 'your-validations-file-name.js';
+
+const app = express();
+const urlencodeParser = bodyParser.urlencoded({extended: false});
+
+function signinRequestHandler(req, res) {
+    const { validationResult } = req;
+
+    if (validationResult.isValid) {
+        // check credentials
+        // ...
+    }
+    else {
+        // respond with the validation error 
+        // ...
+    }
+}
+
+function signupRequestHandler(req, res) {
+    const { validationResult } = req;
+
+    if (validationResult.isValid) {
+        // create an account
+        // ...
+    }
+    else {
+        // respond with the validation error 
+        // ...
+    }
+}
+
+// validations are added as middleware functions
+app.post('/signin', urlencodeParser, signinV, signinRequestHandler);
+app.post('/signup', urlencodeParser, signupV, signupRequestHandler);
+```
