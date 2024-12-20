@@ -54,6 +54,10 @@ Validation().constraint(Predicate(predicateFunction), options)
 
 The `Validation` object. 
 
+### Exceptions
+
+If `anyData` property names clash with `Predicate` API, throws the corresponding error.
+
 ## Description
 
 Adds a predicate function to the predicate group associated with the bound [`validatableObject`](/api/validation/constructor#parameters) of the [single](/concept/single-validation) `Validation`. When invoked on a [grouping](/concept/grouping-validations) `Validation`, does it for each predicate group of the `Validation`. A predicate function must return either a `Boolean` value, if it is synchronous, or a `Promise` that fulfills with a `Boolean` value, if it is asynchronous, otherwise the [`Validation().validate()`](/api/validation/instance-methods/validate) method will throw an error or return a rejected `Promise` respectively.
