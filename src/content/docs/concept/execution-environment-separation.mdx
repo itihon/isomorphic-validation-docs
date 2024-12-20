@@ -1,6 +1,124 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Execution environment separation
+description: Execution environment separation for predicate functions and state callbacks.
+sidebar:
+    label: Execution environment separation
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+Execution environment separation here is a way of running particular predicate functions and state callbacks only in the specified environment and is implemented with the aid of the following properties:
+
+<div style="display: flex">
+<span>
+- [`Validation().client`](/api/validation/instance-properties/client)
+- [`Validation().server`](/api/validation/instance-properties/server)
+- [`Validation().isomorphic`](/api/validation/instance-properties/isomorphic)
+</span>
+<span>
+- [`Predicate().client`](/api/predicate/instance-properties/client)
+- [`Predicate().server`](/api/predicate/instance-properties/server)
+- [`Predicate().isomorphic`](/api/predicate/instance-properties/isomorphic)
+</span>
+</div>
+
+### State callbacks separation
+
+For example, asuming you use the same validation logic on both sides, on the client side you might need to perform UI effects connected to validations' states, whereas on the server side logging on "invalid" to detect attempts to get around your client side validations. If the client side validations passed, the server side validations cannont fail.
+
+```js ".client" ".server"
+import { disableElement, enableElement } from 'your-ui-effects-file.js';
+import { log } from 'your-logging-tools-file.js';
+// import predicate functions from your-predicates-file.js
+// ...
+
+const loginV = Validation();
+const passwordV = Validation();
+
+// adding constraints to loginV and passwordV
+// loginV.constraint() ...
+// passwordV.constraint() ...
+// ...
+
+// creating a validation profile
+const [signinForm, signinV] = Validation.profile(
+    '[name=signinForm]', 
+    ['login', 'password'], 
+    [loginV, passwordV],
+);
+
+signinV
+    .client
+    .started(disableElement(signinForm.submitBtn)) // ignored on the server side
+    .invalid(disableElement(signinForm.submitBtn)) // ignored on the server side
+    .valid(enableElement(signinForm.submitBtn))    // ignored on the server side
+    .server
+    .invalid(log);                                 // ignored on the client side
+
+// export validation to use on the server side as a middleware function
+export default signinV;
+```
+
+### Constraints separation
+
+In some cases it may be useful to split a predicate function in two parts and execute one on the client and the other one on the server side.
+
+```js ".client" ".server"
+import { 
+    isEmailNotTemp, 
+    isEmailVacantC, // makes a request to the server
+    isEmailVacantS, // makes a request to a database 
+    // other predicate functions
+    // ...
+} from 'your-predicates-file.js';
+
+const emailV = Validation();
+const passwordV = Validation();
+const pwdconfirmV = Validation();
+
+// adding shared constraints to emailV, passwordV and pwdconfirmV
+// loginV.constraint() ...
+// passwordV.constraint() ...
+// pwdconfirmV.constraint() ...
+// ...
+
+// creating a validation profile
+const [signupForm, signupV] = Validation.profile(
+    '#signup_form', 
+    ['email', 'password', 'pwdconfirm'], 
+    [emailV, passwordV, pwdconfirmV]
+);
+
+// adding form-specific constraints
+signupV.email
+    .constraint(isEmailNotTemp)         // will be added on both sides
+    .client.constraint(isEmailVacantC)  // will be added only on the client side
+    .server.constraint(isEmailVacantS); // will be added only on the server side
+
+// export validation to use on the server side as a middleware function
+export default signupV;
+```
+
+Now assuming `isEmailVacantC` makes a request to the `'/chkemail'` url, the server code may look as following:
+
+``` js 
+import express from 'express';
+import bodyParser from 'body-parser';
+import signinV from 'your-signin-validation-file-name.js';
+import signupV from 'your-signup-validation-file-name.js';
+import { 
+    signinRequestHandler, 
+    signupRequestHandler, 
+    checkemailRequestHandler, 
+} from 'your-file-name.js';
+
+const app = express();
+const urlencodeParser = bodyParser.urlencoded({extended: false});
+
+// validations are added as middleware functions
+app.post('/signin', urlencodeParser, signinV, signinRequestHandler);
+app.post('/signup', urlencodeParser, signupV, signupRequestHandler);
+app.post('/chkemail', urlencodeParser, signupV.email, checkemailRequestHandler);
+```
+
+:::note 
+You will need to configure a module bundler to exclude/ignore server tools imports from your client's bundle.
+:::
