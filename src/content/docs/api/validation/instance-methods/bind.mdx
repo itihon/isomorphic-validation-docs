@@ -1,57 +1,61 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().bind()
+description: Binds the Validation to a validatable object.
 sidebar:
     label: .bind()
-    badge: New
 ---
 
-import Playground from '../../../../../components/Playground.jsx';
+import { Code } from '@astrojs/starlight/components';
+import bindExample from '../../../../../../public/playground/api/validation/instance-methods/bind/bind.js?raw';
+import bindErrorExample from '../../../../../../public/playground/api/validation/instance-methods/bind/bind-after-grouping.js?raw';
 
-<Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/bind/test.js',
-                html: '/api/validation/instance-methods/bind/test.html',
-            }} 
-            params={{console: 'none'}}
-            height="500px"
-            width="100%"
-/>
+Binds the `Validation` to a validatable object.
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+## Syntax
 
+```js
+Validation().bind(validatableObject)
+Validation().bind(validatableObject, options)
+```
 
-Iste ducimus esse molestiae tempore ut aspernatur perspiciatis et sed. Neque possimus et esse et ipsum eos. Perspiciatis ab est dicta aliquid rerum tempora eum libero nulla. Distinctio sunt voluptatem odit saepe est ut vitae.
- 
-Magni maiores quia et repellendus enim. Necessitatibus culpa quaerat iure suscipit autem. Enim facilis ut voluptatem et voluptates excepturi vel blanditiis. Voluptas earum ad dicta. Numquam reiciendis maiores.
- 
-Repellendus tempore optio similique id voluptatem itaque aliquid delectus. Quia debitis corrupti officia porro dolorem iusto ut doloremque. Voluptatem eos a fugiat. Deleniti odio aut quis quis nulla quia fugit. Voluptatem rerum nihil voluptatem totam quis dolor et.
+### Parameters
 
+- `validatableObject` <sup>optional</sup>
+<br/> An object with an accessible by the `options.path` value to be validated.
+<br/> **Default**: Empty object `{}`.
 
-Delectus eaque voluptatum. Qui fuga possimus et et fugit saepe harum. Quia praesentium dolor esse deserunt sunt. Eum veniam aperiam mollitia culpa occaecati reiciendis voluptatem et.
- 
-Sed nam hic. Harum modi quas fugit magni aut minima id deserunt dolores. Et necessitatibus voluptatem deserunt voluptas quo et minus et. Voluptas earum eligendi recusandae. Rem officiis quidem repellendus rerum velit ipsum eligendi. Quo animi pariatur placeat qui ut quidem ipsa quasi.
- 
-Hic architecto soluta commodi perspiciatis maxime consequuntur assumenda voluptas atque. Omnis consequatur corporis. Harum corrupti necessitatibus perspiciatis et id eum velit voluptates unde.
+- `options` <sup>optional</sup>
+<br/> An object that specifies validation options. The available options are:
 
+    - `path` <sup>optional</sup>
+    <br/> A string path to the validatable value with dots `.` as separators.
+    <br/> **Default**: `undefined`.
 
-Iste ducimus esse molestiae tempore ut aspernatur perspiciatis et sed. Neque possimus et esse et ipsum eos. Perspiciatis ab est dicta aliquid rerum tempora eum libero nulla. Distinctio sunt voluptatem odit saepe est ut vitae.
- 
-Magni maiores quia et repellendus enim. Necessitatibus culpa quaerat iure suscipit autem. Enim facilis ut voluptatem et voluptates excepturi vel blanditiis. Voluptas earum ad dicta. Numquam reiciendis maiores.
- 
-Repellendus tempore optio similique id voluptatem itaque aliquid delectus. Quia debitis corrupti officia porro dolorem iusto ut doloremque. Voluptatem eos a fugiat. Deleniti odio aut quis quis nulla quia fugit. Voluptatem rerum nihil voluptatem totam quis dolor et.
+    - `initValue` <sup>optional</sup>
+    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
+    <br/> **Default**: `undefined`.
 
+### Return value
 
-Delectus eaque voluptatum. Qui fuga possimus et et fugit saepe harum. Quia praesentium dolor esse deserunt sunt. Eum veniam aperiam mollitia culpa occaecati reiciendis voluptatem et.
- 
-Sed nam hic. Harum modi quas fugit magni aut minima id deserunt dolores. Et necessitatibus voluptatem deserunt voluptas quo et minus et. Voluptas earum eligendi recusandae. Rem officiis quidem repellendus rerum velit ipsum eligendi. Quo animi pariatur placeat qui ut quidem ipsa quasi.
- 
-Hic architecto soluta commodi perspiciatis maxime consequuntur assumenda voluptas atque. Omnis consequatur corporis. Harum corrupti necessitatibus perspiciatis et id eum velit voluptates unde.
+The `Validation` object. 
 
+### Exceptions
 
-<Playground client:visible  
-            fileUrls={{ 
-                js: '/api/validation/instance-methods/bind/test_copy.js',
-                html: '/api/validation/instance-methods/bind/test_copy.html',
-            }} 
-/>
+- If the `validatableObject` is the same as that which the `Validation` is already bound to, throws the corresponding error.
+- If invoked on a [grouping](/concept/grouping-validations) `Validation`, throws the corresponding error.
+
+## Description
+
+Binds the `Validation` object to the `validatableObject`. This method is used on a [single](/concept/single-validation) `Validation` when a validatable object is not accessible at creation time. If `options.path` and `options.initValue` are not set, uses the [values](/api/validation/constructor#parameters) that were set at creation time.
+
+This method is used under the hood in the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+
+## Examples
+
+<Code code={bindExample} lang='js' mark={['.bind']} />
+
+:::caution 
+Binding validations to validatable objects must be performed before grouping, because the resulting grouping `Validation` is not "aware" of its grouped validations having changed their objects.
+:::
+
+<Code code={bindErrorExample} lang='js' mark={['.bind', '.group']} />
