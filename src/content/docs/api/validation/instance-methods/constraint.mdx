@@ -29,7 +29,7 @@ Validation().constraint(Predicate(predicateFunction), options)
 ### Parameters
 
 - `predicateFunction`
-<br/> A function which returns either a `Boolean` value or a `Promise` of a `Boolean` value. Instead of a function a [`Predicate`](/api/predicate/constructor) object which wraps the function can be passed in. If anything other than those types is passed in it will be ignored and no error thrown.
+<br/> A function which returns either a `Boolean` value or a `Promise` of a `Boolean` value. Instead of a function a [`Predicate`](/api/predicate/constructor) object which wraps the function can be passed in.
 
 - `options` <sup>optional</sup>
 <br/> An object that specifies predicate execution features. The available options are:
@@ -56,7 +56,9 @@ The `Validation` object.
 
 ### Exceptions
 
-If `anyData` property names clash with `Predicate` API, throws the corresponding error.
+- If neither a function nor a `Predicate` is passed as the first parameter throws the corresponding error.
+
+- If `anyData` property names clash with `Predicate` API, throws the corresponding error.
 
 ## Description
 
