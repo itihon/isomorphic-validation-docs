@@ -1,24 +1,25 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().validations
+description: A property that returns an array of grouped Validaion objects.
+sidebar: 
+    label: .validations
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Code } from '@astrojs/starlight/components';
+import validationsExample from '../../../../../../public/playground/api/validation/instance-properties/validations/validations.js?raw';
 
+The `Validation().validations` property returns an `Array` that contains grouped `Validation` objects.
 
---
-Also, instead of passing an array into the `.group()` method you can use the `Validation().validations` property:
+## Value
 
-```js
-const initValueV = Validation.group(
-    Validation.group(
-        Validation(age), Validation(experience)
-    )
-    .constraint(isInitValue)
-    .validations.map(
-        validation => validation
-            .valid(paintFieldGray)      // paint a field gray if it is empty
-            .invalid(formV)             // otherwise validate against field constraints
-    )
-);
-```
+An `Array` of `Validation` objects.
+
+## Description
+
+On a [single](/concept/single-validation) `Validation` object, this property returns an empty `Array`.  On a [grouping](/concept/grouping-validations) validaiton, this property returns an `Array` of the grouped `Validation` objects which were passed in the [`Validation.group()`](/api/validation/static-methods/group) or [`Validation.glue()`](/api/validation/static-methods/glue) method.
+
+## Examples
+
+In this example two `Validation` objects are grouped into one an then accessed through the grouping `Validation` object's `.validations` property to add a [validated](/api/validation/instance-methods/validated) state callback to each.
+
+<Code code={validationsExample} lang='js' mark={['.validations', '.group' ]}/>
