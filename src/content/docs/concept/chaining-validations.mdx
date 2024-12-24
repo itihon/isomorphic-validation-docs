@@ -59,7 +59,7 @@ validation1.validate().then((res1) => {
 The result of `validation2` is not "awaited" and does not affect the result of `validation1`.
 
 :::note
-    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware) function. If you need to implement such logic on the server side you will have to wrap a validaiton into an arrow function and call the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly:
+    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware) function. If you need to implement such logic on the server side you will have to wrap a `Validation` into an arrow function and call the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly:
 ```js
 const validation1 = Validation();
 const validation2 = Validation();
