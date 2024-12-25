@@ -1,0 +1,65 @@
+---
+title: Predicate().error()
+description: Catches errors in predicate functions and in their state callbacks.
+sidebar: 
+    label: .error()
+---
+
+import { Code } from '@astrojs/starlight/components';
+import errorPredicate from '../../../../../../public/playground/api/predicate/instance-methods/error/error-predicate.js?raw';
+import errorPredicateStateCallback from '../../../../../../public/playground/api/predicate/instance-methods/error/error-predicate-state-callback.js?raw';
+import errorForwarding from '../../../../../../public/playground/api/predicate/instance-methods/error/error-forwarding.js?raw';
+
+Adds state callbacks which will be invoked when an error occurs in predicate functions or in their state callbacks during validation process.
+
+## Syntax
+
+```js
+Predicate().error(callback1, callback2, /* ..., */ callbackN)
+```
+### Parameters
+
+- `callback1, ..., callbackN`
+<br/> Functions to add. The callback functions will be called with the following arguments:
+
+    - `error` 
+    <br/> An [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object. 
+    
+    - `next` 
+    <br/> A function to invoke in case the `error` is not needed to be catched and instead is needed to be passed further. 
+
+### Return value
+
+The `Predicate` object. 
+
+### Exceptions
+
+If anything other than a function is passed in the corresponding error will be thrown. 
+
+## Description
+
+Adds error state callbacks to the `Predicate` object. Once the `Predicate` is in the error state, the callbacks will be invoked one by one in the order they were added. The main purpose of error state callbacks is to perform side effects related to the error state. 
+
+This method catches errors that occur in predicate functions and in their associated state callbacks when the [`Validation.validate()`](/api/validation/instance-methods/validate) method gets invoked (or the `Validation` object is used as an [event handler](/api/validation/callable-object/event-handler) or [middleware](/api/validation/callable-object/middleware)). 
+
+If you want to just perform side effects and not to catch the error on this level, it is possible to forward the error further to catch it on the [`Validation().error()`](/api/validation/instance-methods/error) level by calling the function passed into a callback as the parameter `next`. If you add several error state callbacks in a row, calling the function `next` in only one of them is enough. 
+
+Also see ["Error handling"](/concept/error-handling).
+
+:::caution 
+State callbacks are not "awaited", therefore only synchronous errors that can occur in them will be catched by this method.
+:::
+
+## Examples
+
+### Catching an error in a predicate function
+
+<Code code={errorPredicate} lang='js' mark={['.error', 'faultyCheckEmail']}/>
+
+### Catching an error in a state callback of a `Predicate`
+
+<Code code={errorPredicateStateCallback} lang='js' mark={['.error', 'faultyCallback']}/>
+
+### Error forwarding
+
+<Code code={errorForwarding} lang='js' mark={['.error', 'faultyCheckEmail', '.catch', 'next']}/>
