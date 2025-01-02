@@ -1,6 +1,79 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Validation().dataMapper()
+description: Sets a data mapper function to map request body values with form fields.
+sidebar:
+    label: .dataMapper()
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import { Tabs, TabItem, Code, FileTree } from '@astrojs/starlight/components';
+import public_index_html from '../../../../../../public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3/public/index.html?raw';
+import public_index_js from '../../../../../../public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3/public/index.js?raw';
+import public_validation_js from '../../../../../../public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3/public/validation.js?raw';
+import index_js from '../../../../../../public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3/index.js?raw';
+
+Sets a data mapper function to map request body values with form fields.
+
+## Syntax
+
+```js
+Validation().dataMapper(mappingFunction)
+```
+
+### Parameters
+
+- `mappingFunction`
+<br/> A function to add that will be called with the following arguments:
+
+    - `req` 
+    <br/> A request object. 
+    
+    - `form` 
+    <br/> A form object created with the [`Validation.profile()`](/api/validation/static-methods/profile) method. 
+
+### Return value
+
+The `Validation` object. 
+
+### Exceptions
+
+- If anything other than a function is passed in the corresponding error will be thrown. 
+
+- If invoked on a `Validation` which was not created with the [`Validation.profile()`](/api/validation/static-methods/profile) method, throws the corresponding error.
+
+## Description
+
+The main purpose of this method is to provide a way of mapping a request object's body with form fields specified in the [`Validation.profile()`](/api/validation/static-methods/profile) method in cases when they do not correspond to each other when a `Validation` is used as a [middleware](/api/validation/callable-object/middleware) function.
+
+## Examples
+
+In this example the `Validation().dataMapper()` method is used to map the values passed as URL search parameters to the form fields created with the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+
+The project can be downloaded [here](https://github.com/itihon/isomorphic-validation-docs/tree/main/public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3).
+
+<FileTree>
+- public
+    - libs
+        - isomorphic-validation.mjs the library file is copied and imported from here to be available on the client side without using a module bundler
+    - index.html
+    - index.js                      the main frontend script
+    - validation.js                 file size and type validation code
+- config.js                         a config for S3 storage
+- index.js                          the main backend script
+- repository.js                     a mock repository API
+- ...
+</FileTree>
+
+<Tabs>
+    <TabItem label="index.js">
+        <Code code={index_js} lang='js' mark={['uploadValidation', 'dataMapper', 'public', 'getSignedUrl', 'get-signed-url', 'size', 'type', 'uploaded:', 'image-uploaded']} />
+    </TabItem>
+    <TabItem label="public/index.html">
+        <Code code={public_index_html} lang='html' mark={['name="upload"', 'name="file"', 'type="file"', 'name="uploadBtn"', 'index.js']} />
+    </TabItem>
+    <TabItem label="public/index.js">
+        <Code code={public_index_js} lang='js' mark={['uploadValidation', 'getSignedUrl', 'get-signed-url', 'size=', 'type=', 'uploadToS3', 'uploaded', 'image-uploaded', 'uploadFile']} />
+    </TabItem>
+    <TabItem label="public/validation.js">
+        <Code code={public_validation_js} lang='js' mark={['initValue', 'uploadValidation', 'name=upload', '\'file\'']} />
+    </TabItem>
+</Tabs>

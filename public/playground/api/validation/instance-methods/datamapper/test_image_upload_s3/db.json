@@ -1,0 +1,29 @@
+{
+  "images": {
+    "e18d4ea02c396dee4d554204f041a47f": {
+      "type": "image/jpeg",
+      "size": "67026",
+      "uploaded": true
+    },
+    "ce0b2bdc63a3ca9ddb3de66a52687642": {
+      "type": "image/jpeg",
+      "size": "818848",
+      "uploaded": true
+    },
+    "2808944a1bb0e13d927b672968f943c5": {
+      "type": "image/png",
+      "size": "781120",
+      "uploaded": true
+    },
+    "b577ed22eacd0aa6540f415a2e475b9e": {
+      "type": "image/png",
+      "size": "510318",
+      "uploaded": true
+    },
+    "397e8bb118557e7db9c663c9440f8118": {
+      "type": "image/jpeg",
+      "size": "421845",
+      "uploaded": true
+    }
+  }
+}
