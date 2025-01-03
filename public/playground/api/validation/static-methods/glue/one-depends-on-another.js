@@ -24,7 +24,7 @@ const ageV = Validation(age)
 const experienceV = Validation(experience, { optional: true })
     .constraint(isNaturalNumber);
 
-Validation.glue(Validation(age), experienceV) // "glued" to an auxiliary validaiton object
+Validation.glue(Validation(age), experienceV) // "glued" to an auxiliary validation object
     .constraint(isPossibleExperience);
 
 // side effects
