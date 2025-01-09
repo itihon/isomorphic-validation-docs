@@ -6,9 +6,11 @@
     in Firefox the html renders twice in the playground
     FIXED: Livecodes' params { console: 'closed' };
     CAUSE: Livecodes' params { console: 'none' };
-- [ ] The edit page link in every page's footer should lead to the docs repository whereas the social link should lead to the library's repository
 
 ## Docs
+
+- [ ] installation (npm, CDN, minified), additionally setting up a module bundler
+    in the npm package, CJS and ESM modules are shipped uncompressed.
 
 - [x] concept 
     - [ ] Validation and Predicate api
@@ -22,6 +24,9 @@
     - [ ] middleware and event handler
     - [ ] isomorphic api and execution environment separation
     - [x] chaining and conditional execution validations as state callbacks
+    - [ ] environment separation
+        separation predicates and callbacks for environments
+        execution of .validate() method on client side only for prefilled with saved by browser values form fields. Validation().client.validate();
 
 - [ ] credits
     - [ ] astro 
@@ -35,7 +40,10 @@
 
 - [ ] /api/concept/state-callbacks started, valid, invalid, validated state callbacks can be thought of as "hooks" whereas changed callbacks are more like a notification for subscribers.
 
-- [ ] /api/validation/instance-methods/constraint parameter anyData: names should not clash with the api method and property names.
+- [ ] /api/validation/static-methods/profile parameters path and initValue are used to recreate form fields structure
+- [ ] /api/validation/static-methods/profile exceptions: empty string field name
+
+- [ ] state callbacks run synchronously, they are not awaited
 
 - [x] API
     - [ ] ValidationResult
@@ -52,3 +60,4 @@
 ## Examples
    
     - [ ] add `.error()` state callbacks to all playground examples
+    - [ ] client and server side specific constraints in /concept/execution-environment-separation/
