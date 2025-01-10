@@ -16,6 +16,12 @@ const indicateEnd = (el) => (res) => {
         : `${el.value.split(' ')[0]} ❌` ;
 };
 
+const indicateError = (el) => (err) => { 
+    el.disabled = false;
+    el.value = `${el.value.split(' ')[0]} ❌`;
+    el.insertAdjacentHTML('afterend', `❌ ${err.message}`)
+};
+
 const uploadFile = (fileInput) => ({ target }) => {
     const file = fileInput.files[0];
     const { size, type } = file;
@@ -41,23 +47,24 @@ const uploadFile = (fileInput) => ({ target }) => {
         .then(uploadToS3(file))
         .then(uploaded)
         .then(indicateEnd(target))
+        .catch(indicateError(target))
         .catch(console.error);
 };
 
 const form = document.upload;
 
-uploadValidation.client
+uploadValidation
     .valid(enableElement(form.uploadBtn))
     .invalid(disableElement(form.uploadBtn));
 
-uploadValidation.client.constraints.forEach(validator => {
+uploadValidation.constraints.forEach(validator => {
     const constraint = document.createElement('div');
 
     form.appendChild(constraint);
     
     validator   
-        .valid(() => { constraint.innerText = '' })
-        .invalid(() => { constraint.innerText = `🚫 ${validator.msg}` });
+        .valid(() => { constraint.innerText = ''; })
+        .invalid(() => { constraint.innerText = `🚫 ${validator.msg}`; });
 });
 
 form.addEventListener('change', uploadValidation);

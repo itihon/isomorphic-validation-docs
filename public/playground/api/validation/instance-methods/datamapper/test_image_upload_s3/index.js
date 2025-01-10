@@ -13,7 +13,7 @@ const app = express();
 
 app.use(express.static('public'));
 
-uploadValidation.server.dataMapper((req, form) => {
+uploadValidation.dataMapper((req, form) => {
     Object.assign(form.file.files[0], req.query);
 });
 
