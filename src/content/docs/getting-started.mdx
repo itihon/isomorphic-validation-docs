@@ -1,0 +1,61 @@
+---
+title: Getting started
+description: Installation and usage isomorphic validation javascript library.
+sidebar:
+    label: Getting started
+---
+
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+## Installation
+
+The library contains both ESM and CJS uncompressed modules. Depending on your project setup, you may need to configure a module bundler.
+
+<Tabs>
+    <TabItem label="npm">
+        ```bash
+            npm install isomorphic-validation
+        ``` 
+    </TabItem>
+    <TabItem label="pnpm">
+        ```bash
+            pnpm install isomorphic-validation
+        ``` 
+    </TabItem>
+    <TabItem label="yarn">
+        ```bash
+            yarn install isomorphic-validation
+        ``` 
+    </TabItem>
+    <TabItem label="CDN">
+        For browser only usage, you can pull the library using CDN like [jsdelivr.com](https://www.jsdelivr.com/package/npm/isomorphic-validation) or [esm.sh](https://esm.sh/).
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<Steps>
+1. Define predicate functions or import from another library.
+
+2. Create validation objects.
+
+3. Add predicates as common constraints to the validations.
+
+    - Group validations if needed to add constraints shared between validations.
+
+    - Separate environment specific constraints if needed.
+
+4. Connect common side effects to predicates and validations validity states.
+
+    - Separate side effects by environments if needed.
+
+5. Create profiles (bind the validations to form fields)
+
+6. Add form specific constraints and side effects to cloned validations if needed.
+
+7. Add grouping validations as event handlers and middlewares.
+
+8. Don't forget about error handling.
+
+
+</Steps>
