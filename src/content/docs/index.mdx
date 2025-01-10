@@ -7,31 +7,33 @@ hero:
   image:
     file: ../../../public/lib-logo.svg
   actions:
-    - text: Example Guide
+    - text: Get started
       link: /guides/example/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Github
+      link: https://github.com/itihon/isomorphic-validation
       icon: external
-      variant: minimal
+      variant: secondary
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
-import { LIVECODES_URL } from '../../../config.mjs';
 
-## Next steps
+## Features
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Uniform way of writing validation logic" icon="seti:todo">
+		Both on the client and server side.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Grouping and cloning" icon="seti:svg">
+		Don't repeat yourself. Write repetitive validation steps for fields of different forms for both client and server side once in one place. Allows to write validation logic of any complexity with UI side effects bound to validity states.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Straightforward API" icon="seti:happenings">
+		No need to search through a lot of method names, string constants, config options. Just think of what checks should be performed, where, and with what side effects.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Functional style" icon="seti:haskell">
+		Suits for those who think everything should be a function.
+	</Card>
+	<Card title="Good for educational purposes" icon="pen">
+		Eases cognitive load from using different solutions for the client and server side. Abstracts away common boilerplate code and necessary but easy-to-forget operations. 
 	</Card>
 </CardGrid>
