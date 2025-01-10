@@ -40,15 +40,7 @@ export default defineConfig({
             credits: true,
             sidebar: [
                 {
-                    label: 'Guides',
-                    items: [
-                        // Each item here is one entry in the navigation menu.
-                        { label: 'Example Guide', slug: 'guides/example', badge: {text: 'Experimental', variant: 'caution'} },
-                    ],
-                },
-                {
-                    label: 'Reference',
-                    autogenerate: { directory: 'reference' },
+                    slug: 'getting-started',
                 },
                 {
                     label: 'Concept',
@@ -108,23 +100,23 @@ export default defineConfig({
                     items: [
                         {
                             label: 'Isomorphic sign-up and sign-in forms validation with vanilla JS and Express',
-                            slug: 'guides/example',
+                            slug: 'getting-started',
                         },
                         {
                             label: 'Isomorphic sign-up and sign-in forms validation with React and Express',
-                            slug: 'guides/example',
+                            slug: 'getting-started',
                         },
                         {
                             label: 'Isomorphic file meta data validation',
-                            slug: 'guides/example',
+                            slug: 'getting-started',
                         },
                         {
                             label: 'Validation messages with i18n',
-                            slug: 'guides/example',
+                            slug: 'getting-started',
                         },
                         {
                             label: 'Usage with the ValidatorJS library',
-                            slug: 'guides/example',
+                            slug: 'getting-started',
                         },
                     ],
                 },
