@@ -1,0 +1,83 @@
+---
+title: API overview
+description: Validation and Predicate API description.
+---
+
+The library exposes two entities: [`Validation`](/api/validation/constructor) and [`Predicate`](/api/predicate/constructor).
+
+## Instance methods:
+
+<div style="display: flex">
+<span>
+- [`Validation().started()`](/api/validation/instance-methods/started)
+- [`Validation().valid()`](/api/validation/instance-methods/valid)
+- [`Validation().invalid()`](/api/validation/instance-methods/invalid)
+- [`Validation().changed()`](/api/validation/instance-methods/changed)
+- [`Validation().validated()`](/api/validation/instance-methods/validated)
+- [`Validation().error()`](/api/validation/instance-methods/error)
+- [`Validation().constraint()`](/api/validation/instance-methods/constraint)
+- [`Validation().bind()`](/api/validation/instance-methods/bind)
+- [`Validation().dataMapper()`](/api/validation/instance-methods/datamapper)
+- [`Validation().validate()`](/api/validation/instance-methods/validate)
+</span>
+<span>
+- [`Predicate().started()`](/api/predicate/instance-methods/started)
+- [`Predicate().valid()`](/api/predicate/instance-methods/valid)
+- [`Predicate().invalid()`](/api/predicate/instance-methods/invalid)
+- [`Predicate().changed()`](/api/predicate/instance-methods/changed)
+- [`Predicate().validated()`](/api/predicate/instance-methods/validated)
+- [`Predicate().error()`](/api/predicate/instance-methods/error)
+- [`Predicate().restored()`](/api/predicate/instance-methods/restored)
+</span>
+</div>
+
+## Instance properties:
+
+<div style="display: flex">
+<span>
+- [`Validation().client`](/api/validation/instance-properties/client)
+- [`Validation().server`](/api/validation/instance-properties/server)
+- [`Validation().isomorphic`](/api/validation/instance-properties/isomorphic)
+- [`Validation().isValid`](/api/validation/instance-properties/is-valid)
+- [`Validation().constraints`](/api/validation/instance-properties/constraints)
+- [`Validation().validations`](/api/validation/instance-properties/validations)
+</span>
+<span>
+- [`Predicate().client`](/api/predicate/instance-properties/client)
+- [`Predicate().server`](/api/predicate/instance-properties/server)
+- [`Predicate().isomorphic`](/api/predicate/instance-properties/isomorphic)
+</span>
+</div>
+
+## Static methods:
+
+<div style="display: flex">
+<span>
+- [`Validation.group()`](/api/validation/static-methods/group)
+- [`Validation.glue()`](/api/validation/static-methods/glue)
+- [`Validation.clone()`](/api/validation/static-methods/clone)
+- [`Validation.profile()`](/api/validation/static-methods/profile)
+</span>
+</div>
+
+## Validation object
+
+A `Validation` object can be created several ways:
+    - a [single](/concept/single-validation) `Validation` is created by the [constructor](/api/validation/constructor) function.
+    - a [grouping](/concept/grouping-validations) `Validation` is created by the static methods [`Validation.group()`](/api/validation/static-methods/group) and [`Validation.glue()`](/api/validation/static-methods/glue)
+    - also a [grouping](/concept/grouping-validations) `Validation` with nested (grouped), bound to form fields `Validation` objects is created by the [`Validation.profile()`](/api/validation/static-methods/profile) static method.
+    - and lastly, a [single](/concept/single-validation) `Validation` is created by the [`Validation.clone()`](/api/validation/static-methods/clone) method from another `Validation`.
+
+Nested (grouped) `Validation` objects are accessed through: 
+    - the [`Validation().validations`](/api/validation/instance-properties/validations) property.
+    - by form field names when created using the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+
+## Predicate object
+
+A `Predicate` object can be created:
+    - by the [constructor](/api/predicate/constructor) function.
+    - cloned from another `Predicate` object when passed into the [constructor](/api/predicate/constructor#cloning-a-predicate) function.
+
+`Predicate` objects added to validations can be accessed:
+    - through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property.
+    - in [state callbacks](/concept/state-callbacks) through the [`ValidationResult`](/api/validation-result) object passed in.
