@@ -1,6 +1,28 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Single validation
+description: Single validation object.
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+import Playground from '../../../components/Playground.jsx';
+import singleValidationHTML from '../../../../public/playground/concept/single-validation/single-validation.html?raw';
+import singleValidationCSS from '../../../../public/playground/concept/single-validation/single-validation.css?raw';
+import singleValidationJS from '../../../../public/playground/concept/single-validation/single-validation.js?raw';
+
+A single `Validation` object contains only one predicate group associated with the bound validatable object. Its validity state depends on results of executing the predicates.
+
+![single validation](../../../assets/single-validation.gif)
+
+We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks).
+
+![single validation](../../../assets/single-validation-2.gif)
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        html: singleValidationHTML,
+        css: singleValidationCSS,
+        js: singleValidationJS,
+    }}
+    height="500px"
+    width="100%"
+/>
