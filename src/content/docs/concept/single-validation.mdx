@@ -3,7 +3,6 @@ title: Single validation
 description: Single validation object.
 ---
 
-import { Code } from '@astrojs/starlight/components';
 import Playground from '../../../components/Playground.jsx';
 import singleValidationHTML from '../../../../public/playground/concept/single-validation/single-validation.html?raw';
 import singleValidationCSS from '../../../../public/playground/concept/single-validation/single-validation.css?raw';
@@ -25,8 +24,8 @@ Validation(firstName)
 
 We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks).
 
-<Code code={
-`Validation(firstName)
+```js "valid" "invalid"
+Validation(firstName)
     .constraint(
         Predicate(isAlpha)
             .valid(showStatus(firstNameConstraints[0]))
@@ -46,9 +45,7 @@ We can connect UI effects to changes of the validity state of a `Validation` obj
     .invalid(showStatus(firstName.parentElement))
 
 // Predicate() is a wrapper for adding state callbacks to predicate functions
-    `
-} lang='js' mark={['valid', 'invalid']}>
-</Code>
+```
 
 Now, to run the predicate group, we need to add the `Validation` object as an [event handler](/api/validation/callable-object/event-handler) or invoke the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly.
 
