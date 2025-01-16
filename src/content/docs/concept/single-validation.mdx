@@ -47,6 +47,23 @@ Validation(firstName)
 // Predicate() is a wrapper for adding state callbacks to predicate functions
 ```
 
+It is also possible to access added constraints through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property in order to connect UI effects and achieve slightly more compact code:
+
+```js /valid(?=[\W])/ "invalid" "constraints"
+const validation = Validation(firstName)
+    .constraint(isAlpha)
+    .constraint(isLongerOrEqual(2))
+    .constraint(isShorterOrEqual(32))
+    .valid(showStatus(firstName.parentElement))
+    .invalid(showStatus(firstName.parentElement));
+
+[...validation.constraints].forEach(
+    ([,validator], idx) => validator
+        .valid(showStatus(firstNameConstraints[idx]))
+        .invalid(showStatus(firstNameConstraints[idx]))
+);
+```
+
 Now, to run the predicate group, we need to add the `Validation` object as an [event handler](/api/validation/callable-object/event-handler) or invoke the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly.
 
 ![single validation](../../../assets/single-validation-2.gif)
