@@ -40,10 +40,10 @@ const signupValidation = Validation.group(
     ).constraint(areTwoEqual),
 );
 
-// add a UI effect to the grouping validation
+// side effect for the grouping validation
 signupValidation.changed(toggleAccess(submitBtn));
 
-// add a UI effect to the grouped (nested) validations
+// side effects for the grouped (nested) validations
 const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
 
 [ ...firstAndLastNameV.validations, pwdV, pwdV ].forEach(
@@ -52,7 +52,7 @@ const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
         .invalid(showStatus(fields[idx]))
 );
 
-// add a UI effect to execution of the predicate functions
+// side effects for execution of the predicate functions
 [...signupValidation.constraints].forEach(
     ([, validator], idx) => validator
         .valid(showStatus(constraints[idx]))
