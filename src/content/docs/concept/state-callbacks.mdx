@@ -3,4 +3,26 @@ title: Not created yet.
 description: Will be available soon.
 ---
 
-This page will be avalable soon. It is not created apparently because I haven't had time and **YOU** haven't contributed it yet.
+State callbacks are added with the following methods:
+
+<div style="display: flex">
+<span>
+- [`Validation().started()`](/api/validation/instance-methods/started)
+- [`Validation().valid()`](/api/validation/instance-methods/valid)
+- [`Validation().invalid()`](/api/validation/instance-methods/invalid)
+- [`Validation().changed()`](/api/validation/instance-methods/changed)
+- [`Validation().validated()`](/api/validation/instance-methods/validated)
+- [`Validation().error()`](/api/validation/instance-methods/error)
+</span>
+<span>
+- [`Predicate().started()`](/api/predicate/instance-methods/started)
+- [`Predicate().valid()`](/api/predicate/instance-methods/valid)
+- [`Predicate().invalid()`](/api/predicate/instance-methods/invalid)
+- [`Predicate().changed()`](/api/predicate/instance-methods/changed)
+- [`Predicate().validated()`](/api/predicate/instance-methods/validated)
+- [`Predicate().error()`](/api/predicate/instance-methods/error)
+- [`Predicate().restored()`](/api/predicate/instance-methods/restored)
+</span>
+</div>
+
+It is a way to connect side effects to the state of a `Validation` or `Predicate`.
