@@ -1,0 +1,15 @@
+* { font-family: sans-serif; }
+
+.constraint { font-size: 12px; }
+.constraint::before { content: '✔'; display: inline-block; margin-right: 8px; }
+.constraint.valid::before { content: '✅'; font-size: 8px; }
+.constraint.invalid::before { content: '⛔'; font-size: 8px; }
+
+.field { margin-top: 24px; margin-bottom: 4px; }
+.field::before { content: '✔'; }
+.field.valid::before { content: '✅'; font-size: 10px; }
+.field.invalid::before { content: '⛔'; font-size: 10px; }
+
+.field-title { position: absolute; transform: translateY(-100%); font-size: 16px; }
+
+[type=submit] { margin: 18px; }

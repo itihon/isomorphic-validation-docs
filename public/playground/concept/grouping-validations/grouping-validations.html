@@ -1,0 +1,40 @@
+<form name="form">
+    <div class="field">
+        <label class="field-title">First name</label>
+        <input type="text" name="firstName">
+    </div>
+    <div class="error-box">
+        <div class="constraint firstName">Only letters are allowed.</div>
+        <div class="constraint firstName">Minimal length is 2 characters.</div>
+        <div class="constraint firstName">Maximum length is 32 characters.</div>
+    </div>
+    
+    <div class="field">
+        <label class="field-title">Last name</label>
+        <input type="text" name="lastName">
+    </div>
+    <div class="error-box">
+        <div class="constraint lastName">Only letters are allowed.</div>
+        <div class="constraint lastName">Minimal length is 2 characters.</div>
+        <div class="constraint lastName">Maximum length is 32 characters.</div>
+    </div>
+    
+    <div class="field">
+        <label class="field-title">Password</label>
+        <input type="password" name="password">
+    </div>
+    <div class="error-box">
+        <div class="constraint password">Min. 8 symbols, 1 capital letter, 1 number, 1 special symbol.</div>
+        <div class="constraint password">Password and password confirmation must be the same.</div>
+    </div>
+    
+    <div class="field">
+        <label class="field-title">Password confirmation</label>
+        <input type="password" name="pwdConfirm">
+    </div>
+    <div class="error-box">
+        <div class="constraint password">Password and password confirmation must be the same.</div>
+    </div>
+
+    <input type="submit" name="submitBtn" value="Sign up" disabled>
+</form>
