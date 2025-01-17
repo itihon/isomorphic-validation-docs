@@ -1,6 +1,8 @@
 ---
-title: Not created yet.
-description: Will be available soon.
+title: Middleware and event handler
+description: Validation object can be used as a middleware and event handler.
+sidebar:
+    order: 7
 ---
 
 A `Validation` is a callable object. It can be used as an [event handler](/api/validation/callable-object/event-handler) on the client side. To use it as [middleware](/api/validation/callable-object/middleware) on the server side, it has to be created with the [`Validation.profile()`](/api/validation/static-methods/profile) method. Additionally, the [`Validation().dataMapper()`](/api/validation/instance-methods/datamapper) method may be required for non-standard use cases to map a request body object to form fields.
