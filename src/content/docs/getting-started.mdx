@@ -184,7 +184,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
             .invalid(logSubmitAttempt)
     );
 
-    // side effects for field validations
+    // side effects for field validations (grouped/nested validations)
     [...signinV.validations, ...signupV.validations].forEach(
         (validation) => validation
             .client
