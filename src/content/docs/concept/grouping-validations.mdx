@@ -5,6 +5,11 @@ sidebar:
     order: 4
 ---
 
+import config from 'virtual:starlight/user-config';
+import { Image } from 'astro:assets';
+import groupingValidationsGif from '../../../assets/grouping-validations.gif';
+import groupingValidations2Gif from '../../../assets/grouping-validations-2.gif';
+
 import Playground from '../../../components/Playground.jsx';
 import groupingValidationsHTML from '../../../../public/playground/concept/grouping-validations/grouping-validations.html?raw';
 import groupingValidationsCSS from '../../../../public/playground/concept/grouping-validations/grouping-validations.css?raw';
@@ -27,7 +32,7 @@ Validation.group( Validation(firstName), Validation(lastName) )
 // isAlpha, isLongerOrEqual(2), isShorterOrEqual(32) are predicate functions
 ```
 
-![grouping validations](../../../assets/grouping-validations.gif)
+<Image src={groupingValidationsGif} alt={config.title.en.concat(' | Grouping validations')}></Image>
 
 The [`Validation().constraint()`](/api/validation/instance-methods/constraint) method invoked on a grouping `Validation` adds a predicate function to each predicate group it contains.
 
@@ -111,7 +116,7 @@ const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
 
 Now, if we add the grouping `Validation` as an [event handler](/api/validation/callable-object/event-handler) it will be running the predicate group associated with the input element passed as the [`target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) property of the [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) object.
 
-![grouping validations](../../../assets/grouping-validations-2.gif)
+<Image src={groupingValidations2Gif} alt={config.title.en.concat(' | Side effects for state change of grouping validations')}></Image>
 
 Try it in action in the playground below.
 

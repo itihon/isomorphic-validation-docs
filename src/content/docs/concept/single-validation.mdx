@@ -5,6 +5,11 @@ sidebar:
     order: 2
 ---
 
+import config from 'virtual:starlight/user-config';
+import { Image } from 'astro:assets';
+import singleValidationGif from '../../../assets/single-validation.gif';
+import singleValidation2Gif from '../../../assets/single-validation-2.gif';
+
 import Playground from '../../../components/Playground.jsx';
 import singleValidationHTML from '../../../../public/playground/concept/single-validation/single-validation.html?raw';
 import singleValidationCSS from '../../../../public/playground/concept/single-validation/single-validation.css?raw';
@@ -22,7 +27,7 @@ Validation(firstName)
 // isAlpha, isLongerOrEqual(2), isShorterOrEqual(32) are predicate functions
 ```
 
-![single validation](../../../assets/single-validation.gif)
+<Image src={singleValidationGif} alt={config.title.en.concat(' | Single validation')}></Image>
 
 We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks).
 
@@ -68,7 +73,7 @@ const validation = Validation(firstName)
 
 Now, to run the predicate group, we need to add the `Validation` object as an [event handler](/api/validation/callable-object/event-handler) or invoke the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly.
 
-![single validation](../../../assets/single-validation-2.gif)
+<Image src={singleValidation2Gif} alt={config.title.en.concat(' | Single validation side effects')}></Image>
 
 Try it in action in the playground below.
 
