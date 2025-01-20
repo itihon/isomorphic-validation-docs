@@ -97,31 +97,27 @@ export default defineConfig({
                         },
                     ],
                 },
-                {
-                    label: 'Examples',
-                    items: [
-                        {
-                            label: 'Isomorphic sign-up and sign-in forms validation with vanilla JS and Express',
-                            slug: 'getting-started',
-                        },
-                        {
-                            label: 'Isomorphic sign-up and sign-in forms validation with React and Express',
-                            slug: 'getting-started',
-                        },
-                        {
-                            label: 'Isomorphic file meta data validation',
-                            slug: 'getting-started',
-                        },
-                        {
-                            label: 'Validation messages with i18n',
-                            slug: 'getting-started',
-                        },
-                        {
-                            label: 'Usage with the ValidatorJS library',
-                            slug: 'getting-started',
-                        },
-                    ],
-                },
+                // {
+                //     label: 'Examples',
+                //     items: [
+                //         {
+                //             label: 'Isomorphic sign-up and sign-in forms validation with vanilla JS and Express',
+                //             slug: 'getting-started',
+                //         },
+                //         {
+                //             label: 'Isomorphic sign-up and sign-in forms validation with React and Express',
+                //             slug: 'getting-started',
+                //         },
+                //         {
+                //             label: 'Isomorphic file meta data validation',
+                //             slug: 'getting-started',
+                //         },
+                //         {
+                //             label: 'Validation messages with i18n',
+                //             slug: 'getting-started',
+                //         },
+                //     ],
+                // },
             ],
 		}), 
         react(),
