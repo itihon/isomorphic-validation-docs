@@ -16,9 +16,10 @@ export default defineConfig({
     },
     integrations: [
         starlight({
-            title: 'ISOMORPHIC-VALIDATION',
+            title: 'Isomorphic validation javascript library',
             logo: {
                 src: '/public/lib-logo.svg',
+                alt: 'Isomorphic validation javascript library',
             },
             defaultLocale: 'root', // optional
             locales: {
@@ -36,6 +37,7 @@ export default defineConfig({
             components: {
                 Hero: './src/components/Hero.astro',
                 PageSidebar: './src/components/PageSidebar.astro',
+                SiteTitle: './src/components/SiteTitle.astro',
             },
             credits: true,
             sidebar: [

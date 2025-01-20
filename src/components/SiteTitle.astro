@@ -1,0 +1,8 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/SiteTitle.astro';
+import { LOGO_TITLE } from '../../config.mjs';
+
+---
+
+<Default {...Astro.props} siteTitle={LOGO_TITLE}><slot /></Default>
