@@ -16,7 +16,7 @@ export default defineConfig({
     },
     integrations: [
         starlight({
-            title: 'Isomorphic validation javascript library',
+            title: 'Isomorphic javascript validation library',
             logo: {
                 src: '/public/lib-logo.svg',
                 alt: 'Isomorphic validation javascript library',
