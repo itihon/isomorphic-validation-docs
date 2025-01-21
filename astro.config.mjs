@@ -63,6 +63,43 @@ export default defineConfig({
                     autogenerate: { directory: 'concept' },
                 },
                 {
+                    label: 'Examples',
+                    items: [
+                        {
+                            label: 'Sign-up and sign-in forms validation',
+                            link: '/api/validation/static-methods/profile/#examples',
+                        },
+                        {
+                            label: 'Validating password and password confirmation',
+                            link: '/api/validation/static-methods/glue/#validating-password-and-password-confirmation',
+                        },
+                        {
+                            label: 'Validating one field depending on another',
+                            link: '/api/validation/static-methods/glue#validating-one-field-depending-on-another',
+                        },
+                        {
+                            label: 'Optional (not required) field',
+                            link: '/api/validation/constructor#parameter-optional',
+                        },
+                        {
+                            label: 'Conditional execution of predicates',
+                            link: '/api/validation/instance-methods/constraint/#parameter-next',
+                        },
+                        {
+                            label: 'Prevent input of certain characters',
+                            link: '/api/validation/instance-methods/constraint/#parameter-keepvalid',
+                        },
+                        {
+                            label: 'Validating file metadata before uploading to S3 storage',
+                            link: '/api/validation/instance-methods/datamapper/#validating-file-metadata-before-uploading-to-s3-storage',
+                        },
+                        {
+                            label: 'Sign-up and sign-in forms client and server side validation with Express',
+                            link: 'https://github.com/itihon/signup_signin_example',
+                        },
+                    ],
+                },
+                {
                     label: 'API',
                     items: [
                         {
@@ -111,27 +148,6 @@ export default defineConfig({
                         },
                     ],
                 },
-                // {
-                //     label: 'Examples',
-                //     items: [
-                //         {
-                //             label: 'Isomorphic sign-up and sign-in forms validation with vanilla JS and Express',
-                //             slug: 'getting-started',
-                //         },
-                //         {
-                //             label: 'Isomorphic sign-up and sign-in forms validation with React and Express',
-                //             slug: 'getting-started',
-                //         },
-                //         {
-                //             label: 'Isomorphic file meta data validation',
-                //             slug: 'getting-started',
-                //         },
-                //         {
-                //             label: 'Validation messages with i18n',
-                //             slug: 'getting-started',
-                //         },
-                //     ],
-                // },
             ],
 		}), 
         react(),
