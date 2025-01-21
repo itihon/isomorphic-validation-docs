@@ -5,9 +5,17 @@ import react from '@astrojs/react';
 import baseUrlModifierRemarkPlugin from './base-links-remark-plugin.mjs';
 import { BASE_URL, PROD_HOST } from './config.mjs';
 
-const favicon = import.meta.env.PROD 
-    ? `${PROD_HOST}/isomorphic-validation-docs-favicon.svg` 
-    : '/favicon.svg';
+// override favicon for production so it is eligible to be shown in google search results
+const head = import.meta.env.PROD
+    ?  [{
+        tag: 'link',
+        attrs: {
+            rel: 'icon',
+            href: `${PROD_HOST}/isomorphic-validation-docs-favicon.svg`,
+            type: 'image/svg+xml',
+        },
+    }]
+    : undefined;
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +28,8 @@ export default defineConfig({
     },
     integrations: [
         starlight({
-            favicon,
+            favicon: '/favicon.svg',
+            head,
             title: 'Isomorphic javascript validation library',
             logo: {
                 src: '/public/lib-logo.svg',
