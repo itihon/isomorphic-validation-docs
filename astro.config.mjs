@@ -5,6 +5,10 @@ import react from '@astrojs/react';
 import baseUrlModifierRemarkPlugin from './base-links-remark-plugin.mjs';
 import { BASE_URL, PROD_HOST } from './config.mjs';
 
+const favicon = import.meta.env.PROD 
+    ? '/isomorphic-validation-docs-favicon.svg'
+    : '/public/favicon.svg';
+
 // https://astro.build/config
 export default defineConfig({
     site: PROD_HOST,
@@ -16,6 +20,7 @@ export default defineConfig({
     },
     integrations: [
         starlight({
+            favicon,
             title: 'Isomorphic javascript validation library',
             logo: {
                 src: '/public/lib-logo.svg',
