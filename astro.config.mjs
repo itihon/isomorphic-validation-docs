@@ -6,8 +6,8 @@ import baseUrlModifierRemarkPlugin from './base-links-remark-plugin.mjs';
 import { BASE_URL, PROD_HOST } from './config.mjs';
 
 const favicon = import.meta.env.PROD 
-    ? '/isomorphic-validation-docs-favicon.svg'
-    : '/public/favicon.svg';
+    ? 'isomorphic-validation-docs-favicon.svg' // itihon.github.io/isomorphic-validation-docs-favicon.svg
+    : '/favicon.svg';
 
 // https://astro.build/config
 export default defineConfig({
