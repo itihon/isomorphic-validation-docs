@@ -86,6 +86,10 @@ export default defineConfig({
                             link: '/api/validation/instance-methods/constraint/#parameter-next',
                         },
                         {
+                            label: 'Internationalized validation error messages with i18next',
+                            link: '/api/validation/instance-methods/constraint/#parameter-anydata',
+                        },
+                        {
                             label: 'Prevent input of certain characters',
                             link: '/api/validation/instance-methods/constraint/#parameter-keepvalid',
                         },

@@ -10,8 +10,8 @@ import nextExampleJS from '../../../../../../public/playground/api/validation/in
 import nextExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next.html?raw';
 import nextDebounceExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce.js?raw';
 import nextDebounceExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce.html?raw';
-import nextDebounceAnydataExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata.js?raw';
-import nextDebounceAnydataExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata.html?raw';
+import nextDebounceAnydataI18nExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata-i18n.js?raw';
+import nextDebounceAnydataI18nExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/next-debounce-anydata-i18n.html?raw';
 import keepValidExampleJS from '../../../../../../public/playground/api/validation/instance-methods/constraint/keepvalid.js?raw';
 import keepValidExampleHTML from '../../../../../../public/playground/api/validation/instance-methods/constraint/keepvalid.html?raw';
 
@@ -108,16 +108,15 @@ Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which ap
     width="100%"
 />
 
-### Passing a message as anyData
+### Parameter "anyData"
 
-This example keeps bulding up on the previous one. Here validator messages are passed as `msg` while adding constraints and then they are accessed through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property and [`ValidationResult`](/api/validation-result).
+This example keeps bulding up on the previous one. Here translated validator messages are  accessed by i18n keys supplied with predicate functions as `anyData` while adding constraints which in turn are accessed through [`ValidationResult`](/api/validation-result) in [state callbacks](/concept/state-callbacks) by `i18nMsg` helper function.
  
-
 <Playground client:visible  
     params={{
         console: 'open',
-        js: nextDebounceAnydataExampleJS,
-        html: nextDebounceAnydataExampleHTML,
+        js: nextDebounceAnydataI18nExampleJS,
+        html: nextDebounceAnydataI18nExampleHTML,
     }}
     height="500px"
     width="100%"
