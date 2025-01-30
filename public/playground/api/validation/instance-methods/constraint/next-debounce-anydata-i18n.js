@@ -1,4 +1,5 @@
 import { Predicate, Validation } from "isomorphic-validation";
+import { firstInvalid } from 'isomorphic-validation/helpers';
 import i18next from 'i18next';
 
 const emailField = document.form.email;
@@ -28,14 +29,6 @@ i18next.init({
 
 // helpers
 
-const firstInvalid = (res) => {
-    for (let [,validator] of res) {
-        if (!validator.isValid) {
-            return validator;
-        }
-    }
-};
-
 const theFirstOne = (res) => {
     const [[,validator]] = res;
     return validator;
@@ -43,7 +36,7 @@ const theFirstOne = (res) => {
 
 const i18nMsg = (res) => {
     const { type } = res;
-    const validator = firstInvalid(res) || theFirstOne(res);
+    const validator = firstInvalid(res)[1] || theFirstOne(res);
     const msgKey = validator[`${type}MsgKey`];
 
     return `<div data-i18n="${msgKey}">${i18next.t(msgKey)}</div>`;
