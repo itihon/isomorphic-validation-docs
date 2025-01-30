@@ -1,4 +1,5 @@
 import { Validation, Predicate } from 'isomorphic-validation';
+import { firstInvalid } from 'isomorphic-validation/helpers';
 
 // ui effects functions
 
@@ -37,17 +38,11 @@ const useMsgBox = (selector) => {
 
 const [showMsg, hideMsg, setMsg, resetMsg] = useMsgBox('.msg-box');
 
-const preserveFirstErrMsg = (validation) => {
-    const constraints = [...validation.constraints];
-    return (result) => {
-        constraints.some(([, validator]) => {
-            if (!validator.isValid) {
-                result.msg = validator.invalidMsg;
-                return true;
-            }
-            return false;
-        });
-    };
+// helper functions
+
+const preserveFirstErrMsg = (result) => {
+    const [, validator] = firstInvalid(result);
+    result.msg = validator ? validator.invalidMsg : '';
 };
 
 const preserveStartedMsg = (result) => {
@@ -145,8 +140,8 @@ signupV.login
 [...signinV.validations, ...signupV.validations].forEach(
     validation => validation
         .client // the following state callbacks will be added on the client side
-        .invalid(preserveFirstErrMsg(validation), setMsg)
-        .changed(preserveFirstErrMsg(validation))
+        .invalid(preserveFirstErrMsg, setMsg)
+        .changed(preserveFirstErrMsg)
         .changed(({ target, isValid, msg }) => { // for password and password confirmation
             isValid ?  resetMsg({ target }) : setMsg({ target, msg });
         })
