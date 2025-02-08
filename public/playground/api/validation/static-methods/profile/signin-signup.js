@@ -1,5 +1,5 @@
 import { Validation, Predicate } from 'isomorphic-validation';
-import { firstInvalid } from 'isomorphic-validation/helpers';
+import { firstInvalid } from 'isomorphic-validation/ui';
 
 // ui effects functions
 

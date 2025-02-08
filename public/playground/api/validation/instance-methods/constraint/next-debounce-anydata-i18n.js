@@ -1,5 +1,5 @@
 import { Predicate, Validation } from "isomorphic-validation";
-import { firstInvalid } from 'isomorphic-validation/helpers';
+import { firstInvalid } from 'isomorphic-validation/ui';
 import i18next from 'i18next';
 
 const emailField = document.form.email;
