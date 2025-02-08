@@ -19,19 +19,15 @@ form.addEventListener(
     Validation(firstName)
         .constraint(
             Predicate(isAlpha)
-                .valid(showStatus(firstNameConstraints[0]))
-                .invalid(showStatus(firstNameConstraints[0]))
+                .validated(showStatus(firstNameConstraints[0]))
         )
         .constraint(
             Predicate(isLongerOrEqual(2))
-                .valid(showStatus(firstNameConstraints[1]))
-                .invalid(showStatus(firstNameConstraints[1]))
+                .validated(showStatus(firstNameConstraints[1]))
         )
         .constraint(
             Predicate(isShorterOrEqual(32))
-                .valid(showStatus(firstNameConstraints[2]))
-                .invalid(showStatus(firstNameConstraints[2]))
+                .validated(showStatus(firstNameConstraints[2]))
         )
-        .valid(showStatus(firstName.parentElement))
-        .invalid(showStatus(firstName.parentElement))
+        .validated(showStatus(firstName.parentElement))
 );

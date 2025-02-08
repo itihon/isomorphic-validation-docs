@@ -31,43 +31,37 @@ Validation(firstName)
 
 We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks).
 
-```js "valid" "invalid"
+```js "validated"
 Validation(firstName)
     .constraint(
         Predicate(isAlpha)
-            .valid(showStatus(firstNameConstraints[0]))
-            .invalid(showStatus(firstNameConstraints[0]))
+            .validated(showStatus(firstNameConstraints[0]))
     )
     .constraint(
         Predicate(isLongerOrEqual(2))
-            .valid(showStatus(firstNameConstraints[1]))
-            .invalid(showStatus(firstNameConstraints[1]))
+            .validated(showStatus(firstNameConstraints[1]))
     )
     .constraint(
         Predicate(isShorterOrEqual(32))
-            .valid(showStatus(firstNameConstraints[2]))
-            .invalid(showStatus(firstNameConstraints[2]))
+            .validated(showStatus(firstNameConstraints[2]))
     )
-    .valid(showStatus(firstName.parentElement))
-    .invalid(showStatus(firstName.parentElement))
+    .validated(showStatus(firstName.parentElement))
 
 // Predicate() is a wrapper for adding state callbacks to predicate functions
 ```
 
 It is also possible to access added constraints through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property in order to connect UI effects and achieve slightly more compact code:
 
-```js /valid(?=[\W])/ "invalid" "constraints"
+```js "validated" "constraints"
 const validation = Validation(firstName)
     .constraint(isAlpha)
     .constraint(isLongerOrEqual(2))
     .constraint(isShorterOrEqual(32))
-    .valid(showStatus(firstName.parentElement))
-    .invalid(showStatus(firstName.parentElement));
+    .validated(showStatus(firstName.parentElement));
 
 [...validation.constraints].forEach(
     ([,validator], idx) => validator
-        .valid(showStatus(firstNameConstraints[idx]))
-        .invalid(showStatus(firstNameConstraints[idx]))
+        .validated(showStatus(firstNameConstraints[idx]))
 );
 ```
 
