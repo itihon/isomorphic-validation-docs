@@ -48,15 +48,13 @@ const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
 
 [ ...firstAndLastNameV.validations, pwdV, pwdV ].forEach(
     (validation, idx) => validation
-        .valid(showStatus(fields[idx]))
-        .invalid(showStatus(fields[idx]))
+        .validated(showStatus(fields[idx]))
 );
 
 // side effects for execution of the predicate functions
 [...signupValidation.constraints].forEach(
     ([, validator], idx) => validator
-        .valid(showStatus(constraints[idx]))
-        .invalid(showStatus(constraints[idx]))
+        .validated(showStatus(constraints[idx]))
 );
 
 form.addEventListener('input', signupValidation);

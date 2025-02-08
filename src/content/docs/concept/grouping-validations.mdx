@@ -93,7 +93,7 @@ The `Validation` objects that were grouped can be accessed through the [`Validat
 
 We can connect UI effects to state changes of the grouping `Validation`, its grouped validations, and execution of predicate functions.
 
-```js /valid(?=[\W])/ "invalid" "changed" /(?<=[.])constraints/ /(?<=[.])validations/
+```js "validated" "changed" /(?<=[.])constraints/ /(?<=[.])validations/
 // add a UI effect to the grouping validation
 signupValidation.changed(toggleAccess(submitBtn));
 
@@ -102,15 +102,13 @@ const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
 
 [ ...firstAndLastNameV.validations, pwdV, pwdV ].forEach(
     (validation, idx) => validation
-        .valid(showStatus(fields[idx]))
-        .invalid(showStatus(fields[idx]))
+        .validated(showStatus(fields[idx]))
 );
 
 // add a UI effect to execution of the predicate functions
 [...signupValidation.constraints].forEach(
     ([, validator], idx) => validator
-        .valid(showStatus(constraints[idx]))
-        .invalid(showStatus(constraints[idx]))
+        .validated(showStatus(constraints[idx]))
 );
 ```
 
