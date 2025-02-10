@@ -18,7 +18,7 @@ import chainingDiffObjExample2JS from '../../../../public/playground/concept/cha
 
 ### `Validation` as a state callback
 
-Since `Validation` objects are callable and, while executing on the client side, they are [`event handler`](/api/validation/callable-object/event-handler) functions, it is possible to chain their execution by adding them as [`state callbacks`](/concept/state-callbacks) and run conditionally: one depending on the state of another.
+Since `Validation` objects are callable and, while executing on the client side, they are [`event handler`](/api/validation/callable-object/event-handler/) functions, it is possible to chain their execution by adding them as [`state callbacks`](/concept/state-callbacks/) and run conditionally: one depending on the state of another.
 
 ```js
 const validation1 = Validation();
@@ -60,7 +60,7 @@ validation1.validate().then((res1) => {
 The result of `validation2` is not "awaited" and does not affect the result of `validation1`.
 
 :::note
-    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware) function. If you need to implement such logic on the server side you will have to wrap a `Validation` into an arrow function and call the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly:
+    This pattern will not work on the server side because of `Validation` object being a [middleware](/api/validation/callable-object/middleware/) function. If you need to implement such logic on the server side you will have to wrap a `Validation` into an arrow function and call the [`Validation().validate()`](/api/validation/instance-methods/validate/) method explicitly:
 ```js
 const validation1 = Validation();
 const validation2 = Validation();
@@ -70,7 +70,7 @@ validation1.invalid(() => validation2.validate());
 
 #### Example
 
-In this example one `Validation` object is added as ["invalid"](/api/validation/instance-methods/invalid) state callback of another one. Initially, the input field is painted gray. Try to input letter characters, it turns green. Then type in something other than letters, it turns red. Eventually, if you decide to clear it out, it returns back to its initial state and becomes gray.
+In this example one `Validation` object is added as ["invalid"](/api/validation/instance-methods/invalid/) state callback of another one. Initially, the input field is painted gray. Try to input letter characters, it turns green. Then type in something other than letters, it turns red. Eventually, if you decide to clear it out, it returns back to its initial state and becomes gray.
 
 <Playground client:visible  
     params={{
@@ -111,7 +111,7 @@ textField.addEventListener(
 
 ### Chaining validations of different validatable objects
 
-A state callback function accepts a [`ValidationResult`](/api/validation-result) object which has the `target` property. A `Validation` object, when used as an [`event handler`](/api/validation/callable-object/event-handler) on the client side, accepts an `Event` object which also has the `target` property. So it is possible to chain `Validation` objects bound to the same validatable object. 
+A state callback function accepts a [`ValidationResult`](/api/validation-result/) object which has the `target` property. A `Validation` object, when used as an [`event handler`](/api/validation/callable-object/event-handler/) on the client side, accepts an `Event` object which also has the `target` property. So it is possible to chain `Validation` objects bound to the same validatable object. 
 
 ```js
 const validation1 = Validation(element1);
@@ -129,7 +129,7 @@ element1.addEventListener('input', validation1);
 ```
 
 :::caution
-If a chained `Validation` object is bound to a different validatable object than that which is passed to it as the property `target` when called as a callable object on the client side, it will return a rejected `Promise` with the corresponding error message. See "Return value" of the [`Validation().validate()`](/api/validation/instance-methods/validate#return-value) method.
+If a chained `Validation` object is bound to a different validatable object than that which is passed to it as the property `target` when called as a callable object on the client side, it will return a rejected `Promise` with the corresponding error message. See "Return value" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#return-value) method.
 
 ```js
 const validation1 = Validation(element1);
@@ -150,7 +150,7 @@ element1.addEventListener('input', validation1);
 If you need to chain validations bound to different validatable objects you can wrap a `Validation` into an arrow function to isolate from the passed in argument:
 > `validation2.invalid(() => validation3());`
 
-Also the safest way (but rather verbose) and compatible with both client and server side is to call the `.validate()` method explicitly and pass no arguments in case of a ["single"](/concept/single-validation) `Validation`. See "Description" of the [`Validation.validate()`](/api/validation/instance-methods/validate#description) method.
+Also the safest way (but rather verbose) and compatible with both client and server side is to call the `.validate()` method explicitly and pass no arguments in case of a ["single"](/concept/single-validation/) `Validation`. See "Description" of the [`Validation.validate()`](/api/validation/instance-methods/validate/#description) method.
 
 ```js
 const validation1 = Validation(element1);
@@ -193,12 +193,12 @@ The third chain is a part of the first one because validity of data in the exper
 :::note 
 In this example `isPossibleExperience` predicate function accepts the experience field value as the only argument and directly addresses the age field value which in this particular case is safe because all predicate functions here are synchronous. In case of asynchronous predicate functions (especially if the same validation logic is performed on the server side) a better solution would be to make `isPossibleExperience` accept both values as arguments by adding it as a constraint to "glued" validations.
 
-See the same example but with ["glued"](/api/validation/static-methods/glue#validating-one-field-depending-on-another) validations.
+See the same example but with ["glued"](/api/validation/static-methods/glue/#validating-one-field-depending-on-another) validations.
 
-Also see the description of the [`Validation().validate()`](/api/validation/instance-methods/validate#description) method for details.
+Also see the description of the [`Validation().validate()`](/api/validation/instance-methods/validate/#description) method for details.
 :::
 
-Validity of data in the fields are checked with `ageV` and `experienceV` validations which are grouped into `formV` that serves as the entry point of the form validation process and controls access to the submit button. `initValueV` is used to paint the fields gray when they are empty. The experience field gets enabled with `careerYearsV` and `experienceV` gets revalidated with it. Since `careerYearsV` and `experienceV` are bound to different fields the latter is wrapped into an arrow function when added as ["validated"](/api/validation/instance-methods/validated) state callback of the former.
+Validity of data in the fields are checked with `ageV` and `experienceV` validations which are grouped into `formV` that serves as the entry point of the form validation process and controls access to the submit button. `initValueV` is used to paint the fields gray when they are empty. The experience field gets enabled with `careerYearsV` and `experienceV` gets revalidated with it. Since `careerYearsV` and `experienceV` are bound to different fields the latter is wrapped into an arrow function when added as ["validated"](/api/validation/instance-methods/validated/) state callback of the former.
 
 <Playground client:visible  
     params={{
@@ -220,7 +220,7 @@ The next example below shows how the validation chains could have been recompose
 
 ### Chaining grouping validations
 
-If you need to conditionally validate a particular predicate group of a ["grouping"](/concept/grouping-validations) `Validation`, pass the validatable object it associated with to the `.validate()` method. See "Description" of the [`Validation.validate()`](/api/validation/instance-methods/validate#description) method.
+If you need to conditionally validate a particular predicate group of a ["grouping"](/concept/grouping-validations/) `Validation`, pass the validatable object it associated with to the `.validate()` method. See "Description" of the [`Validation.validate()`](/api/validation/instance-methods/validate/#description) method.
 
 ```js
 const validation1 = Validation(element1);
@@ -256,7 +256,7 @@ Let's recompose the validation chains from the example above.
 `initValueV({ target: experience })` --> `initValueV.validations[1].invalid(formV)` --> `experienceV()`
 </details>
 
-Now `initValueV` serves as the entry point of the form validation process and starts validating a field against its constraints if the field is not empty. The second chain is a part of the first one because the experience field still needs to be revalidated when the age field changes. And since `initValueV` is a grouping validation, when added as ["validated"](/api/validation/instance-methods/validated) state callback of `careerYearsV`, it gets the experience field as the target object to perform check only on this field leaving out the age field (It is already being checked! If you omit that passed in target object, checks on both fields will be executed and you will get an **infinite loop**). Next, the passed in object is getting passed further along to `formV` to validate only the experience field against its constraints.
+Now `initValueV` serves as the entry point of the form validation process and starts validating a field against its constraints if the field is not empty. The second chain is a part of the first one because the experience field still needs to be revalidated when the age field changes. And since `initValueV` is a grouping validation, when added as ["validated"](/api/validation/instance-methods/validated/) state callback of `careerYearsV`, it gets the experience field as the target object to perform check only on this field leaving out the age field (It is already being checked! If you omit that passed in target object, checks on both fields will be executed and you will get an **infinite loop**). Next, the passed in object is getting passed further along to `formV` to validate only the experience field against its constraints.
 
 <Playground client:visible  
     params={{

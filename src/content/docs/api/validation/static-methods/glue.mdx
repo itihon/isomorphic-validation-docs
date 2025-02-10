@@ -43,9 +43,9 @@ If not a `Validation` was passed in or an `Array` that contains not a `Validatio
 
 ## Description
 
-Accepts `Validation` objects or arrays of `Validation` objects of any nesting level or both in any combination. The `Validation` objects passed in can be [single](/concept/single-validation) as well as other [grouping](/concept/grouping-validations) `Validation` objects. Repetitive `Validation` objects will be ignored, only the unique ones will be grouped. The returned grouping `Validation` object "subscribes" to state changes of the grouped `Validation` objects and its validity state depends on them.
+Accepts `Validation` objects or arrays of `Validation` objects of any nesting level or both in any combination. The `Validation` objects passed in can be [single](/concept/single-validation/) as well as other [grouping](/concept/grouping-validations/) `Validation` objects. Repetitive `Validation` objects will be ignored, only the unique ones will be grouped. The returned grouping `Validation` object "subscribes" to state changes of the grouped `Validation` objects and its validity state depends on them.
 
-The resulting grouping `Validation` object differs from the one created with the [`Validation.group()`](/api/validation/static-methods/group) method in the way of adding constraints and passing validatable values to executed predicate functions. That is, when a predicate function is added to it with the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method, validity states of all the grouped `Validation` objects start depending on the result of that function execution no matter which one is being validated and validatable values of them all are passed as arguments to the function. 
+The resulting grouping `Validation` object differs from the one created with the [`Validation.group()`](/api/validation/static-methods/group/) method in the way of adding constraints and passing validatable values to executed predicate functions. That is, when a predicate function is added to it with the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method, validity states of all the grouped `Validation` objects start depending on the result of that function execution no matter which one is being validated and validatable values of them all are passed as arguments to the function. 
 
 The main purpose of this method is to group mutually dependant validations. A typical use case is validating equality of a password and password confirmation.
 
@@ -75,7 +75,7 @@ In case of grouped validations, the predicate function affects only that `Valida
 </Tabs>
 
 :::tip 
-Since every "glued" `Validation` depends on the result of its own execution of a "glued" predicate it makes possible to "glue" [optional](/api/validation/constructor#parameters) validations with the non-optional (required).
+Since every "glued" `Validation` depends on the result of its own execution of a "glued" predicate it makes possible to "glue" [optional](/api/validation/constructor/#parameters) validations with the non-optional (required).
 :::
 
 ### Validating password and password confirmation

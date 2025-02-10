@@ -75,11 +75,11 @@ export default defineConfig({
                         },
                         {
                             label: 'Validating one field depending on another',
-                            link: '/api/validation/static-methods/glue#validating-one-field-depending-on-another',
+                            link: '/api/validation/static-methods/glue/#validating-one-field-depending-on-another',
                         },
                         {
                             label: 'Optional (not required) field',
-                            link: '/api/validation/constructor#parameter-optional',
+                            link: '/api/validation/constructor/#parameter-optional',
                         },
                         {
                             label: 'Conditional execution of predicates',

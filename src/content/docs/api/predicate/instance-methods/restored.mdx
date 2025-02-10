@@ -7,7 +7,7 @@ sidebar:
 import { Code } from '@astrojs/starlight/components';
 import restoredCode from '../../../../../../public/playground/api/predicate/instance-methods/restored/restored.js?raw';
 
-Adds state callbacks which will be invoked after the predicate function execution when it returns `false` or a `Promise` that fulfills with `false` after restoration of the previous valid value if the predicate function was added with the parameter `keepValid=true` of the [`Validation().constraint()`](/api/validation/instance-methods/constraint#parameters) method.
+Adds state callbacks which will be invoked after the predicate function execution when it returns `false` or a `Promise` that fulfills with `false` after restoration of the previous valid value if the predicate function was added with the parameter `keepValid=true` of the [`Validation().constraint()`](/api/validation/instance-methods/constraint/#parameters) method.
 
 ## Syntax
 
@@ -21,7 +21,7 @@ Predicate().restored(callback1, callback2, /* ..., */ callbackN)
 <br/> Functions to add. The callback functions will be called with the following arguments:
 
     - `validationResult` 
-    <br/> A [`ValidationResult`](/api/validation-result) object. 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
 
 ### Return value
 
@@ -33,11 +33,11 @@ If anything other than a function is passed in the corresponding error will be t
 
 ## Description
 
-Adds state callbacks to the `Predicate` object. Once the `Predicate` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result) object is passed into state callbacks.
+Adds state callbacks to the `Predicate` object. Once the `Predicate` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result/) object is passed into state callbacks.
 
 ## Examples
 
-Until there is a valid value to restore, the validatable value is restored back to the [initial value](/api/validation/constructor#parameters) and since it is not valid, ["invalid"](/api/predicate/instance-methods/invalid) state callbacks are called after the value restoration. Once the validatable value gets valid, it is saved and any attempt to assign an invalid value leads to restoration to that previous valid value and calling ["valid"](/api/predicate/instance-methods/valid) state callbacks. The only invalid value that is possible to assign after that is the initial value which causes resetting of the previously saved valid value.
+Until there is a valid value to restore, the validatable value is restored back to the [initial value](/api/validation/constructor/#parameters) and since it is not valid, ["invalid"](/api/predicate/instance-methods/invalid/) state callbacks are called after the value restoration. Once the validatable value gets valid, it is saved and any attempt to assign an invalid value leads to restoration to that previous valid value and calling ["valid"](/api/predicate/instance-methods/valid/) state callbacks. The only invalid value that is possible to assign after that is the initial value which causes resetting of the previously saved valid value.
 
 Also see the example of using the parameter [`keepValid`](/api/validation/instance-methods/constraint/#parameter-keepvalid).
 

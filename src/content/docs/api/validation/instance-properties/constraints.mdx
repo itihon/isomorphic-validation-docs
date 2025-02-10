@@ -10,7 +10,7 @@ import iteratorExample from '../../../../../../public/playground/api/validation/
 import foreachExample from '../../../../../../public/playground/api/validation/instance-properties/constraints/foreach-and-state-callbacks.js?raw';
 import jsonExample from '../../../../../../public/playground/api/validation/instance-properties/constraints/json-representation.js?raw';
 
-The `Validation().constraints` property returns a `Map` with [validatable objects](/api/validation/constructor#parameters) as keys and sets of predicate groups associated with them as values.
+The `Validation().constraints` property returns a `Map` with [validatable objects](/api/validation/constructor/#parameters) as keys and sets of predicate groups associated with them as values.
 
 ## Value
 
@@ -18,11 +18,11 @@ A `Map` object.
 
 ## Description
 
-The main purpose of this property is to access constraints added with the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method in order to get their current validity state (the property `isValid`), address additional data that were supplied with them as `anyData` or add [state callbacks](/concept/state-callbacks) to them.
+The main purpose of this property is to access constraints added with the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method in order to get their current validity state (the property `isValid`), address additional data that were supplied with them as `anyData` or add [state callbacks](/concept/state-callbacks/) to them.
 
-For the reason that several validations can be bound to one validatable object and then [grouped](/concept/grouping-validations) into one `Validation`, this `Map` contains sets of arrays of "validators" as values. The standard `Map` iterator and the `forEach` method are overridden for convinience, so that they iterate over validatable objects as keys and "validators" as values.
+For the reason that several validations can be bound to one validatable object and then [grouped](/concept/grouping-validations/) into one `Validation`, this `Map` contains sets of arrays of "validators" as values. The standard `Map` iterator and the `forEach` method are overridden for convinience, so that they iterate over validatable objects as keys and "validators" as values.
 
-These "validator" objects "inherit" all properties and methods of [`Predicate()`](/api/predicate/constructor), have the property `isValid` representing their current validity state and are populated with the `anyData`.
+These "validator" objects "inherit" all properties and methods of [`Predicate()`](/api/predicate/constructor/), have the property `isValid` representing their current validity state and are populated with the `anyData`.
 
 ## Examples
 

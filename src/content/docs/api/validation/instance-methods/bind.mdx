@@ -32,7 +32,7 @@ Validation().bind(validatableObject, options)
     <br/> **Default**: `undefined`.
 
     - `initValue` <sup>optional</sup>
-    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
+    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint/#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
     <br/> **Default**: `undefined`.
 
 ### Return value
@@ -42,13 +42,13 @@ The `Validation` object.
 ### Exceptions
 
 - If the `validatableObject` is the same as that which the `Validation` is already bound to, throws the corresponding error.
-- If invoked on a [grouping](/concept/grouping-validations) `Validation`, throws the corresponding error.
+- If invoked on a [grouping](/concept/grouping-validations/) `Validation`, throws the corresponding error.
 
 ## Description
 
-Binds the `Validation` object to the `validatableObject`. This method is used on a [single](/concept/single-validation) `Validation` when a validatable object is not accessible at creation time. If `options.path` and `options.initValue` are not set, uses the [values](/api/validation/constructor#parameters) that were set at creation time.
+Binds the `Validation` object to the `validatableObject`. This method is used on a [single](/concept/single-validation/) `Validation` when a validatable object is not accessible at creation time. If `options.path` and `options.initValue` are not set, uses the [values](/api/validation/constructor/#parameters) that were set at creation time.
 
-This method is used under the hood in the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+This method is used under the hood in the [`Validation.profile()`](/api/validation/static-methods/profile/) method.
 
 ## Examples
 

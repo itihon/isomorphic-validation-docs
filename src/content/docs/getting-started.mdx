@@ -61,7 +61,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
     import isEmail from 'validator/es/lib/isEmail';
     ```
 
-2. Create [`Validation`](/api/validation/constructor) objects:
+2. Create [`Validation`](/api/validation/constructor/) objects:
 
     ```js 
     const emailV = Validation();
@@ -70,7 +70,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
     const pwdConfirmV = Validation();
     ```
 
-3. Add the predicate functions as common (shared between forms) [constraints](/api/validation/instance-methods/constraint) to the validations:
+3. Add the predicate functions as common (shared between forms) [constraints](/api/validation/instance-methods/constraint/) to the validations:
 
     ```js
     loginV
@@ -99,7 +99,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
         );
     ```
 
-4. Create validation [profiles](/api/validation/static-methods/profile) (bind the validations to form fields):
+4. Create validation [profiles](/api/validation/static-methods/profile/) (bind the validations to form fields):
 
     ```js 
     const [signinForm, signinV] = Validation.profile(
@@ -138,7 +138,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
         );
     ```
 
-6. Add grouping validations as [event handlers](/api/validation/callable-object/event-handler) and [middleware functions](/api/validation/callable-object/middleware):
+6. Add grouping validations as [event handlers](/api/validation/callable-object/event-handler/) and [middleware functions](/api/validation/callable-object/middleware/):
 
     For the client side:
 
@@ -165,7 +165,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
     app.post('/is-login-not-taken', urlencodeParser, signupV.login, loginRequestHandler);
     ```
 
-7. Connect side effects to validators' and validations' [validity states](/concept/state-callbacks):
+7. Connect side effects to validators' and validations' [validity states](/concept/state-callbacks/):
 
     ```js 
     import {
@@ -201,7 +201,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
     );
     ```
 
-8. Don't forget about [error handling](/concept/error-handling):
+8. Don't forget about [error handling](/concept/error-handling/):
 
     ```js
     import { handleError } from 'your-error-handlers-file.js';
@@ -213,10 +213,10 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 </Steps>
 
 
-You can see in action the client side part of a similar example on the [`Validation.profile()`](/api/validation/static-methods/profile#examples) method page.
+You can see in action the client side part of a similar example on the [`Validation.profile()`](/api/validation/static-methods/profile/#examples) method page.
 
 :::tip
 You can also:
-    - [Group](/concept/grouping-validations) validations if needed to add constraints shared between validations.
-    - [Chain](/concept/chaining-validations) validations in order to implement complex validation logic with UI side effects.
+    - [Group](/concept/grouping-validations/) validations if needed to add constraints shared between validations.
+    - [Chain](/concept/chaining-validations/) validations in order to implement complex validation logic with UI side effects.
 :::

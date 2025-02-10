@@ -5,7 +5,7 @@ sidebar:
     label: Middleware
 ---
 
-A `Validation` object created with the [`Validation.profile()`](/api/validation/static-methods/profile) method can be used as a middleware function on the server side.
+A `Validation` object created with the [`Validation.profile()`](/api/validation/static-methods/profile/) method can be used as a middleware function on the server side.
 
 ## Syntax
 
@@ -26,11 +26,11 @@ None (`undefined`).
 
 ### Exceptions
 
-If invoked without having created a [validation profile](/api/validation/static-methods/profile), throws the corresponding error. Also see "Exceptions" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#exceptions) method.
+If invoked without having created a [validation profile](/api/validation/static-methods/profile/), throws the corresponding error. Also see "Exceptions" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#exceptions) method.
 
 ## Description
 
-When invoked on the server side, runs a [data mapper](/api/validation/instance-methods/datamapper) function and the [`Validation().validate()`](/api/validation/instance-methods/validate) method. Assigns a [validation result](/api/validation-result) to the incoming request object which can be accessed in the next executed middleware. Only validations created with the [`Validation.profile()`](/api/validation/static-methods/profile) method can be used as middleware functions.
+When invoked on the server side, runs a [data mapper](/api/validation/instance-methods/datamapper/) function and the [`Validation().validate()`](/api/validation/instance-methods/validate/) method. Assigns a [validation result](/api/validation-result/) to the incoming request object which can be accessed in the next executed middleware. Only validations created with the [`Validation.profile()`](/api/validation/static-methods/profile/) method can be used as middleware functions.
 
 Using a `Validation` object as a middleware function is intended to reduce boilerplate code.  
 

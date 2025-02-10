@@ -41,13 +41,13 @@ If anything other than a function is passed in the corresponding error will be t
 
 Adds error state callbacks to the `Validation` object. Once the `Validation` is in the error state, the callbacks will be invoked one by one in the order they were added. The main purpose of error state callbacks is to perform side effects related to the error state. 
 
-When validating [grouping](/concept/grouping-validations) `Validation` objects, unlike other [state callbacks](/concept/state-callbacks), error state callbacks of their grouped validations will not be triggered. 
+When validating [grouping](/concept/grouping-validations/) `Validation` objects, unlike other [state callbacks](/concept/state-callbacks/), error state callbacks of their grouped validations will not be triggered. 
 
-This method catches errors that occur in predicate functions and in their associated state callbacks and other state callbacks of the `Validation` (and its grouped validations) when the [`Validation.validate()`](/api/validation/instance-methods/validate) method gets invoked (or the `Validation` object is used as an [event handler](/api/validation/callable-object/event-handler) or [middleware](/api/validation/callable-object/middleware)). 
+This method catches errors that occur in predicate functions and in their associated state callbacks and other state callbacks of the `Validation` (and its grouped validations) when the [`Validation.validate()`](/api/validation/instance-methods/validate/) method gets invoked (or the `Validation` object is used as an [event handler](/api/validation/callable-object/event-handler/) or [middleware](/api/validation/callable-object/middleware/)). 
 
-If you want to just perform side effects and not to catch the error on this level, it is possible to forward the error further to return a rejected `Promise` from the [`Validation().validate()`](/api/validation/instance-methods/validate) method or from the [middleware](/api/validation/callable-object/middleware) by calling the function passed into a callback as the parameter `next`. This may be used to trigger the [`Express`](https://expressjs.com/en/guide/error-handling.html) error handling middleware. If you add several error state callbacks in a row, calling the function `next` in only one of them is enough. 
+If you want to just perform side effects and not to catch the error on this level, it is possible to forward the error further to return a rejected `Promise` from the [`Validation().validate()`](/api/validation/instance-methods/validate/) method or from the [middleware](/api/validation/callable-object/middleware/) by calling the function passed into a callback as the parameter `next`. This may be used to trigger the [`Express`](https://expressjs.com/en/guide/error-handling.html) error handling middleware. If you add several error state callbacks in a row, calling the function `next` in only one of them is enough. 
 
-Also see ["Error handling"](/concept/error-handling).
+Also see ["Error handling"](/concept/error-handling/).
 
 :::caution 
 State callbacks are not "awaited", therefore only synchronous errors that can occur in them will be catched by this method.

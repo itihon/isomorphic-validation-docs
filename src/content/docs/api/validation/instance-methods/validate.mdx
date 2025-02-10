@@ -8,7 +8,7 @@ sidebar:
 import { Code } from '@astrojs/starlight/components';
 import validateExample from '../../../../../../public/playground/api/validation/instance-methods/validate/validate.js?raw';
 
-Validates a [`validatableObject`](/api/validation/constructor#parameters) of the `Validation` against constraints added by the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method. Runs [state callbacks](/concept/state-callbacks).
+Validates a [`validatableObject`](/api/validation/constructor/#parameters) of the `Validation` against constraints added by the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. Runs [state callbacks](/concept/state-callbacks/).
 
 ## Syntax
 
@@ -20,14 +20,14 @@ Validation().validate(validatableObject)
 ### Parameters
 
 - `validatableObject` <sup>optional</sup>
-<br/> An object to which a `Validation` is bound during [creation time](/api/validation/constructor#parameters) or via the [`Validation().bind()`](/api/validation/instance-methods/bind) method.
+<br/> An object to which a `Validation` is bound during [creation time](/api/validation/constructor/#parameters) or via the [`Validation().bind()`](/api/validation/instance-methods/bind/) method.
 <br/> **Default**: `undefined`.
 
 ### Return value
 
 A `Promise` that fufills/rejects depending on the success/fail of the operation: 
 
-- In case of successful execution of the method the `Promise` will be fulfilled with a [`ValidationResult`](/api/validation-result) object no matter valid or invalid. 
+- In case of successful execution of the method the `Promise` will be fulfilled with a [`ValidationResult`](/api/validation-result/) object no matter valid or invalid. 
 
 - If the `Validation` object does not contain predicate groups associated with the `validatableObject` passed in, the `Promise` will be rejected with the error message.
 
@@ -37,17 +37,17 @@ A `Promise` that fufills/rejects depending on the success/fail of the operation:
 
 ### Exceptions
 
-Any synchronous error that occurs in a predicate function or a [state callback](/concept/state-callbacks) will be thrown synchronously unless an [error state callback](/concept/error-handling) was added, in this case the error will be catched.
+Any synchronous error that occurs in a predicate function or a [state callback](/concept/state-callbacks/) will be thrown synchronously unless an [error state callback](/concept/error-handling/) was added, in this case the error will be catched.
 
 ## Description
 
-For a [grouping](/concept/grouping-validations) `Validation`, when a `validatableObject` is passed in only the predicate group associated with this object will be executed. When nothing is passed in all predicate groups will be executed. The passed in `validatableObject` is assigned to the property `target` of the [`ValidationResult`](/api/validation-result) object. 
+For a [grouping](/concept/grouping-validations/) `Validation`, when a `validatableObject` is passed in only the predicate group associated with this object will be executed. When nothing is passed in all predicate groups will be executed. The passed in `validatableObject` is assigned to the property `target` of the [`ValidationResult`](/api/validation-result/) object. 
 
-For a [single](/concept/single-validation) `Validation`, it doesn't matter whether `validatableObject` is passed or not, since it contains only one predicate group, and the property `target` in this case is always set to the object the `Validation` is bound to.  
+For a [single](/concept/single-validation/) `Validation`, it doesn't matter whether `validatableObject` is passed or not, since it contains only one predicate group, and the property `target` in this case is always set to the object the `Validation` is bound to.  
 
 For the reason that predicate functions can be asynchronous with deferred execution, validatable values can be possibly changed during execution of predicate groups, so before running them it preserves current validatable values to ensure data consistency. This means, all predicate functions will be supplied with that data which were at the momement validation process started regardless of their delay.
 
-This method is performed under the hood when a `Validation` object is used as a [middleware](/api/validation/callable-object/middleware) and [event handler](/api/validation/callable-object/event-handler).
+This method is performed under the hood when a `Validation` object is used as a [middleware](/api/validation/callable-object/middleware/) and [event handler](/api/validation/callable-object/event-handler/).
 
 ## Examples
 

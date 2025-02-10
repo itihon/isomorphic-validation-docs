@@ -29,7 +29,7 @@ Validation().constraint(Predicate(predicateFunction), options)
 ### Parameters
 
 - `predicateFunction`
-<br/> A function which returns either a `Boolean` value or a `Promise` of a `Boolean` value. Instead of a function a [`Predicate`](/api/predicate/constructor) object which wraps the function can be passed in.
+<br/> A function which returns either a `Boolean` value or a `Promise` of a `Boolean` value. Instead of a function a [`Predicate`](/api/predicate/constructor/) object which wraps the function can be passed in.
 
 - `options` <sup>optional</sup>
 <br/> An object that specifies predicate execution features. The available options are:
@@ -43,11 +43,11 @@ Validation().constraint(Predicate(predicateFunction), options)
     <br/> **Default**: `0`.
     
     - `keepValid` <sup>optional</sup>
-    <br/> When set to `true`, assigns (restores) a previous valid value or the [initial value](/api/validation/constructor#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor#parameters) of the [validatable object](/api/validation/constructor#parameters). Runs [restored](/api/predicate/instance-methods/restored) state callbacks.
+    <br/> When set to `true`, assigns (restores) a previous valid value or the [initial value](/api/validation/constructor/#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor/#parameters) of the [validatable object](/api/validation/constructor/#parameters). Runs [restored](/api/predicate/instance-methods/restored/) state callbacks.
     <br/> **Default**: `false`.
     
     - `anyData` <sup>optional</sup>
-    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property and in [`ValidationResult`](/api/validation-result).
+    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property and in [`ValidationResult`](/api/validation-result/).
     <br/> **Default**: `undefined`.
 
 ### Return value
@@ -62,7 +62,7 @@ The `Validation` object.
 
 ## Description
 
-Adds a predicate function to the predicate group associated with the bound [`validatableObject`](/api/validation/constructor#parameters) of the [single](/concept/single-validation) `Validation`. When invoked on a [grouping](/concept/grouping-validations) `Validation`, does it for each predicate group of the `Validation`. A predicate function must return either a `Boolean` value, if it is synchronous, or a `Promise` that fulfills with a `Boolean` value, if it is asynchronous, otherwise the [`Validation().validate()`](/api/validation/instance-methods/validate) method will throw an error or return a rejected `Promise` respectively.
+Adds a predicate function to the predicate group associated with the bound [`validatableObject`](/api/validation/constructor/#parameters) of the [single](/concept/single-validation/) `Validation`. When invoked on a [grouping](/concept/grouping-validations/) `Validation`, does it for each predicate group of the `Validation`. A predicate function must return either a `Boolean` value, if it is synchronous, or a `Promise` that fulfills with a `Boolean` value, if it is asynchronous, otherwise the [`Validation().validate()`](/api/validation/instance-methods/validate/) method will throw an error or return a rejected `Promise` respectively.
 
 ## Examples
 
@@ -110,7 +110,7 @@ Enter an e-mail in the proper format, wait for the hourglass icon "⏳" which ap
 
 ### Parameter "anyData"
 
-This example keeps bulding up on the previous one. Here translated validator messages are  accessed by i18n keys supplied with predicate functions as `anyData` while adding constraints which in turn are accessed through [`ValidationResult`](/api/validation-result) in [state callbacks](/concept/state-callbacks) by `i18nMsg` helper function.
+This example keeps bulding up on the previous one. Here translated validator messages are  accessed by i18n keys supplied with predicate functions as `anyData` while adding constraints which in turn are accessed through [`ValidationResult`](/api/validation-result/) in [state callbacks](/concept/state-callbacks/) by `i18nMsg` helper function.
  
 <Playground client:visible  
     params={{
@@ -126,7 +126,7 @@ This example keeps bulding up on the previous one. Here translated validator mes
 
 This option allows to completely prevent input of certain characters. It can be used to restrict input fields to accept only allowed characters or ignore unwanted characters.
 
-In this example the input field is restricted to accept only letter characters. Additionaly, [`Predicate().started()`](/api/predicate/instance-methods/started) and [`Predicate().restored()`](/api/predicate/instance-methods/restored) state callbacks can be used to perform some side effects like saving and restoring the caret position.
+In this example the input field is restricted to accept only letter characters. Additionaly, [`Predicate().started()`](/api/predicate/instance-methods/started/) and [`Predicate().restored()`](/api/predicate/instance-methods/restored/) state callbacks can be used to perform some side effects like saving and restoring the caret position.
 
 <Playground client:visible  
     params={{

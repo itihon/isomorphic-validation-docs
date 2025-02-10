@@ -21,7 +21,7 @@ Predicate().invalid(callback1, callback2, /* ..., */ callbackN)
 <br/> Functions to add. The callback functions will be called with the following arguments:
 
     - `validationResult` 
-    <br/> A [`ValidationResult`](/api/validation-result) object. 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
 
 ### Return value
 
@@ -33,7 +33,7 @@ If anything other than a function is passed in the corresponding error will be t
 
 ## Description
 
-Adds state callbacks to the `Predicate` object. Once the `Predicate` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result) object is passed into state callbacks.
+Adds state callbacks to the `Predicate` object. Once the `Predicate` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result/) object is passed into state callbacks.
 
 ## Examples
 

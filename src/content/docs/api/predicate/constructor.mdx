@@ -31,7 +31,7 @@ If neither a function nor another `Predicate` is passed as the only parameter th
 
 ## Description
 
-Creates a new `Predicate` instance. It is just a container for a predicate function which will be unpacked in the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method. The main purpose of it is attaching state callbacks to a predicate function before passing it into the [`Validation().constraint()`](/api/validation/instance-methods/constraint) method. If another `Predicate` is passed as the only parameter, a new (cloned) instance will be returned with the predicate function and state callbacks of the passed `Predicate`. 
+Creates a new `Predicate` instance. It is just a container for a predicate function which will be unpacked in the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. The main purpose of it is attaching state callbacks to a predicate function before passing it into the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. If another `Predicate` is passed as the only parameter, a new (cloned) instance will be returned with the predicate function and state callbacks of the passed `Predicate`. 
 
 ## Examples
 
@@ -41,6 +41,6 @@ Creates a new `Predicate` instance. It is just a container for a predicate funct
 
 ### Cloning a `Predicate`
 
-In this example there are two `Predicates` which have the same predicate function and [valid](/api/predicate/instance-methods/valid) and [invalid](/api/predicate/instance-methods/invalid) state callbacks. But the second one additinaly have [started](/api/predicate/instance-methods/started) and [validated](/api/predicate/instance-methods/validated) state callbacks added. In other words the second one has everything what the first one has plus two more state callbacks. So we clone the first one and add two extra state callbacks. It spares us from writing a pair of lines of code, but there could be much more.
+In this example there are two `Predicates` which have the same predicate function and [valid](/api/predicate/instance-methods/valid/) and [invalid](/api/predicate/instance-methods/invalid/) state callbacks. But the second one additinaly have [started](/api/predicate/instance-methods/started/) and [validated](/api/predicate/instance-methods/validated/) state callbacks added. In other words the second one has everything what the first one has plus two more state callbacks. So we clone the first one and add two extra state callbacks. It spares us from writing a pair of lines of code, but there could be much more.
 
 <Code code={clonePredicateExample} lang='js' />

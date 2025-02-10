@@ -16,10 +16,10 @@ An `Array` of `Validation` objects.
 
 ## Description
 
-On a [single](/concept/single-validation) `Validation` object, this property returns an empty `Array`.  On a [grouping](/concept/grouping-validations) `Validation`, this property returns an `Array` of the grouped `Validation` objects which were passed in the [`Validation.group()`](/api/validation/static-methods/group) or [`Validation.glue()`](/api/validation/static-methods/glue) method.
+On a [single](/concept/single-validation/) `Validation` object, this property returns an empty `Array`.  On a [grouping](/concept/grouping-validations/) `Validation`, this property returns an `Array` of the grouped `Validation` objects which were passed in the [`Validation.group()`](/api/validation/static-methods/group/) or [`Validation.glue()`](/api/validation/static-methods/glue/) method.
 
 ## Examples
 
-In this example two `Validation` objects are grouped into one an then accessed through the grouping `Validation` object's `.validations` property to add a [validated](/api/validation/instance-methods/validated) state callback to each.
+In this example two `Validation` objects are grouped into one an then accessed through the grouping `Validation` object's `.validations` property to add a [validated](/api/validation/instance-methods/validated/) state callback to each.
 
 <Code code={validationsExample} lang='js' mark={['.validations', '.group' ]}/>

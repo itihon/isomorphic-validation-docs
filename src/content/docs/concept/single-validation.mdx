@@ -29,7 +29,7 @@ Validation(firstName)
 
 <Image src={singleValidationGif} alt={config.title.en.concat(' | Single validation')}></Image>
 
-We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks).
+We can connect UI effects to changes of the validity state of a `Validation` object and changes of execution results of its predicates by adding [`state callbacks`](/concept/state-callbacks/).
 
 ```js "validated"
 Validation(firstName)
@@ -50,7 +50,7 @@ Validation(firstName)
 // Predicate() is a wrapper for adding state callbacks to predicate functions
 ```
 
-It is also possible to access added constraints through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property in order to connect UI effects and achieve slightly more compact code:
+It is also possible to access added constraints through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property in order to connect UI effects and achieve slightly more compact code:
 
 ```js "validated" "constraints"
 const validation = Validation(firstName)
@@ -65,7 +65,7 @@ const validation = Validation(firstName)
 );
 ```
 
-Now, to run the predicate group, we need to add the `Validation` object as an [event handler](/api/validation/callable-object/event-handler) or invoke the [`Validation().validate()`](/api/validation/instance-methods/validate) method explicitly.
+Now, to run the predicate group, we need to add the `Validation` object as an [event handler](/api/validation/callable-object/event-handler/) or invoke the [`Validation().validate()`](/api/validation/instance-methods/validate/) method explicitly.
 
 <Image src={singleValidation2Gif} alt={config.title.en.concat(' | Single validation side effects')}></Image>
 

@@ -16,9 +16,9 @@ import groupingValidationsCSS from '../../../../public/playground/concept/groupi
 import groupingValidationsJS from '../../../../public/playground/concept/grouping-validations/grouping-validations.js?raw';
 
 Grouping validations are created with static methods: 
-- [`Validation.group()`](/api/validation/static-methods/group) 
-- [`Validation.glue()`](/api/validation/static-methods/glue) 
-- [`Validation.profile()`](/api/validation/static-methods/profile)
+- [`Validation.group()`](/api/validation/static-methods/group/) 
+- [`Validation.glue()`](/api/validation/static-methods/glue/) 
+- [`Validation.profile()`](/api/validation/static-methods/profile/)
 
 A grouping `Validation` object contains several predicate groups which can be associated with different validatable objects as well as with the same one. Its validity state depends on execution results of all predicate functions in the contained groupes.
 
@@ -34,7 +34,7 @@ Validation.group( Validation(firstName), Validation(lastName) )
 
 <Image src={groupingValidationsGif} alt={config.title.en.concat(' | Grouping validations')}></Image>
 
-The [`Validation().constraint()`](/api/validation/instance-methods/constraint) method invoked on a grouping `Validation` adds a predicate function to each predicate group it contains.
+The [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method invoked on a grouping `Validation` adds a predicate function to each predicate group it contains.
 
 Consider this code snippet. 
 
@@ -61,7 +61,7 @@ const signupValidation = Validation.group(
 //  areTwoEqual are predicate functions
 ```
 
-Resulting `signupValidation` will contain 4 predicate groups which can be accessed through the [`Validation().constraints`](/api/validation/instance-properties/constraints) property as `signupValidation.constraints`:
+Resulting `signupValidation` will contain 4 predicate groups which can be accessed through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property as `signupValidation.constraints`:
     - `firstName`:
 
         - `isAlpha`
@@ -89,7 +89,7 @@ Resulting `signupValidation` will contain 4 predicate groups which can be access
         - `areTwoEqual`
 
 
-The `Validation` objects that were grouped can be accessed through the [`Validation().validations`](/api/validation/instance-properties/validations) property as `signupValidation.validations`.
+The `Validation` objects that were grouped can be accessed through the [`Validation().validations`](/api/validation/instance-properties/validations/) property as `signupValidation.validations`.
 
 We can connect UI effects to state changes of the grouping `Validation`, its grouped validations, and execution of predicate functions.
 
@@ -112,7 +112,7 @@ const [ firstAndLastNameV, pwdV ] = signupValidation.validations;
 );
 ```
 
-Now, if we add the grouping `Validation` as an [event handler](/api/validation/callable-object/event-handler) it will be running the predicate group associated with the input element passed as the [`target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) property of the [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) object.
+Now, if we add the grouping `Validation` as an [event handler](/api/validation/callable-object/event-handler/) it will be running the predicate group associated with the input element passed as the [`target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) property of the [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) object.
 
 <Image src={groupingValidations2Gif} alt={config.title.en.concat(' | Side effects for state change of grouping validations')}></Image>
 

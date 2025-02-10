@@ -28,7 +28,7 @@ Validation().dataMapper(mappingFunction)
     <br/> A request object. 
     
     - `form` 
-    <br/> A form object created with the [`Validation.profile()`](/api/validation/static-methods/profile) method. 
+    <br/> A form object created with the [`Validation.profile()`](/api/validation/static-methods/profile/) method. 
 
 ### Return value
 
@@ -38,17 +38,17 @@ The `Validation` object.
 
 - If anything other than a function is passed in the corresponding error will be thrown. 
 
-- If invoked on a `Validation` which was not created with the [`Validation.profile()`](/api/validation/static-methods/profile) method, throws the corresponding error.
+- If invoked on a `Validation` which was not created with the [`Validation.profile()`](/api/validation/static-methods/profile/) method, throws the corresponding error.
 
 ## Description
 
-The main purpose of this method is to provide a way of mapping a request object's body with form fields specified in the [`Validation.profile()`](/api/validation/static-methods/profile) method in cases when they do not correspond to each other when a `Validation` is used as a [middleware](/api/validation/callable-object/middleware) function.
+The main purpose of this method is to provide a way of mapping a request object's body with form fields specified in the [`Validation.profile()`](/api/validation/static-methods/profile/) method in cases when they do not correspond to each other when a `Validation` is used as a [middleware](/api/validation/callable-object/middleware/) function.
 
 ## Examples
 
 ### Validating file metadata before uploading to S3 storage
 
-In this example the `Validation().dataMapper()` method is used to map the values passed as URL search parameters to the form fields created with the [`Validation.profile()`](/api/validation/static-methods/profile) method.
+In this example the `Validation().dataMapper()` method is used to map the values passed as URL search parameters to the form fields created with the [`Validation.profile()`](/api/validation/static-methods/profile/) method.
 
 The project can be downloaded [here](https://github.com/itihon/isomorphic-validation-docs/tree/main/public/playground/api/validation/instance-methods/datamapper/test_image_upload_s3).
 

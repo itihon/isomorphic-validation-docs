@@ -37,7 +37,7 @@ Validation(validatableObject, options)
     <br/> **Default**: string `'value'`.
 
     - `initValue` <sup>optional</sup>
-    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
+    <br/> The initial value is used while validating against constraints [added](/api/validation/instance-methods/constraint/#parameters) with the parameter `keepValid=true` or if the `Validation` was created with the parameter `optional=true`.
     <br/> **Default**: empty string `''`.
     
     - `optional` <sup>optional</sup>
@@ -51,7 +51,7 @@ A new `Validation` instance.
 
 ## Description
 
-Creates a new [single](/concept/single-validation) `Validation` instance bound to the `validatableObject`. The `path` evaluates while the [`Validation().validate()`](/api/validation/instance-methods/validate) method is being called or when the created instance is being invoked as a [middleware](/api/validation/callable-object/middleware) or [event handler](/api/validation/callable-object/event-handler). So it is acceptable for the property that is being accessed by the `path` to not exist at the creation time. This may be useful for example when validating file meta data on a file input element `<input type="file" />` since particular properties do not exist until a file is opened.
+Creates a new [single](/concept/single-validation/) `Validation` instance bound to the `validatableObject`. The `path` evaluates while the [`Validation().validate()`](/api/validation/instance-methods/validate/) method is being called or when the created instance is being invoked as a [middleware](/api/validation/callable-object/middleware/) or [event handler](/api/validation/callable-object/event-handler/). So it is acceptable for the property that is being accessed by the `path` to not exist at the creation time. This may be useful for example when validating file meta data on a file input element `<input type="file" />` since particular properties do not exist until a file is opened.
 
 ## Examples
 
@@ -76,7 +76,7 @@ Creates a new [single](/concept/single-validation) `Validation` instance bound t
 
 Some libraries offer marking form fields as "required" in one way or another. HTML input elements have the [`required`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required) attribute. In fact, in most cases form fields are required to be filled out. This library has the opposite approach. Instead of marking almost every field as "required", it offers making only needed validations "optional". 
 
-In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
+In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler/). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
 
 <Playground client:visible  
     params={{
