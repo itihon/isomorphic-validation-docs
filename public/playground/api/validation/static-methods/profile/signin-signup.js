@@ -1,10 +1,7 @@
 import { Validation, Predicate } from 'isomorphic-validation';
-import { firstInvalid } from 'isomorphic-validation/ui';
+import { firstInvalid, applyAccess } from 'isomorphic-validation/ui';
 
 // ui effects functions
-
-const enableElement = (element) => () => element.disabled = false;
-const disableElement = (element) => () => element.disabled = true;
 
 const markValidity = ({target, isValid}) => {
     const label = target.previousElementSibling;
@@ -155,9 +152,8 @@ signupV.login
             form, 
             validation
                 .client // the following state callbacks will be added on the client side
-                .started(disableElement(form.submitBtn))
-                .invalid(disableElement(form.submitBtn))
-                .valid(enableElement(form.submitBtn))
+                .started(applyAccess(form.submitBtn, { disabled: true })) // always disable submit button regardless of validity
+                .validated(applyAccess(form.submitBtn)) // enable/disable submit button depending on validity
                 .error(console.error),
         ]
     )
