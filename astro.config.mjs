@@ -54,7 +54,8 @@ export default defineConfig({
             credits: true,
             sidebar: [
                 {
-                    slug: 'getting-started',
+                    label: 'Getting started',
+                    link: '/getting-started/',
                 },
                 {
                     label: 'Concept',
@@ -108,7 +109,8 @@ export default defineConfig({
                             label: 'Validation',
                             items: [
                                 {
-                                    slug: 'api/validation/constructor'
+                                    label: 'Validation() constructor',
+                                    link: '/api/validation/constructor/',
                                 },
                                 {
                                     label: 'Instance methods',
@@ -132,7 +134,8 @@ export default defineConfig({
                             label: 'Predicate',
                             items: [
                                 {
-                                    slug: 'api/predicate/constructor'
+                                    label: 'Predicate() constructor',
+                                    link: '/api/predicate/constructor/',
                                 },
                                 {
                                     label: 'Instance methods',
@@ -146,7 +149,7 @@ export default defineConfig({
                         },
                         {
                             label: 'ValidationResult',
-                            slug: 'api/validation-result',
+                            link: '/api/validation-result/',
                         },
                     ],
                 },
