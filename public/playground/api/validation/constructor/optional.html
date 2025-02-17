@@ -18,12 +18,16 @@
 
             <h5>Age</h5> 
             <input type="number" name="age" placeholder="Age" />
+            
+            <h5>Secret question</h5> 
+            <textarea name="secret" placeholder="Make up your security question"></textarea> *
 
             <br><br>
             <input type="submit" name="submitBtn" disabled />
         </form>
         <p>"First name" and "Last name" fields should be filled in with only letter characters.</p>
         <p>The "Age" field is optional and should be filled in with a natural number between 21 and 45.</p>
-        <p class="note"><b>Note:</b> There is a quirk in Google Chrome, Firefox and maybe in other browsers. If you type in an input field with type="number" something like "1234+" or "1234-" it transforms into an <b>empty string</b>, which is valid as a value.</p>
+        <p>The "Secret question" should be less than 250 characters long.</p>
+        <p class="note"><b>Note:</b> There is a quirk in Google Chrome, Firefox and maybe in other browsers. If you type in an input field with type="number" something like "1234+" or "1234-" it transforms into an <b>empty string</b>, which is valid as a value for an "optional" field.</p>
     </body>
 </html>

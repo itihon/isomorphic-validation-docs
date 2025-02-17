@@ -11,8 +11,9 @@ const isOnlyLetters = (value) => /^[A-Za-z]+$/.test(value);
 const isNaturalNumber = (value) => /^[1-9]+[0-9]*$/.test(value);
 const isLessOrEqual = (number) => (value) => Number(value) <= Number(number);
 const isGreaterOrEqual = (number) => (value) => Number(value) >= Number(number);
+const isShorterThan = (number) => (value) => value.length < number;
 
-const { firstName, lastName, age, submitBtn } = document.form;
+const { firstName, lastName, age, secret, submitBtn } = document.form;
 
 document.form.addEventListener(
     'input',
@@ -32,6 +33,10 @@ document.form.addEventListener(
             .constraint(isNaturalNumber)
             .constraint(isGreaterOrEqual(21))
             .constraint(isLessOrEqual(45))
+            .validated(paintBackground),
+
+        Validation(secret)
+            .constraint(isShorterThan(250))
             .validated(paintBackground),
     )
     .changed(enableElement(submitBtn))

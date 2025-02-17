@@ -41,7 +41,7 @@ Validation(validatableObject, options)
     <br/> **Default**: empty string `''`.
     
     - `optional` <sup>optional</sup>
-    <br/> When set to `true`, the predicate group will be executed only if the validatable value is not equal to `initValue` or `undefined` otherwise it will be in "valid" state, in other words, making `initValue` and `undefined` valid values but any other value is required to be validated. An optional `Validation` by default is in "valid" state after creation.
+    <br/> When set to `true`, the predicate group will be executed only if the validatable value is not equal to `initValue` or `undefined` otherwise it will be in "valid" state, in other words, making `initValue` and `undefined` valid values but any other value is required to be validated. An "optional" `Validation` by default is in "valid" state after creation. On the contrary, for a "non-optional" `Validation`, the validatable value equal to the initial value is treated as invalid even if it is in the range of valid values of the added predicate functions. 
     <br/> **Default**: `false`.
     
 
@@ -76,7 +76,7 @@ Creates a new [single](/concept/single-validation/) `Validation` instance bound 
 
 Some libraries offer marking form fields as "required" in one way or another. HTML input elements have the [`required`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required) attribute. In fact, in most cases form fields are required to be filled out. This library has the opposite approach. Instead of marking almost every field as "required", it offers making only needed validations "optional". 
 
-In this example "First name", "Last name", and "Age" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler/). Fill out "First name" and "Last name" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. 
+In this example "First name", "Last name", "Age" and "Secret question" `Validations` are grouped into one `Validation` object which is added as the form's input [event handler](/api/validation/callable-object/event-handler/). Fill out "First name", "Last name" and "Secret question" fields, the submit button gets enabled even though the "Age" field is empty. Start filling out the "Age" field, the submit button gets disabled. As this field is optional, it should either be left empty or contain a valid number value. The "Secret question" field has the only constraint that requires its content to be shorter than 250 characters. Now if you clear this field it becomes invalid despite 0 characters being less than 250. This is because for a "non-optional" (required) validation, the initial value is considered as invalid.
 
 <Playground client:visible  
     params={{
