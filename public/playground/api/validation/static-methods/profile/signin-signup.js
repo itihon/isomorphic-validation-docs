@@ -1,51 +1,47 @@
 import { Validation, Predicate } from 'isomorphic-validation';
-import { firstInvalid, applyAccess } from 'isomorphic-validation/ui';
+import { applyAccess, applyBox, renderFirstError, renderProperty } from 'isomorphic-validation/ui';
 
-// ui effects functions
+// ui effects 
 
-const markValidity = ({target, isValid}) => {
-    const label = target.previousElementSibling;
-    const haveMark = label.innerText[label.innerText.length - 1] === '✔';
-
-    if (isValid) {
-        if (!haveMark) {
-            label.innerText = label.innerText + ' ✔';
-        }
-    }
-    else {
-        if (haveMark) {
-            label.innerText = label.innerText.slice(0, -2);
-        }
-    }
-}
-
-const useMsgBox = (selector) => {
-    const getBoxNextTo = (target) => {
-        const { parentNode, name } = target;
-        return parentNode.querySelector(`[name=${name}]+${selector}`);
-    };
-
-    const show = ({ target }) => { getBoxNextTo(target).style.opacity = 1; };
-    const hide = ({ target }) => { getBoxNextTo(target).style.opacity = 0; };
-    const set = ({ target, msg }) => { getBoxNextTo(target).innerText = msg; };
-    const reset = ({ target }) => { getBoxNextTo(target).innerText = ''; };
-
-    return [ show, hide, set, reset ];
+const msgBoxStyle = { 
+    padding: '4px',
+    lineHeight: '12px',
+    color: 'red', 
+    fontSize: '10px',
+    backgroundColor: 'white',
+    boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, .5)',
+    borderRadius: '2px',
+    width: '100%',
+    zIndex: 1,
 };
 
-const [showMsg, hideMsg, setMsg, resetMsg] = useMsgBox('.msg-box');
-
-// helper functions
-
-const preserveFirstErrMsg = (result) => {
-    const [, validator] = firstInvalid(result);
-    result.msg = validator ? validator.invalidMsg : '';
+const validSign = {
+    true: { value: '✔' }, // show when Validation().isValid === true, otherwise clear
+    style: { color: 'green' },
 };
 
-const preserveStartedMsg = (result) => {
-    const [[, { startedMsg }]] = result;
-    result.msg = startedMsg;
-}
+const invalidSign = {
+    false: { delay: 2000, value: '✖' }, // show when Validation().isValid === false, otherwise clear
+    style: { color: 'red' },
+    position: 'LEVEL_RIGHT',
+};
+
+const errorMsgBox = {
+    false: { delay: 2000, value: renderFirstError('invalidMsg') }, // show when Validation().isValid === false, otherwise clear
+    mode: 'MAX_SIDE',
+    position: 'BELOW_LEFT',
+    style: msgBoxStyle, 
+};
+
+const startedMsgBox = {
+    ...errorMsgBox,
+    true: { value: renderProperty('startedMsg') }, // show when Validation().isValid === true
+    false: { value: renderProperty('startedMsg') },// the same is when Validation().isValid === false
+    style: { ...msgBoxStyle, color: 'green' },
+};
+
+const msgBoxEID = 'MSG_BOX'; // message box effect id
+const [cancelErrBox, setErrBox] = applyBox(errorMsgBox, msgBoxEID); // one container will be used for showing messages on both forms
 
 // predicate functions
 
@@ -124,7 +120,7 @@ signupV.login
     .constraint(
         Predicate(isNotTaken)
             .client // the following state callback will be added on the client side
-            .started(preserveStartedMsg, setMsg, showMsg),
+            .started(applyBox(startedMsgBox, msgBoxEID)), // will be rendered in the same container as error messages will be
         { 
             startedMsg: '⏳ Checking login for existence...',
             invalidMsg: 'Login must not be already registered.', 
@@ -134,40 +130,43 @@ signupV.login
 
 // connecting ui effects to the validations
 
-[...signinV.validations, ...signupV.validations].forEach(
-    validation => validation
-        .client // the following state callbacks will be added on the client side
-        .invalid(preserveFirstErrMsg, setMsg)
-        .changed(preserveFirstErrMsg)
-        .changed(({ target, isValid, msg }) => { // for password and password confirmation
-            isValid ?  resetMsg({ target }) : setMsg({ target, msg });
-        })
-        .changed(markValidity)
-        .valid(resetMsg)
+[...signinV.validations, ...signupV.validations].forEach( // for grouped (nested) validations
+    (validation, idx) => {
+        const label = [...validation.constraints][0][0].previousElementSibling;
+        const validSignEID = 'VALID_SIGN' + idx; // "valid" sign effect id
+        const invalidSignEID = 'INVALID_SIGN' + idx; // "invalid" sign effect id
+
+        validation
+            .client // the following state callbacks will be added on the client side
+
+            /* The "valid" sign for the field's label element */
+            .started(applyBox(label, validSignEID))              // clear the "valid" sign
+            .validated(applyBox(label, validSign, validSignEID)) // set the "valid" sign
+            .changed(applyBox(label, validSign, validSignEID))   // set the "valid" sign (for glued validations)
+
+            /* The "invalid" sign for a field element */
+            .started(applyBox(invalidSignEID))                   // clear the "invalid" sign
+            .validated(applyBox(invalidSign, invalidSignEID))    // set the "invalid" sign
+            .changed(applyBox(invalidSign, invalidSignEID))      // set the "invalid" sign (for glued validations)
+
+            /* The message box for a field element */
+            .started(cancelErrBox)
+            .valid(cancelErrBox)
+            .validated(setErrBox)
+            .changed(setErrBox);
+        }
 );
 
-[[signinForm, signinV], [signupForm, signupV]]
-    .map(
-        ([form, validation]) => [ 
-            form, 
-            validation
-                .client // the following state callbacks will be added on the client side
-                .started(applyAccess(form.submitBtn, { disabled: true })) // always disable submit button regardless of validity
-                .validated(applyAccess(form.submitBtn)) // enable/disable submit button depending on validity
-                .error(console.error),
-        ]
-    )
-    .forEach(
-        ([form, validation]) => {
-            form.addEventListener('input', validation);
-            [...form].forEach(input => {
-                if (input !== form.submitBtn) {
-                    input.addEventListener('focusin', hideMsg);
-                    input.addEventListener('focusout', showMsg);
-                }
-            });
-        }
-    );
+[[signinForm, signinV], [signupForm, signupV]].forEach( // for grouping validations
+    ([form, validation]) => { 
+        form.addEventListener('input', validation);
+        validation
+            .client // the following state callbacks will be added on the client side
+            .started(applyAccess(form.submitBtn, { disabled: true })) // always disable submit button regardless of validity
+            .validated(applyAccess(form.submitBtn)) // enable/disable submit button depending on validity
+            .error(console.error);
+    }
+);
     
 // export validations to use on the server side as middleware functions
 export { signinV, signupV };
