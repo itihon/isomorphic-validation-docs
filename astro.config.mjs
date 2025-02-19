@@ -151,6 +151,23 @@ export default defineConfig({
                             label: 'ValidationResult',
                             link: '/api/validation-result/',
                         },
+                        {
+                            label: 'UI',
+                            items: [
+                                {
+                                    label: 'Helper functions',
+                                    autogenerate: { directory: 'api/ui/helper-functions'}
+                                },
+                                {
+                                    label: 'Renderer functions',
+                                    autogenerate: { directory: 'api/ui/renderer-functions'}
+                                },
+                                {
+                                    label: 'Effect functions',
+                                    autogenerate: { directory: 'api/ui/effect-functions'}
+                                },
+                            ],
+                        },
                     ],
                 },
             ],

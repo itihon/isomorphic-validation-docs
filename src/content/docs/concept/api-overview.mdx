@@ -5,9 +5,11 @@ sidebar:
     order: 1
 ---
 
-The library exposes two entities: [`Validation`](/api/validation/constructor/) and [`Predicate`](/api/predicate/constructor/).
+## Core module "isomorphic-validation"
 
-## Instance methods:
+The core module of the library exports two entities: [`Validation`](/api/validation/constructor/) and [`Predicate`](/api/predicate/constructor/).
+
+### Instance methods:
 
 <div style="display: flex">
 <span>
@@ -33,7 +35,7 @@ The library exposes two entities: [`Validation`](/api/validation/constructor/) a
 </span>
 </div>
 
-## Instance properties:
+### Instance properties:
 
 <div style="display: flex">
 <span>
@@ -51,7 +53,7 @@ The library exposes two entities: [`Validation`](/api/validation/constructor/) a
 </span>
 </div>
 
-## Static methods:
+### Static methods:
 
 <div style="display: flex">
 <span>
@@ -62,7 +64,7 @@ The library exposes two entities: [`Validation`](/api/validation/constructor/) a
 </span>
 </div>
 
-## Validation object
+### Validation object
 
 A `Validation` object can be created several ways:
     - a [single](/concept/single-validation/) `Validation` is created by the [constructor](/api/validation/constructor/) function.
@@ -74,7 +76,7 @@ Nested (grouped) `Validation` objects are accessed through:
     - the [`Validation().validations`](/api/validation/instance-properties/validations/) property.
     - by form field names when created using the [`Validation.profile()`](/api/validation/static-methods/profile/) method.
 
-## Predicate object
+### Predicate object
 
 A `Predicate` object can be created:
     - by the [constructor](/api/predicate/constructor/) function.
@@ -83,3 +85,28 @@ A `Predicate` object can be created:
 `Predicate` objects added to validations can be accessed:
     - through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property.
     - in [state callbacks](/concept/state-callbacks/) through the [`ValidationResult`](/api/validation-result/) object passed in.
+
+## UI module "isomorphic-validation/ui"
+
+The UI module exports the following set of helper, renderer and effect functions for performing UI side effects:
+
+### Helper functions
+
+- [`firstInvalid()`](/api/ui/helper-functions/first-invalid/)
+- [`allInvalid()`](/api/ui/helper-functions/all-invalid/)
+- [`toEventHandler()`](/api/ui/helper-functions/to-event-handler/)
+- [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/)
+
+### Renderer functions 
+
+- [`renderFirstError()`](/api/ui/renderer-functions/render-first-error/)
+- [`renderAllErrors()`](/api/ui/renderer-functions/render-all-errors/)
+- [`renderProperty()`](/api/ui/renderer-functions/render-property/)
+
+### Effect functions
+
+- [`applyClass()`](/api/ui/effect-functions/apply-class/)
+- [`applyOutline()`](/api/ui/effect-functions/apply-outline/)
+- [`applyBackground()`](/api/ui/effect-functions/apply-background/)
+- [`applyAccess()`](/api/ui/effect-functions/apply-access/)
+- [`applyBox()`](/api/ui/effect-functions/apply-box/)
