@@ -13,6 +13,11 @@ Adds state callbacks which will be invoked during the execution of the [`Validat
 
 ```js
 Validation().started(callback1, callback2, /* ..., */ callbackN)
+Validation().started([callback1, callback2, /* ..., */ callbackN])
+Validation().started(callback1, [callback2, /* ..., */ callbackN])
+Validation().started(callback1, [[callback2], /* ..., */ callbackN])
+Validation().started([callback1, callback2], /* ..., */ callbackN)
+Validation().started([[callback1], callback2], /* ..., */ callbackN)
 ```
 
 ### Parameters
@@ -29,9 +34,11 @@ The `Validation` object.
 
 ### Exceptions
 
-If anything other than a function is passed in the corresponding error will be thrown. 
+If anything other than a function was passed in or an `Array` that contains not a function the corresponding error will be thrown. 
 
 ## Description
+
+Accepts functions or arrays of functions of any nesting level or both in any combination. 
 
 Adds state callbacks to the `Validation` object. Once the `Validation` in the specified state, the corresponding callbacks will be invoked one by one in the order they were added. The main purpose of state callbacks is to perform side effects related to the state. A [`ValidationResult`](/api/validation-result/) object is passed into state callbacks.
 

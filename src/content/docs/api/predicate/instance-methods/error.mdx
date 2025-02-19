@@ -16,6 +16,11 @@ Adds state callbacks which will be invoked when an error occurs in predicate fun
 
 ```js
 Predicate().error(callback1, callback2, /* ..., */ callbackN)
+Predicate().error([callback1, callback2, /* ..., */ callbackN])
+Predicate().error(callback1, [callback2, /* ..., */ callbackN])
+Predicate().error(callback1, [[callback2], /* ..., */ callbackN])
+Predicate().error([callback1, callback2], /* ..., */ callbackN)
+Predicate().error([[callback1], callback2], /* ..., */ callbackN)
 ```
 ### Parameters
 
@@ -34,9 +39,11 @@ The `Predicate` object.
 
 ### Exceptions
 
-If anything other than a function is passed in the corresponding error will be thrown. 
+If anything other than a function was passed in or an `Array` that contains not a function the corresponding error will be thrown. 
 
 ## Description
+
+Accepts functions or arrays of functions of any nesting level or both in any combination. 
 
 Adds error state callbacks to the `Predicate` object. Once the `Predicate` is in the error state, the callbacks will be invoked one by one in the order they were added. The main purpose of error state callbacks is to perform side effects related to the error state. 
 
