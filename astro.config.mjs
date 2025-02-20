@@ -52,6 +52,7 @@ export default defineConfig({
                 SiteTitle: './src/components/SiteTitle.astro',
             },
             credits: true,
+            lastUpdated: true,
             sidebar: [
                 {
                     label: 'Getting started',
