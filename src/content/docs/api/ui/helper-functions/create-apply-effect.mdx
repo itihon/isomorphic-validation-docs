@@ -1,9 +1,191 @@
 ---
 title: createApplyEffect() function
-description: Creates an effect function with deferred execution that can perform side effects depending on a target element and validity.
+description: Creates an apply effect function with the ability of deferred execution that can perform side effects depending on a target element and validation results validity state.
 sidebar: 
     label: createApplyEffect()
     badge: New
 ---
 
-Will be available soon...
+Creates an apply effect function with the ability of deferred execution that can perform side effects depending on a target element and validation results validity state.
+
+## Syntax
+
+```js
+createApplyEffect(effectFunction, defaultStateValues)
+```
+
+### Parameters
+
+- `effectFunction`
+<br/> An effect function that will be called with the following arguments:
+
+    - `htmlElement`
+    <br/> An object that implements the [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) interface. 
+    
+    - `stateValues`
+    <br/> An object that specifies values for validity states. The available properties are:
+
+        - `true`
+        <br/> An object with properties for the validity state equal to `true`. The available properties are:
+
+            - `delay`
+            <br/> A number in milliseconds for the effect to be deferred for this validity state.
+            
+            - `value`
+            <br/> Any value to be used for applying the effect for this validity state.
+
+        - `false`
+        <br/> An object with properties for the validity state equal to `false`. The available properties are:
+
+            - `delay`
+            <br/> A number in milliseconds for the effect to be deferred for this validity state.
+            
+            - `value`
+            <br/> Any value to be used for applying the effect for this validity state.
+        
+        - `...`
+        <br/> Any additional properties can be supplied for using in `effectFunciton`.
+    
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
+    
+    - `effectID` 
+    <br/> A string identifier of the effect.
+
+- `defaultStateValues` <sup>optional</sup>
+<br/> An object that specifies values for validity states. The available properties are:
+
+    - `true` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `true`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> Any value to be used for applying the effect for this validity state.
+        <br/> **Default**: `null`.
+
+    - `false` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `false`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> Any value to be used for applying the effect for this validity state.
+        <br/> **Default**: `null`.
+
+    - `...` <sup>optional</sup>
+    <br/> Default values for any additional properties can be specified here if planned to be supplied in `stateValues` for using in `effectFunciton`.
+
+### Return value
+
+A new apply effect function that accepts `htmlElement`, `effectID`, `stateValues` as arguments and returns an `Array` with two functions: for cancellation and setting the effect.
+
+### Exceptions
+
+If anything other than a function was passed in as `effectFunciton` the corresponding error will be thrown. 
+
+## Description
+
+The `createApplyEffect()` function allows to perform deferred side effects with different delays and effect data for "valid" and "invalid" states. Side effects can be changing CSS properties, attributes, showing, hiding, enabling, disabling, creating, deleting other HTML elements etc.
+
+You can write the logic inside `effectFunction` that can be performed  depending on passed in arguments: `htmlElement`, its parent, sibling or child elements, current validity state and an effect identifier.
+
+The effect control functions `cancelEffect()` and `setEffect()` returned by the `applyEffect()` function are intended to be used as [state callbacks](/concept/state-callbacks/) and accept a [`ValidationResult`](/api/validation-result/) as an argument. The `cancelEffect()` function cancels deferred execution of `effectFunction` and `setEffect()` does the same but also enqueues a new execution of `effectFunction`. The separate function for cancellation were introduced to provide more fine grained control for cases where you need to only cancel the previously deferred execution without settting a new one.
+
+```js 
+const effectFunction = (
+    htmlElement, stateValues, validationResult, effectID
+) => {
+    const { isValid } = validationResult;
+    const { value } = stateValues[isValid]; // using data depending on validity
+
+    // effect logic
+    // ....
+};
+
+const defaultStateValues = {
+  true: { delay: 0, value: 'default effect data for the valid state' },
+  false: { delay: 0, value: 'default effect data for the invalid state' },
+};
+
+const applyEffect = createApplyEffect(effectFunction, defaultStateValues);
+
+const [cancelEffect, setEffect] = applyEffect();
+```
+
+The parameters of the `applyEffect()` function can be passed in any order for convenience. When passed, they override their default counterparts such that:
+
+- `htmlElement` overrides the element set as the `target` property of `ValidationResult` passed in the `cancelEffect()` and `setEffect()` functions;
+
+- properties of the `stateValues` object override the properties of the `defaultStateValues`;
+
+- if `effectID` is specified it overrides the default effect identifier which is unique for every `applyEffect()` function call.
+
+```js 
+const stateValues = {
+  true: { delay: 0, value: 'effect data for the valid state' },
+  false: { delay: 2000, value: 'effect data for the invalid state' },
+};
+
+const effectID = 'someEID';
+
+applyEffect();
+applyEffect(stateValues);
+applyEffect(effectID, stateValues);
+applyEffect(htmlElement, effectID, stateValues);
+applyEffect(effectID, htmlElement, stateValues);
+applyEffect(effectID, stateValues, htmlElement);
+applyEffect(htmlElement, stateValues, effectID);
+applyEffect(stateValues, htmlElement, effectID);
+applyEffect(stateValues, effectID, htmlElement);
+```
+
+When pairs of effect control functions are created by different calls of the `applyEffect()` function with the same `effectID` passed in, functions returned from one call cancel `effectFunction` enqueued by `setEffect()` from another call, if the same `htmlElement` was passed as the `target` property in `ValidationResult`. In other words, separate calls of the `applyEffect()` function with the same `effectID` constitute a compound effect applied to the `htmlElement`.
+
+```js
+// the same htmlElement and effectID
+// cancelEffect1, cancelEffect2 and setEffect2 
+// will be cancelling the effect set by setEffect1
+// cancelEffect2, cancelEffect1 and setEffect1 
+// will be cancelling the effect set by setEffect2
+
+const [cancelEffect1, setEffect1] = applyEffect(
+    htmlElement, stateValues1, effectID
+);
+
+const [cancelEffect2, setEffect2] = applyEffect(
+    htmlElement, stateValues2, effectID
+);
+
+```
+
+```js 
+// the same effectID
+// cancelEffect1, cancelEffect2 and setEffect2 
+// will be cancelling the effect set by setEffect1
+// cancelEffect2, cancelEffect1 and setEffect1 
+// will be cancelling the effect set by setEffect2
+// only if the same html element will be passed as the 'target' property
+// of validation results
+
+const [cancelEffect1, setEffect1] = applyEffect(stateValues1, effectID);
+const [cancelEffect2, setEffect2] = applyEffect(stateValues2, effectID);
+```
+
+When the function `createApplyEffect()` is being invoked on the server side, gives a warning and returns `applyEffect()` function which in turn will return an `Array` of two empty functions.
+
+## Examples
+
+The following functions were created with using `createApplyEffect()`:
+
+- [`applyClass()`](/api/ui/effect-functions/apply-class/)
+- [`applyOutline()`](/api/ui/effect-functions/apply-outline/)
+- [`applyBackground()`](/api/ui/effect-functions/apply-background/)
+- [`applyAccess()`](/api/ui/effect-functions/apply-access/)
+- [`applyBox()`](/api/ui/effect-functions/apply-box/)
+
+For examples, please refer to their source codes.
