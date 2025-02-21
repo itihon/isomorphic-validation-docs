@@ -6,4 +6,95 @@ sidebar:
     badge: New
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/effect-functions/apply-class/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/effect-functions/apply-class/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/effect-functions/apply-class/example.css?raw';
+
+Applies a particular class name with a particular delay to an element depending on validity.
+
+## Syntax
+
+```js 
+applyClass()
+applyClass(stateValues)
+applyClass(effectID, stateValues)
+applyClass(htmlElement, effectID, stateValues)
+applyClass(effectID, htmlElement, stateValues)
+applyClass(effectID, stateValues, htmlElement)
+applyClass(htmlElement, stateValues, effectID)
+applyClass(stateValues, htmlElement, effectID)
+applyClass(stateValues, effectID, htmlElement)
+```
+
+### Parameters
+
+- `htmlElement` <sup>optional</sup>
+<br/> An object that implements the [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) interface.
+<br/> **Default**: `undefined`.
+
+- `effectID` <sup>optional</sup>
+<br/> A string identifier of the effect.
+<br/> **Default**: A unique string value for each function call.
+
+- `stateValues` <sup>optional</sup>
+<br/> An object that specifies values for validity states. The available properties are:
+
+    - `true` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `true`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The value of a class name to be applied for this validity state.
+        <br/> **Default**: string `'valid'`.
+
+    - `false` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `false`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The value of a class name to be applied for this validity state.
+        <br/> **Default**: string `'invalid'`.
+
+### Return value
+
+An `Array` with two functions:
+
+    0. A function for cancellation the effect if it is deffered.
+    1. A function for setting the effect.
+
+Both functions accept the following arguments:
+
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
+
+### Exceptions
+
+See exceptions of the function returned by the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#exceptions) function.
+
+## Description
+
+This function was created with using `createApplyEffect()`.
+
+See the description of `applyEffect(), cancelEffect(), setEffect()` on the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#description) function page.
+
+<br/>**Implementation:** [apply-class.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/apply-class.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
