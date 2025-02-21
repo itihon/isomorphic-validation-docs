@@ -84,9 +84,13 @@ createApplyEffect(effectFunction, defaultStateValues)
 
 A new apply effect function that accepts `htmlElement`, `effectID`, `stateValues` as arguments and returns an `Array` with two functions: for cancellation and setting the effect.
 
+When invoked on the server side, gives a warning and for crash-safety returns a function which in turn will return an `Array` with two empty functions.
+
 ### Exceptions
 
-If anything other than a function was passed in as `effectFunciton` the corresponding error will be thrown. 
+- If anything other than a function was passed in as `effectFunciton` the corresponding error will be thrown. 
+
+- For the returned apply effect function: if anything other than `HTMLElement`, string and `Object` or more arguments of a particular type were passed in, throws the corresponding error.
 
 ## Description
 
@@ -176,7 +180,7 @@ const [cancelEffect1, setEffect1] = applyEffect(stateValues1, effectID);
 const [cancelEffect2, setEffect2] = applyEffect(stateValues2, effectID);
 ```
 
-When the function `createApplyEffect()` is being invoked on the server side, gives a warning and returns `applyEffect()` function which in turn will return an `Array` of two empty functions.
+<br/>**Implementation:** [create-apply-effect.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/create-apply-effect.js).
 
 ## Examples
 
@@ -188,4 +192,4 @@ The following functions were created with using `createApplyEffect()`:
 - [`applyAccess()`](/api/ui/effect-functions/apply-access/)
 - [`applyBox()`](/api/ui/effect-functions/apply-box/)
 
-For examples, please refer to their source codes.
+For examples, see their implementations.
