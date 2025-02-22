@@ -43,6 +43,7 @@ input {
     border-radius: 2px;
     border-bottom: 2px ridge;
     width: 100%;
+    min-width: 104px;
 }
 
 input:focus-visible { outline: 1px solid gray; }
