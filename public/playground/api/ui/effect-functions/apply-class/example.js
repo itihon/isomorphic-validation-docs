@@ -39,7 +39,6 @@ input3.addEventListener(
 /** 4. Indicate only valid state */
 
 const onlyValid = {
-    true: { value: 'valid'},
     false: { value: ''},
 };
 
@@ -83,14 +82,10 @@ input6.addEventListener(
 
 /** 7. Clear only invalid state */
 
-const clearInvalid = { 
-    false: { value: '' },
-};
-
 input7.addEventListener(
     'input',
     Validation(input7)
         .constraint(isAlpha)
-        .started(applyClass(clearInvalid, underlineEID))
+        .started(applyClass(onlyValid, underlineEID))
         .validated(applyClass(delayed, underlineEID))
 );
