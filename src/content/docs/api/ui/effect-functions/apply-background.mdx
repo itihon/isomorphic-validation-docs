@@ -6,4 +6,95 @@ sidebar:
     badge: New
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/effect-functions/apply-background/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/effect-functions/apply-background/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/effect-functions/apply-background/example.css?raw';
+
+Applies a particular background with a particular delay to an element depending on validity.
+
+## Syntax
+
+```js 
+applyBackground()
+applyBackground(stateValues)
+applyBackground(effectID, stateValues)
+applyBackground(htmlElement, effectID, stateValues)
+applyBackground(effectID, htmlElement, stateValues)
+applyBackground(effectID, stateValues, htmlElement)
+applyBackground(htmlElement, stateValues, effectID)
+applyBackground(stateValues, htmlElement, effectID)
+applyBackground(stateValues, effectID, htmlElement)
+```
+
+### Parameters
+
+- `htmlElement` <sup>optional</sup>
+<br/> An object that implements the [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) interface.
+<br/> **Default**: `undefined`.
+
+- `effectID` <sup>optional</sup>
+<br/> A string identifier of the effect.
+<br/> **Default**: A unique string value for each function call.
+
+- `stateValues` <sup>optional</sup>
+<br/> An object that specifies values for validity states. The available properties are:
+
+    - `true` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `true`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The value of the `background` CSS property to be applied for this validity state.
+        <br/> **Default**: string `'honeydew'`.
+
+    - `false` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `false`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The value of the `background` CSS property to be applied for this validity state.
+        <br/> **Default**: string `'lavenderblush'`.
+
+### Return value
+
+An `Array` with two functions:
+
+    0. A function for cancellation the effect if it is deffered.
+    1. A function for setting the effect.
+
+Both functions accept the following arguments:
+
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
+
+### Exceptions
+
+See exceptions of the function returned by the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#exceptions) function.
+
+## Description
+
+This function was created with using `createApplyEffect()`.
+
+See the description of `applyEffect(), cancelEffect(), setEffect()` on the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#description) function page.
+
+<br/>**Implementation:** [apply-background.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/apply-background.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
