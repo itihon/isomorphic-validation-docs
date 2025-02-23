@@ -1,5 +1,5 @@
-import { Validation } from 'https://unpkg.com/isomorphic-validation@0.9.9/dist/esm/index.js';
-import { applyAccess, applyBox } from 'https://unpkg.com/isomorphic-validation@0.9.9/dist/esm/index.ui.js';
+import { Validation } from 'isomorphic-validation';
+import { applyAccess, applyBox } from 'isomorphic-validation/ui';
 import isAlpha from 'validator/es/lib/isAlpha';
 
 const { input1, button1, input2, button2, input3, input3_1 } = document.form;
@@ -29,7 +29,7 @@ const waitIcon = {
 };
 
 const isNotProfanity = async (message) => {
-    console.log('... Prafanity check. Making a request:', message);
+    console.log('... Profanity check. Making a request:', message);
     
     const resp = await fetch('https://vector.profanity.dev', {
         method: 'POST',
