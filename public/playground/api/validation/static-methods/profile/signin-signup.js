@@ -29,7 +29,7 @@ const invalidSign = {
 const errorMsgBox = {
     false: { delay: 2000, value: renderFirstError('invalidMsg') }, // show when Validation().isValid === false, otherwise clear
     mode: 'MAX_SIDE',
-    position: 'BELOW_LEFT',
+    position: 'BELOW_CENTER',
     style: msgBoxStyle, 
 };
 
