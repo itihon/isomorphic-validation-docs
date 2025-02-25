@@ -6,4 +6,107 @@ sidebar:
     badge: New
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/effect-functions/apply-box/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/effect-functions/apply-box/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/effect-functions/apply-box/example.css?raw';
+
+Creates a container for displaying icons and messages.
+
+## Syntax
+
+```js 
+applyBox()
+applyBox(stateValues)
+applyBox(effectID, stateValues)
+applyBox(htmlElement, effectID, stateValues)
+applyBox(effectID, htmlElement, stateValues)
+applyBox(effectID, stateValues, htmlElement)
+applyBox(htmlElement, stateValues, effectID)
+applyBox(stateValues, htmlElement, effectID)
+applyBox(stateValues, effectID, htmlElement)
+```
+
+### Parameters
+
+- `htmlElement` <sup>optional</sup>
+<br/> An object that implements the [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) interface.
+<br/> **Default**: `undefined`.
+
+- `effectID` <sup>optional</sup>
+<br/> A string identifier of the effect.
+<br/> **Default**: A unique string value for each function call.
+
+- `stateValues` <sup>optional</sup>
+<br/> An object that specifies values for validity states. The available properties are:
+
+    - `true` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `true`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The content to be placed inside the container for this validity state.
+        <br/> **Default**: an empty string `''`.
+
+    - `false` <sup>optional</sup>
+    <br/> An object with properties for the validity state equal to `false`. The available properties are:
+
+        - `delay` <sup>optional</sup>
+        <br/> A number in milliseconds for the effect to be deferred for this validity state.
+        <br/> **Default**: `0`.
+        
+        - `value` <sup>optional</sup>
+        <br/> The content to be placed inside the container for this validity state.
+        <br/> **Default**: an empty string `''`.
+
+    - `mode` <sup>optional</sup>
+    <br/> Sizing mode of the container.
+    <br/> **Default**: `'MIN_SIDE'`.
+    
+    - `position` <sup>optional</sup>
+    <br/> Positioning mode of the container.
+    <br/> **Default**: `'LEVEL_RIGHT_BESIDE'`.
+    
+    - `style` <sup>optional</sup>
+    <br/> Additional styles for the container.
+    <br/> **Default**: `undefined`.
+
+### Return value
+
+An `Array` with two functions:
+
+    0. A function for cancellation the effect if it is deffered.
+    1. A function for setting the effect.
+
+Both functions accept the following arguments:
+
+    - `validationResult` 
+    <br/> A [`ValidationResult`](/api/validation-result/) object. 
+
+### Exceptions
+
+See exceptions of the function returned by the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#exceptions) function.
+
+## Description
+
+This function was created with using `createApplyEffect()`.
+
+See the description of `applyEffect(), cancelEffect(), setEffect()` on the [`createApplyEffect()`](/api/ui/helper-functions/create-apply-effect/#description) function page.
+
+<br/>**Implementation:** [apply-box.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/apply-box.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
