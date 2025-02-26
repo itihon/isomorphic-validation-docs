@@ -28,7 +28,7 @@ const msgBox = {
 
 /** 1. Default */
 
-const allErrors = {
+const firstError = {
     false: { value: renderFirstError() },
     ...msgBox,
 };
@@ -39,7 +39,7 @@ form.addEventListener(
         .constraint(isAlpha, { msg: isAlphaMsg })
         .constraint(isLongerThan(5), { msg: isLongerThan5Msg })
         .constraint(hasJSLetters, { msg: hasJSLettersMsg })
-        .validated(applyBox(allErrors))
+        .validated(applyBox(firstError))
 );
 
 /** 2. Custom property name and "toString" function */
@@ -55,7 +55,7 @@ const errToHTML = ([field, validator], idx) =>
         ? renderLabel(field).concat(renderError(validator))
         : renderError(validator);
 
-const allErrorsDelayed = {
+const firstErrorDelayed = {
     false: { value: renderFirstError('err', errToHTML), delay: 2000 },
     ...msgBox,
 };
@@ -66,5 +66,5 @@ form.addEventListener(
         .constraint(isAlpha, { err: isAlphaMsg })
         .constraint(isLongerThan(5), { err: isLongerThan5Msg })
         .constraint(hasJSLetters, { err: hasJSLettersMsg })
-        .validated(applyBox(allErrorsDelayed))
+        .validated(applyBox(firstErrorDelayed))
 );
