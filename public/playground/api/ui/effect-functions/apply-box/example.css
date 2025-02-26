@@ -9,7 +9,7 @@ body {
     background-color: whitesmoke;
 }
 
-.options { font-size: 8px; position: fixed; top: 0; }
+.options { font-size: 8px; align-self: flex-start; }
 .options .modes { display: grid; gap: 4px; grid-template-columns: auto auto; }
 .options .positions { display: grid; gap: 4px; grid-template-columns: auto auto auto auto auto; }
 
