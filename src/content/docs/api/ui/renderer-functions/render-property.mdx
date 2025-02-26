@@ -8,4 +8,50 @@ sidebar:
         variant: caution
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/renderer-functions/render-property/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/renderer-functions/render-property/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/renderer-functions/render-property/example.css?raw';
+
+Creates a renderer function that renders the specified property of a validation result.
+
+## Syntax
+
+```js 
+renderProperty()
+renderProperty(propName)
+renderProperty(propName, toString)
+```
+
+### Parameters
+
+- `propName` <sup>optional</sup>
+<br/> A property name supplied with a predicate function as `anyData` when adding as a [constraint](/api/validation/instance-methods/constraint/#parameters).
+<br/> **Default**: `'msg'`.
+
+- `toString` <sup>optional</sup>
+<br/> A function that accepts a validation result entry, index, and an `Array` of the entries and returns a string.
+<br/> **Default**: implementation: [render-entry.js](https://github.com/itihon/isomorphic-validation/blob/master/src/helpers/render-entry.js).
+
+### Return value
+
+A function that accepts a [`ValidationResult`](/api/validation-result/) object and returns a string. 
+
+## Description
+
+Creates a function that is intended to be used as the `value` property in the `stateValues` object which is passed as a parameter into the [`applyBox()`](/api/ui/effect-functions/apply-box/#parameters) function.
+
+<br/>**Implementation:** [render-property.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/render-property.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
