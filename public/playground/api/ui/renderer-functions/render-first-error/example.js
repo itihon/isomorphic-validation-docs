@@ -33,7 +33,7 @@ const firstError = {
     ...msgBox,
 };
 
-form.addEventListener(
+input1.addEventListener(
     'input',
     Validation(input1)
         .constraint(isAlpha, { msg: isAlphaMsg })
@@ -60,7 +60,7 @@ const firstErrorDelayed = {
     ...msgBox,
 };
 
-form.addEventListener(
+input2.addEventListener(
     'input',
     Validation(input2)
         .constraint(isAlpha, { err: isAlphaMsg })
