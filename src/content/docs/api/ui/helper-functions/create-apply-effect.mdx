@@ -98,7 +98,7 @@ The `createApplyEffect()` function allows to perform deferred side effects with 
 
 You can write the logic inside `effectFunction` that can be performed  depending on passed in arguments: `htmlElement`, its parent, sibling or child elements, current validity state and an effect identifier.
 
-The effect control functions `cancelEffect()` and `setEffect()` returned by the `applyEffect()` function are intended to be used as [state callbacks](/concept/state-callbacks/) and accept a [`ValidationResult`](/api/validation-result/) as an argument. The `cancelEffect()` function cancels deferred execution of `effectFunction` and `setEffect()` does the same but also enqueues a new execution of `effectFunction`. The separate function for cancellation were introduced to provide more fine grained control for cases where you need to only cancel the previously deferred execution without settting a new one.
+The effect control functions `cancelEffect()` and `setEffect()` returned by the `applyEffect()` function are intended to be used as [state callbacks](/concept/state-callbacks/) and accept a [`ValidationResult`](/api/validation-result/) as an argument. The `cancelEffect()` function cancels a deferred execution of `effectFunction` and `setEffect()` enqueues a new execution of `effectFunction`. 
 
 ```js 
 const effectFunction = (
@@ -137,6 +137,7 @@ const stateValues = {
 
 const effectID = 'someEID';
 
+// parameters can be passed in any order
 applyEffect();
 applyEffect(stateValues);
 applyEffect(effectID, stateValues);
@@ -148,14 +149,12 @@ applyEffect(stateValues, htmlElement, effectID);
 applyEffect(stateValues, effectID, htmlElement);
 ```
 
-When pairs of effect control functions are created by different calls of the `applyEffect()` function with the same `effectID` passed in, functions returned from one call cancel `effectFunction` enqueued by `setEffect()` from another call, if the same `htmlElement` was passed as the `target` property in `ValidationResult`. In other words, separate calls of the `applyEffect()` function with the same `effectID` constitute a compound effect applied to the `htmlElement`.
+When pairs of effect control functions are created by different calls of the `applyEffect()` function with the same `effectID` passed in, `cancelEffect()` cancels `effectFunction` enqueued by `setEffect()` from another call, if the same `htmlElement` was passed as the `target` property in `ValidationResult`. In other words, separate calls of the `applyEffect()` function with the same `effectID` constitute a compound effect applied to the `htmlElement`.
 
 ```js
 // the same htmlElement and effectID
-// cancelEffect1, cancelEffect2 and setEffect2 
-// will be cancelling the effect set by setEffect1
-// cancelEffect2, cancelEffect1 and setEffect1 
-// will be cancelling the effect set by setEffect2
+// cancelEffect1 and cancelEffect2 both
+// will be cancelling the effect set by either setEffect1 or setEffect2
 
 const [cancelEffect1, setEffect1] = applyEffect(
     htmlElement, stateValues1, effectID
@@ -164,15 +163,12 @@ const [cancelEffect1, setEffect1] = applyEffect(
 const [cancelEffect2, setEffect2] = applyEffect(
     htmlElement, stateValues2, effectID
 );
-
 ```
 
 ```js 
 // the same effectID
-// cancelEffect1, cancelEffect2 and setEffect2 
-// will be cancelling the effect set by setEffect1
-// cancelEffect2, cancelEffect1 and setEffect1 
-// will be cancelling the effect set by setEffect2
+// cancelEffect1 and cancelEffect2 both
+// will be cancelling the effect set by either setEffect1 or setEffect2
 // only if the same html element will be passed as the 'target' property
 // of validation results
 
