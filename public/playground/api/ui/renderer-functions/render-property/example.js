@@ -43,18 +43,22 @@ const errToHTML = ([field, validator], idx) =>
         : renderError(validator);
 
 const allMsgs = {
+    true: { value: renderProperty('err', errToHTML), delay: 0 },
     false: { value: renderProperty('err', errToHTML), delay: 0 },
-    true: { value: renderProperty('err', errToHTML), delay: 0 },
     ...msgBox,
 };
 
-const allMsgsDelayed = {
+const allMsgsIfInvalid = {
+    false: { value: renderProperty('err', errToHTML), delay: 0 },
+    ...msgBox,
+};
+
+const allMsgsIfInvalidDelayed = {
     false: { value: renderProperty('err', errToHTML), delay: 1000 },
-    true: { value: renderProperty('err', errToHTML), delay: 0 },
     ...msgBox,
 };
 
-const clearMsgsOnValid = {
+const clearMsgsIfValidDelayed = {
     false: { value: renderProperty('err', errToHTML), delay: 1000 },
     true: { value: '', delay: 2000 },
     ...msgBox,
@@ -68,7 +72,8 @@ input.addEventListener(
         .constraint(isAlpha, { err: isAlphaMsg })
         .constraint(isLongerThan(5), { err: isLongerThan5Msg })
         .constraint(hasJSLetters, { err: hasJSLettersMsg })
-        .started(applyBox(allMsgs, msgBoxEID))
-        .validated(applyBox(allMsgsDelayed, msgBoxEID))
-        .validated(applyBox(clearMsgsOnValid, msgBoxEID))
+        .started(applyBox(allMsgsIfInvalid, msgBoxEID))
+        .invalid(applyBox(allMsgsIfInvalidDelayed, msgBoxEID))
+        .changed(applyBox(allMsgs, msgBoxEID))
+        .changed(applyBox(clearMsgsIfValidDelayed, msgBoxEID))
 );
