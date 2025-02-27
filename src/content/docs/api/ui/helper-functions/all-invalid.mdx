@@ -1,6 +1,6 @@
 ---
 title: allInvalid() function
-description: Returnes all validators of a validation result with the isValid property equal to false.
+description: Returns all validator entries of a validation result with the isValid property equal to false.
 sidebar: 
     label: allInvalid()
     badge:
@@ -8,4 +8,43 @@ sidebar:
         variant: caution
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/helper-functions/all-invalid/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/helper-functions/all-invalid/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/helper-functions/all-invalid/example.css?raw';
+
+Returns all validator entries of a validation result with the `isValid` property equal to false.
+
+## Syntax
+
+```js 
+allInvalid(validationResult)
+```
+
+### Parameters
+
+- `validationResult`
+<br/> A [validation result](/api/validation-result/) object.
+
+### Return value
+
+An array of key-value pairs. Each key-value pair is an array with a validatable object as the first element and a validator as the second.
+
+## Description
+
+Returns all validator entries of the passed in validation result that are being in the "invalid" state. When all validators are in the "valid" state, returns an empty array.
+
+<br/>**Implementation:** [all-invalid.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/all-invalid.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
