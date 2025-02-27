@@ -8,4 +8,39 @@ sidebar:
         variant: caution
 ---
 
-Will be available soon...
+Converts a state callback function to an event handler function.
+
+## Syntax
+
+```js 
+toEventHandler(stateCallback, isValid)
+```
+
+### Parameters
+
+- `stateCallback`
+<br/> A function with the signature of a [state callback](/concept/state-callbacks/).
+
+- `isValid` <sup>optional</sup>
+<br/> A validity state value to be assigned to a [`ValidationResult`](/api/validation-result/) object passed to `stateCallback`.
+<br/> **Default**: `false`.
+
+### Return value
+
+A function with the signature of an event listener.
+
+## Description
+
+This helper function is intended to be used with apply effect functions in case the effect is needed to be performed as an event listener.
+
+```js 
+import { toEventHandler, applyBox } from 'isomorphic-validation/ui';
+
+const [, showMsg] = applyBox({ false: { value: 'Invalid data.' } });
+
+// ...
+
+form.addEventListener('focusout', toEventHandler(showMsg));
+```
+
+<br/>**Implementation:** [to-event-handler.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/to-event-handler.js).
