@@ -8,4 +8,43 @@ sidebar:
         variant: caution
 ---
 
-Will be available soon...
+import Playground from '../../../../../components/Playground.jsx';
+import exampleJS from '../../../../../../public/playground/api/ui/helper-functions/first-invalid/example.js?raw';
+import exampleHTML from '../../../../../../public/playground/api/ui/helper-functions/first-invalid/example.html?raw';
+import exampleCSS from '../../../../../../public/playground/api/ui/helper-functions/first-invalid/example.css?raw';
+
+Returns the first validator entry of a validation result with the `isValid` property equal to false.
+
+## Syntax
+
+```js 
+firstInvalid(validationResult)
+```
+
+### Parameters
+
+- `validationResult`
+<br/> A [validation result](/api/validation-result/) object.
+
+### Return value
+
+An array with a validatable object as the first element and a validator as the second.
+
+## Description
+
+Returns the first validator entry of the passed in validation result that is being in the "invalid" state. When all validators are in the "valid" state, returns an empty array.
+
+<br/>**Implementation:** [first-invalid.js](https://github.com/itihon/isomorphic-validation/blob/master/src/ui/first-invalid.js).
+
+## Examples
+
+<Playground client:visible  
+    params={{
+        console: 'closed',
+        js: exampleJS,
+        html: exampleHTML,
+        css: exampleCSS,
+    }}
+    height="500px"
+    width="100%"
+/>
