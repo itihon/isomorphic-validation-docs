@@ -9,7 +9,7 @@ body {
     background-color: whitesmoke;
 }
 
-.note { width: 100%; background-color: lightslategray; color: white; font-size: 12px }
+.note { width: 100%; background-color: lightslategray; color: white; font-size: 12px; }
 .info_icon { color: yellow; font-size: 16px; }
 
 input {
@@ -23,7 +23,7 @@ input {
 }
 
 .msg_box { min-height: 48px; max-width: 200px; font-size: 10px; }
-.msg_box > * { padding-top: 4px; color: firebrick }
+.msg_box > * { padding-top: 4px; color: firebrick; }
 
 
 label { font-size: 14px; padding: 4px 0; display: block; text-wrap: nowrap; }
