@@ -1,26 +1,16 @@
 import { Validation } from 'isomorphic-validation';
+import { applyClass as showStatus, applyAccess as toggleAccess } from 'isomorphic-validation/ui';
 import isAlpha from 'validator/es/lib/isAlpha';
 import isStrongPassword from 'validator/es/lib/isStrongPassword';
 
-const isLongerOrEqual = (min) => (value) => String(value).length >= min;
-const isShorterOrEqual = (max) => (value) => String(value).length <= max;
+const isLongerOrEqual = (min) => (value) => value.length >= min;
+const isShorterOrEqual = (max) => (value) => value.length <= max;
 const areTwoEqual = (value1, value2) => value1 === value2;
 
 const { form } = document;
 const { firstName, lastName, password, pwdConfirm, submitBtn } = form;
 const constraints = form.querySelectorAll('.constraint');
 const fields = form.querySelectorAll('.field');
-
-// UI side effects
-
-const showStatus = ({ classList }) => ({ isValid }) => {
-    classList.remove(isValid ? 'invalid' : 'valid');
-    classList.add(isValid ? 'valid' : 'invalid');
-};
-
-const toggleAccess = (element) => ({ isValid }) => { 
-    element.disabled = !isValid; 
-};
 
 // group validations
 const signupValidation = Validation.group(
