@@ -39,10 +39,11 @@ const careerYearsV = Validation(age)
     .validated(() => experienceV());    // revalidate "experience" field after age gets validated
 
 const initValueV = Validation.group(
-    [Validation(age), Validation(experience)].map(
-        validation => validation
-            .valid(paintFieldGray)      // paint a field gray if it is empty
-    )
+    [
+        Validation(age, { optional: true }),              // initial value is invalid for non-optional validations
+        Validation(experience, { optional: true }),       // initial value is invalid for non-optional validations
+    ]
+    .map(validation => validation.valid(paintFieldGray)), // paint a field gray if it is empty
 )
 .constraint(isInitValue);
 

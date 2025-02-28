@@ -12,7 +12,7 @@ const paintFieldGray = paintField(textField, '#b0b0b0');
 const paintFieldGreen = paintField(textField, '#b0ffb0');
 const paintFieldRed = paintField(textField, '#ffb0b0');
 
-const initValueV = Validation(textField)
+const initValueV = Validation(textField, { optional: true }) // initial value is invalid for non-optional validations
   .constraint(isInitValue)
   .valid(paintFieldGray)      // paint gray if initial value
   .invalid(paintFieldRed);    // otherwise paint red 
