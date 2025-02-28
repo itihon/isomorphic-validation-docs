@@ -128,8 +128,8 @@ validation2.invalid(validation3);
 element1.addEventListener('input', validation1); 
 ```
 
-:::caution
-If a chained `Validation` object is bound to a different validatable object than that which is passed to it as the property `target` when called as a callable object on the client side, it will return a rejected `Promise` with the corresponding error message. See "Return value" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#return-value) method.
+:::note
+If a chained `Validation` object is bound to a different validatable object than that which is passed to it as the property `target` when called as a callable object on the client side, then no predicate groups of the chained validation object will be executed. See "Description" of the [`Validation().validate()`](/api/validation/instance-methods/validate/#description) method.
 
 ```js
 const validation1 = Validation(element1);
@@ -139,7 +139,7 @@ const validation3 = Validation(element2);
 // validation2({ target: element1 }) // works
 validation1.invalid(validation2); 
 
-// validation3({ target: element1 }) // uncaught rejected Promise!
+// validation3({ target: element1 }) // warning
 validation2.invalid(validation3);    // validation3 doesn't have predicate groups associated with element1
 
 // validation1({ target: element1 }) // works
@@ -240,7 +240,7 @@ validation1.invalid(() => validationGr23({ target: element2 }));
 element1.addEventListener('input', validation1); 
 ```
 
-Let's recompose the validation chains from the example above.
+Let's recompose the validation chains from the previous example.
 
 <details>
     <summary>
