@@ -34,11 +34,12 @@ console.log('\n--> executing all predicate groups');
 const { target: target3 } = await v.validate();
 
 console.log('\n--> no predicate group associated with this object');
-await v.validate({ value: 'dummy' }).catch(err => console.log(err.message));
+const { target: target4 } = await v.validate({ value: 'foo' });
 
-console.log('\n--> targets:', target1, target2, target3);
+console.log('\n--> targets:', target1, target2, target3, target4);
 
 // Output:
+//
 // --> executing a predicate group, associated with obj1
 // isObj(1), value: obj1
 // isString(), value: obj1
@@ -54,6 +55,6 @@ console.log('\n--> targets:', target1, target2, target3);
 // isString(), value: obj2
 // 
 // --> no predicate group associated with this object
-// There are no predicates assosiated with the target {"value":"dummy"}
+// There are no predicates associated with the target: {"value":"foo"}.
 // 
-// --> targets: { value: 'obj1' } { value: 'obj2' } undefined
+// --> targets: { value: 'obj1' } { value: 'obj2' } undefined undefined

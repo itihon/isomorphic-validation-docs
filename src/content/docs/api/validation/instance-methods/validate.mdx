@@ -29,7 +29,7 @@ A `Promise` that fufills/rejects depending on the success/fail of the operation:
 
 - In case of successful execution of the method the `Promise` will be fulfilled with a [`ValidationResult`](/api/validation-result/) object no matter valid or invalid. 
 
-- If the `Validation` object does not contain predicate groups associated with the `validatableObject` passed in, the `Promise` will be rejected with the error message.
+- If the `Validation` object does not contain predicate groups associated with the `validatableObject` passed in, the `Promise` will be fulfilled with a [`ValidationResult`](/api/validation-result/) object with the `isValid` property equal to `null`. A warning will be shown in the console in this case.
 
 - If an `async` predicate function returns a `Promise` that fulfills with any value other than `Boolean`, the `Promise` returned by this method will be rejected with the error message.
 
