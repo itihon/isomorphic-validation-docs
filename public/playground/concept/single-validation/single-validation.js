@@ -1,14 +1,9 @@
 import { Validation, Predicate } from 'isomorphic-validation';
+import { applyClass as showStatus } from 'isomorphic-validation/ui';
 import isAlpha from 'validator/es/lib/isAlpha';
 
-const isLongerOrEqual = (min) => (value) => String(value).length >= min;
-const isShorterOrEqual = (max) => (value) => String(value).length <= max;
-
-// UI side effect
-const showStatus = ({ classList }) => ({ isValid }) => {
-    classList.remove(isValid ? 'invalid' : 'valid');
-    classList.add(isValid ? 'valid' : 'invalid');
-};
+const isLongerOrEqual = (min) => (value) => value.length >= min;
+const isShorterOrEqual = (max) => (value) => value.length <= max;
 
 const { form } = document;
 const { firstName } = form;
