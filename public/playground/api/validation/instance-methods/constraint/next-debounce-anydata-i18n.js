@@ -66,7 +66,7 @@ const msgAfter = (element, msgRetreiver = () => '') => {
     return [show, cancel];
 };
 
-const [showInitialIcon, /* not used */]    = msgAfter(emailField, () => '✔');
+const [showInitialIcon, /* not used */]    = msgAfter(emailField, () => '🖊');
 const [showWaitIcon, cancelWaitIcon]       = msgAfter(emailField, () => '⏳');
 const [showValidIcon, /* not used */]      = msgAfter(emailField, () => '✅');
 const [showInvalidIcon, cancelInvalidIcon] = msgAfter(emailField, () => '⛔');
