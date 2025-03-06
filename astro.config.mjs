@@ -97,10 +97,6 @@ export default defineConfig({
                             label: 'Validating file metadata before uploading to S3 storage',
                             link: '/api/validation/instance-methods/datamapper/#validating-file-metadata-before-uploading-to-s3-storage',
                         },
-                        {
-                            label: 'Sign-up and sign-in forms client and server side validation with Express',
-                            link: 'https://github.com/itihon/signup_signin_example',
-                        },
                     ],
                 },
                 {
