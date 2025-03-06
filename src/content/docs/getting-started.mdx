@@ -28,7 +28,12 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
         ``` 
     </TabItem>
     <TabItem label="CDN">
-        For browser only usage, you can pull the library using CDN like [jsdelivr.com](https://www.jsdelivr.com/package/npm/isomorphic-validation) or [unpkg](https://unpkg.com/browse/isomorphic-validation/) or [esm.sh](https://esm.sh/).
+        For browser only usage, you can pull the library using CDN like [jsdelivr.com](https://www.jsdelivr.com/package/npm/isomorphic-validation) or [unpkg](https://unpkg.com/browse/isomorphic-validation/).
+
+        ```js
+import { Validation, Predicate } from 'https://unpkg.com/isomorphic-validation@latest/dist/esm/index.js';
+import { renderFirstError, applyBox, toEventHandler } from 'https://unpkg.com/isomorphic-validation@latest/dist/esm/index.ui.js';
+        ```
     </TabItem>
 </Tabs>
 
@@ -43,11 +48,15 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
     export const isLongerThan = (number) => (value) => value.length > number;
     export const isShorterThan = (number) => (value) => value.length < number;
 
+    // client side part of the predicate
+    // makes a request to the server
     export const isNotTakenC = (login) => fetch(
         'is-login-not-taken', 
         { method: 'post', body: new URLSearchParams(`login=${login}`) }
     ).then(resp => resp.json());
 
+    // server side part of the predicate
+    // makes a request to the database
     // a proper module bundler setup is needed to exclude this import from the client side bundle
     export const isNotTakenS = async (login) => {
         const repository = (await import('your-repository.js')).default;
@@ -59,6 +68,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 
     ```js 
     import isEmail from 'validator/es/lib/isEmail';
+    import isStrongPassword from 'validator/es/lib/isStrongPassword';
     ```
 
 2. Create [`Validation`](/api/validation/constructor/) objects:
@@ -77,31 +87,39 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
         .constraint(
             areAllowedChars, 
             { 
-                invalidMsg: 'Allowed characters are: letters, numbers, ".", "_", "-".',
+                errorMsg: 'Allowed characters are: letters, numbers, ".", "_", "-".',
                 next: false,
             },
         )
         .constraint(
             isLongerThan(4),
-            { invalidMsg: 'Minimal length is 5 characters.', next: false },
+            { errorMsg: 'Minimal length is 5 characters.', next: false },
         )
         .constraint(
             isShorterThan(33),
-            { invalidMsg: 'Maximum length is 32 characters.' },
+            { errorMsg: 'Maximum length is 32 characters.' },
         );
 
     emailV
         .constraint(
             isEmail,
             {
-                invalidMsg: 'Must conform to the e-mail format.'
+                errorMsg: 'Must conform to the e-mail format.'
+            }
+        );
+
+    passwordV
+        .constraint(
+            isStrongPassword,
+            {
+                errorMsg: 'Min. 8 symbols, 1 capital letter, 1 number, 1 special symbol.'
             }
         );
     ```
 
 4. Create validation [profiles](/api/validation/static-methods/profile/) (bind the validations to form fields):
 
-    ```js 
+    ```js {3, 4} {9, 10} /(?<!\=)signinForm/ "signinV" /(?<!\=)signupForm/ "signupV"
     const [signinForm, signinV] = Validation.profile(
         '[name=signinForm]', 
         ['login', 'password'], 
@@ -117,11 +135,11 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 
 5. Add form-specific and environment-specific constraints to cloned validations:
 
-    ```js 
+    ```js "signinV" "signupV" "client" "server"
     Validation.glue(signupV.password, signupV.pwdConfirm)
         .constraint(
             areTwoEqual,
-            { invalidMsg: 'Password and password confirmation must be the same.' },
+            { errorMsg: 'Password and password confirmation must be the same.' },
         );
 
     signupV.login
@@ -129,7 +147,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
             isNotTakenC,
             { 
                 startedMsg: '⏳ Checking login for existence...',
-                invalidMsg: 'Login must not be already registered.', 
+                errorMsg: 'Login must not be already registered.', 
                 debounce: 3000, 
             },
         )
@@ -142,7 +160,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 
     For the client side:
 
-    ```js 
+    ```js "signinV" "signupV"
     import { signinForm, signinV, signupForm, signupV } from 'your-validations-file-name.js';
 
     signinForm.addEventListener('input', signinV);
@@ -151,7 +169,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 
     For the server side:
 
-    ```js 
+    ```js "signinV" "signupV"
     import express from 'express';
     import bodyParser from 'body-parser';
     import { signinV,  signupV } from 'your-validations-file-name.js';
@@ -167,7 +185,7 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
 
 7. Connect side effects to validators' and validations' [validity states](/concept/state-callbacks/):
 
-    ```js 
+    ```js /\.(valid)[(]/ "invalid" "changed"
     import {
         enableSubmitBtn, disableSubmitBtn, logSubmitAttempt,
         preserveFirstInvalidMsg, clearInvalidMsg, showFirstInvalidMsg,
@@ -198,6 +216,17 @@ The library contains both ESM and CJS uncompressed modules. Depending on your pr
         ([,validator]) => validator
             .client
             .invalid(preserveFirstInvalidMsg)
+    );
+    ```
+    You can also employ a set of useful side effect functions provided by the library's [UI module](/concept/api-overview/#ui-module-isomorphic-validationui):
+
+    ```js "validated"
+    import { applyOutline } from 'isomorphic-validation/ui';
+
+    [...signinV.validations, ...signupV.validations].forEach(
+        (validation) => validation
+            .client
+            .validated(applyOutline())
     );
     ```
 
