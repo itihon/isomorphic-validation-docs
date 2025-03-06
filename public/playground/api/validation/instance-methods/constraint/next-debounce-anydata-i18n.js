@@ -1,5 +1,5 @@
 import { Predicate, Validation } from "isomorphic-validation";
-import { firstInvalid } from 'isomorphic-validation/ui';
+import { applyBox, renderFirstError, renderProperty } from 'isomorphic-validation/ui';
 import i18next from 'i18next';
 
 const emailField = document.form.email;
@@ -13,7 +13,7 @@ i18next.init({
                 promptMsg: 'Try to enter "john.doe@mail.me".',
                 isEmailErrorMsg: 'Must be in the e-mail format.',
                 isEmailRegisteredErrorMsg: 'The e-mail must be registered.',
-                isEmailRegisteredStartedMsg: 'Checking registration...',
+                isEmailRegisteredWaitMsg: 'Checking registration...',
             },
         },
         ru: {
@@ -21,7 +21,7 @@ i18next.init({
                 promptMsg: 'Попробуйте набрать "john.doe@mail.me".',
                 isEmailErrorMsg: 'Должен быть в формате эл.почты.',
                 isEmailRegisteredErrorMsg: 'Эл.почта должна быть зарегистрирована.',
-                isEmailRegisteredStartedMsg: 'Проверка регистрации...',
+                isEmailRegisteredWaitMsg: 'Проверка регистрации...',
             },
         },
     },
@@ -29,16 +29,8 @@ i18next.init({
 
 // helpers
 
-const theFirstOne = (res) => {
-    const [[,validator]] = res;
-    return validator;
-};
-
-const i18nMsg = (res) => {
-    const { type } = res;
-    const validator = firstInvalid(res)[1] || theFirstOne(res);
-    const msgKey = validator[`${type}MsgKey`];
-
+const i18nMsg = ([, validator, propName]) => {
+    const msgKey = validator[propName];
     return `<div data-i18n="${msgKey}">${i18next.t(msgKey)}</div>`;
 };
 
@@ -51,30 +43,46 @@ const i18nRerender = () => {
 
 // UI effects
 
-const msgAfter = (element, msgRetreiver = () => '') => {
-    let timeout;
+const iconEID = 'ICON';
+const msgEID = 'MSG';
 
-    const show = (delay) => (res) => {
-        timeout = setTimeout(() => {
-            element?.nextSibling?.remove();
-            element.insertAdjacentHTML('afterend', msgRetreiver(res));
-        }, delay);
-    };
-
-    const cancel = () => clearTimeout(timeout);
-
-    return [show, cancel];
+const msgBoxCfg = { 
+    position: 'BELOW_CENTER', 
+    mode: 'MAX_SIDE',
+    style: { width: '100%' },
 };
 
-const [showInitialIcon, /* not used */]    = msgAfter(emailField, () => '🖊');
-const [showWaitIcon, cancelWaitIcon]       = msgAfter(emailField, () => '⏳');
-const [showValidIcon, /* not used */]      = msgAfter(emailField, () => '✅');
-const [showInvalidIcon, cancelInvalidIcon] = msgAfter(emailField, () => '⛔');
+const validityIcons = {
+    true: { value: '✅' },
+    false: { value: '⛔', delay: 2000 },
+};
 
-const [showInitialMsg, /* not used */]   = msgAfter(document.form, () => '...');
-const [showStartedMsg, cancelStartedMsg] = msgAfter(document.form, i18nMsg);
-const [showInvalidMsg, cancelInvalidMsg] = msgAfter(document.form, i18nMsg);
-const [clearMsg, /* not used */]         = msgAfter(document.form);
+const editIcon = {
+    true: { value: '🖊' },
+    false: { value: '🖊' },
+};
+
+const waitIcon = {
+    true: { value: '⏳', delay: 1000 },
+    false: { value: '⏳', delay: 1000 },
+};
+
+const editMsg = {
+    true: { value: '...' },
+    false: { value: '...' },
+    ...msgBoxCfg,
+};
+
+const waitMsg = {
+    true: { value: renderProperty('waitMsgKey', i18nMsg), delay: 1000 },
+    false: { value: renderProperty('waitMsgKey', i18nMsg), delay: 1000 },
+    ...msgBoxCfg,
+};
+
+const errorMsg = {
+    false: { value: renderFirstError('errorMsgKey', i18nMsg), delay: 2000 },
+    ...msgBoxCfg,
+};
 
 // predicate functions
 
@@ -91,28 +99,23 @@ const emailV = Validation(emailField)
         isEmail,
         { 
             next: false, 
-            invalidMsgKey: 'isEmailErrorMsg', // i18n key
+            errorMsgKey: 'isEmailErrorMsg', // i18n key
         },
     )
     .constraint(
         Predicate(isEmailRegistered)
-            .started(showWaitIcon(1000)) // delayed icon show
-            .started(showStartedMsg(1000)), // delayed message show
+            .started(applyBox(waitIcon, iconEID)) 
+            .started(applyBox(waitMsg, msgEID)), 
         { 
             debounce: 5000, 
-            startedMsgKey: 'isEmailRegisteredStartedMsg', // i18n key
-            invalidMsgKey: 'isEmailRegisteredErrorMsg', // i18n key
+            waitMsgKey: 'isEmailRegisteredWaitMsg', // i18n key
+            errorMsgKey: 'isEmailRegisteredErrorMsg', // i18n key
          },
     )
-    .started(cancelWaitIcon, cancelInvalidIcon) // cancel delayed icon shows
-    .started(showInitialIcon())
-    .valid(showValidIcon())
-    .invalid(showInvalidIcon(500)) // delayed icon show
-
-    .started(cancelStartedMsg, cancelInvalidMsg) // cancel delayed message shows
-    .started(showInitialMsg())
-    .valid(clearMsg())
-    .invalid(showInvalidMsg(500)); // delayed message show
+    .started(applyBox(editIcon, iconEID))
+    .validated(applyBox(validityIcons, iconEID))
+    .started(applyBox(editMsg, msgEID))
+    .validated(applyBox(errorMsg, msgEID));
 
 emailField.addEventListener('input', emailV);
 locale.addEventListener('change', (e) => i18next.changeLanguage(e.target.value));
