@@ -47,13 +47,13 @@ input1.addEventListener(
 const renderLabel = (field) => 
     `<h4>The field "${field.previousElementSibling.innerText}"</h4><hr><br>`;
 
-const renderError = (validator) => 
-    `<div><span>❗ </span><span>${validator.err}</span></div>`;
+const renderError = (err) => 
+    `<div><span>❗ </span><span>${err}</span></div>`;
 
-const errToHTML = ([field, validator], idx) => 
+const errToHTML = ([field, validator, propName], idx) => 
     idx === 0 
-        ? renderLabel(field).concat(renderError(validator))
-        : renderError(validator);
+        ? renderLabel(field).concat(renderError(validator[propName]))
+        : renderError(validator[propName]);
 
 const allErrorsDelayed = {
     false: { value: renderAllErrors('err', errToHTML), delay: 2000 },

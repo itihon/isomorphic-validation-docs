@@ -29,18 +29,18 @@ const msgBox = {
 const renderLabel = (field) => 
     `<h4>The field "${field.previousElementSibling.innerText}"</h4><hr><br>`;
 
-const renderError = (validator) => 
+const renderError = (validator, propName) => 
     `<div>
         <span style="color: ${validator.isValid ? 'green' : 'red'}">
             ${validator.isValid ? '✔' : '✘'} 
         </span>
-        <span>${validator.err}</span>
+        <span>${validator[propName]}</span>
     </div>`;
 
-const errToHTML = ([field, validator], idx) => 
+const errToHTML = ([field, validator, propName], idx) => 
     idx === 0 
-        ? renderLabel(field).concat(renderError(validator))
-        : renderError(validator);
+        ? renderLabel(field).concat(renderError(validator, propName))
+        : renderError(validator, propName);
 
 const allMsgs = {
     true: { value: renderProperty('err', errToHTML), delay: 0 },
