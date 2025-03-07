@@ -1,10 +1,5 @@
 import { Validation } from "isomorphic-validation";
-
-const enableElement = (element) => ({isValid}) => element.disabled = !isValid;
-const paintBackground = ({isValid,  target: { style }}) => 
-    isValid 
-        ? style.backgroundColor = '#e7ffe7' 
-        : style.backgroundColor = '#ffe7e7';
+import { applyAccess, applyBackground } from 'isomorphic-validation/ui';
 
 // predicate functions
 const isOnlyLetters = (value) => /^[A-Za-z]+$/.test(value);
@@ -22,10 +17,10 @@ document.form.addEventListener(
         Validation.group( 
 
             Validation(firstName)
-                .validated(paintBackground),
+                .validated(applyBackground()),
 
             Validation(lastName) 
-                .validated(paintBackground),
+                .validated(applyBackground()),
         )
         .constraint(isOnlyLetters),
 
@@ -33,13 +28,13 @@ document.form.addEventListener(
             .constraint(isNaturalNumber)
             .constraint(isGreaterOrEqual(21))
             .constraint(isLessOrEqual(45))
-            .validated(paintBackground),
+            .validated(applyBackground()),
 
         Validation(secret)
             .constraint(isShorterThan(250))
-            .validated(paintBackground),
+            .validated(applyBackground()),
     )
-    .changed(enableElement(submitBtn))
+    .changed(applyAccess(submitBtn))
 );
 
 
