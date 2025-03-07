@@ -7,10 +7,21 @@ import Default from '@astrojs/starlight/components/PageSidebar.astro';
 
 <script is:inline type="text/javascript">
 
+    // scroll current sidebar menu into view
+
     const activeMenuLink = document.querySelector('[aria-current=page]');
 
     if (activeMenuLink) {
         activeMenuLink.scrollIntoView({ behavior: 'smooth', block: 'center'});
     }
+    
+    // scroll current anchor into view
+    // workaround for chrome
+    addEventListener('load', () => {
+        const anchor = window.location.hash;
 
+        if (anchor) {
+            window.location.href = anchor;
+        }
+    });
 </script>
