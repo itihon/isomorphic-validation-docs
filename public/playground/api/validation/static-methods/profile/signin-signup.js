@@ -35,8 +35,8 @@ const errorMsgBox = {
 
 const startedMsgBox = {
     ...errorMsgBox,
-    true: { value: renderProperty('startedMsg') }, // show when Validation().isValid === true
-    false: { value: renderProperty('startedMsg') },// the same is when Validation().isValid === false
+    true: { delay: 1000, value: renderProperty('startedMsg') },  // show when Validation().isValid === true
+    false: { delay: 1000, value: renderProperty('startedMsg') }, // the same is when Validation().isValid === false
     style: { ...msgBoxStyle, color: 'green' },
 };
 
@@ -120,6 +120,7 @@ signupV.login
     .constraint(
         Predicate(isNotTaken)
             .client // the following state callback will be added on the client side
+            .started(applyBox(msgBoxEID)) // clear the message container
             .started(applyBox(startedMsgBox, msgBoxEID)), // will be rendered in the same container as error messages will be
         { 
             startedMsg: '⏳ Checking login for existence...',
