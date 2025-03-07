@@ -1,12 +1,9 @@
 import { Validation } from 'isomorphic-validation';
+import { applyAccess, applyBackground } from 'isomorphic-validation/ui';
 
 const { login, password, pwdconfirm, submitBtn } = document.form;
-const GREEN = '#b0ffb0', GRAY = '#b0b0b0';
-
-// side effects 
-const paintField = (color, field) => { field.style.backgroundColor = color; };
-const highlight = ({isValid, target}) => isValid ? paintField(GREEN, target) : paintField(GRAY, target);
-const enableElement = (element) => ({isValid}) => element.disabled = !isValid;
+const greenAndGray = { false: { value: 'lightgray' } };
+const [, highlight] = applyBackground(greenAndGray);
 
 // predicate functions
 const areTwoEqual = (value1, value2) => value1 === value2;
@@ -27,15 +24,14 @@ document.form.addEventListener(
                 .changed(highlight),
 
             Validation(pwdconfirm)
-                .constraint(isLongerThan(5))
                 .changed(highlight),
 
         ).constraint(areTwoEqual) // accepts values from both fields
 
-    ).changed(enableElement(submitBtn))
+    ).changed(applyAccess(submitBtn))
 );
 
 // initial paint
-paintField(GRAY, login);
-paintField(GRAY, password);
-paintField(GRAY, pwdconfirm);
+highlight({ target: login, isValid: false });
+highlight({ target: password, isValid: false });
+highlight({ target: pwdconfirm, isValid: false });

@@ -1,15 +1,14 @@
 <style>
-    input {
-        display: block;
-        margin-top: 20px;
-    }
-    input:disabled {
-        opacity: .5;
-    }
+    label { display: block; margin-top: 20px; }
+    input { display: block; margin-bottom: 20px; }
+    input:disabled { opacity: .5; }
 </style>
 <form name="form">
+    <label>Login</label>
     <input type="text" name="login" placeholder="Login">
+    <label>Password</label>
     <input type="password" name="password" placeholder="Password">
+    <label>Password confirmation</label>
     <input type="password" name="pwdconfirm" placeholder="Password confirmation">
     <input type="submit" name="submitBtn" disabled>
 </form>
