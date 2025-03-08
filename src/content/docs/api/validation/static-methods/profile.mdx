@@ -70,11 +70,15 @@ Then two validation profiles corresponding to the forms are created and sign-up 
 
 After having set up client side validations, you can just export `signinV` and `signupV` and use them on the server side as [`middleware`](/api/validation/callable-object/middleware/) functions:
 
-```js 
+```js "signinV" "signupV"
 import express from 'express';
 import bodyParser from 'body-parser';
 import { signinV,  signupV } from 'your-validations-file-name.js';
-import { signinRequestHandler, signupRequestHandler } from 'your-file-name.js';
+import { 
+    signinRequestHandler, 
+    signupRequestHandler, 
+    checkLoginRequestHandler, 
+} from 'your-file-name.js';
 
 const app = express();
 const urlencodeParser = bodyParser.urlencoded({extended: false});
@@ -82,6 +86,7 @@ const urlencodeParser = bodyParser.urlencoded({extended: false});
 // validations are added as middleware functions
 app.post('/signin', urlencodeParser, signinV, signinRequestHandler);
 app.post('/signup', urlencodeParser, signupV, signupRequestHandler);
+app.post('/check-login', urlencodeParser, signupV.login, checkLoginRequestHandler);
 ```
 
 The UI side effects functions added as [`state callbacks`](/concept/state-callbacks/) are isolated here with the [`Validation().client`](/api/validation/instance-properties/client/) and [`Predicate().client`](/api/predicate/instance-properties/client/) properties and will be ignored on the server side. Invocations of the `form.addEventListener()` and `input.addEventListener()` methods will be ignored on the server side as well.

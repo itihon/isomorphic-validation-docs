@@ -1,7 +1,7 @@
 import { Validation, Predicate } from 'isomorphic-validation';
 import { applyAccess, applyBox, renderFirstError, renderProperty } from 'isomorphic-validation/ui';
 
-// ui effects 
+/* validity states UI effects  */
 
 const msgBoxStyle = { 
     padding: '4px',
@@ -40,14 +40,22 @@ const startedMsgBox = {
     style: { ...msgBoxStyle, color: 'green' },
 };
 
-const msgBoxEID = 'MSG_BOX'; // message box effect id
-const [cancelErrBox, setErrBox] = applyBox(errorMsgBox, msgBoxEID); // one container will be used for showing messages on both forms
+const disable = { true: { value: true }, false: { value: true } }; // always disable regarldless of validity
 
-// predicate functions
+const msgBoxEID = 'MSG_BOX'; // message box effect id, one container will be used for showing messages on both forms
 
-const isNotTaken = (value) => new Promise(res => { 
-    setTimeout(res, 3000, value !== 'admin'); // mock request
+/* predicate functions */
+
+const isNotTakenC = (value) => new Promise(res => { // the client side part of the predicate
+    console.log('... Making request to /check-login with the value:', value); // mock request to /check-login
+    setTimeout(res, 3000, value !== 'admin');
 });
+const isNotTakenS = (value) => { // the server side part of the predicate
+    // This function may be a wrapper around a database requesting function
+    // dynamically imported from a backend module. 
+    // In order to exclude that import from the frontend bundle, a module
+    // bundler should be configured properly.
+};
 const areTwoEqual = (value1, value2) => value1 === value2;
 const areAllowedChars = (value) => /^[A-Za-z0-9._\-]*$/.test(value);
 const isLongerThan = (number) => (value) => value.length > number;
@@ -58,7 +66,7 @@ const hasSpecialChar = (value) => /[\W]+/.test(value);
 const isStrongPassword = (value) => 
     hasCapitalLetter(value) && hasNumber(value) && hasSpecialChar(value);
 
-// adding constraints shared by both forms
+/* adding constraints shared by both forms */
 
 const loginV = Validation();
 const passwordV = Validation();
@@ -94,7 +102,7 @@ passwordV
         { invalidMsg: 'Minimal length is 8 characters.' },
     );
 
-// creating validation profiles
+/* creating validation profiles */
 
 const [signinForm, signinV] = Validation.profile(
     '[name=signinForm]', 
@@ -108,7 +116,7 @@ const [signupForm, signupV] = Validation.profile(
     [loginV, passwordV, pwdConfirmV],
 );
 
-// additional constraints for the sign-up form
+/* additional constraints for the sign-up form */
 
 Validation.glue(signupV.password, signupV.pwdConfirm)
     .constraint(
@@ -117,19 +125,20 @@ Validation.glue(signupV.password, signupV.pwdConfirm)
     );
 
 signupV.login
-    .constraint(
-        Predicate(isNotTaken)
-            .client // the following state callback will be added on the client side
-            .started(applyBox(msgBoxEID)) // clear the message container
-            .started(applyBox(startedMsgBox, msgBoxEID)), // will be rendered in the same container as error messages will be
+    .client.constraint( // This predicate will be added on the client side
+        Predicate(isNotTakenC)
+            .started(applyBox(startedMsgBox, msgBoxEID)), // show started message 
         { 
             startedMsg: '⏳ Checking login for existence...',
             invalidMsg: 'Login must not be already registered.', 
             debounce: 3000, 
         },
+    )
+    .server.constraint( // This predicate will be added on the server side
+        isNotTakenS
     );
 
-// connecting ui effects to the validations
+/* connecting ui effects to the validations */
 
 [...signinV.validations, ...signupV.validations].forEach( // for grouped (nested) validations
     (validation, idx) => {
@@ -151,10 +160,9 @@ signupV.login
             .changed(applyBox(invalidSign, invalidSignEID))      // set the "invalid" sign (for glued validations)
 
             /* The message box for a field element */
-            .started(cancelErrBox)
-            .valid(cancelErrBox)
-            .validated(setErrBox)
-            .changed(setErrBox);
+            .started(applyBox(msgBoxEID))                        // clear error message 
+            .validated(applyBox(errorMsgBox, msgBoxEID))         // show error message
+            .changed(applyBox(errorMsgBox, msgBoxEID));          // show error message (for glued validations)
         }
 );
 
@@ -163,11 +171,11 @@ signupV.login
         form.addEventListener('input', validation);
         validation
             .client // the following state callbacks will be added on the client side
-            .started(applyAccess(form.submitBtn, { disabled: true })) // always disable submit button regardless of validity
+            .started(applyAccess(form.submitBtn, disable)) // disable submit button regardless of validity
             .validated(applyAccess(form.submitBtn)) // enable/disable submit button depending on validity
             .error(console.error);
     }
 );
     
-// export validations to use on the server side as middleware functions
+/* export validations to use on the server side as middleware functions */
 export { signinV, signupV };
