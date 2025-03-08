@@ -100,7 +100,7 @@ export default signupV;
 
 Now assuming `isEmailVacantC` makes a request to the `'/chkemail'` url, the server code may look as following:
 
-``` js 
+``` js "signinV" "signupV"
 import express from 'express';
 import bodyParser from 'body-parser';
 import signinV from 'your-signin-validation-file-name.js';
@@ -122,4 +122,6 @@ app.post('/chkemail', urlencodeParser, signupV.email, checkemailRequestHandler);
 
 :::note 
 You will need to configure a module bundler to exclude/ignore server tools imports from your client's bundle.
+
+Another option that does not imply additional module bundler configuration is to add the server's part of a split predicate in the server side's script directly before applying a `Validation` object as a middleware. But in this case adding constraints code becomes scattered across different files.
 :::
