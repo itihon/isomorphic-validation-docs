@@ -14,13 +14,6 @@ const msgBoxStyle = {
     zIndex: 1,
 };
 
-const invalidSignStyle = {
-    color: 'red', 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center' 
-};
-
 const validSign = {
     true: { value: '✔' }, // show when Validation().isValid === true, otherwise clear
     style: { color: 'green' },
@@ -28,7 +21,7 @@ const validSign = {
 
 const invalidSign = {
     false: { delay: 2000, value: '✖' }, // show when Validation().isValid === false, otherwise clear
-    style: invalidSignStyle,
+    style: { color: 'red' },
     position: 'LEVEL_RIGHT',
 };
 

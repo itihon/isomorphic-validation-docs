@@ -5,7 +5,6 @@ const { input1 } = document.form;
 const boxEID = 'CONTENT_BOX';
 
 const style = { 
-    padding: '1px',
     backgroundColor: 'rgba(255, 255, 255, .7)',
     display: 'grid',
     gridTemplateColumns: 'auto auto',
