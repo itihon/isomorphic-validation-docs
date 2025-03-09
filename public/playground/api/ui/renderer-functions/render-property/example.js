@@ -12,7 +12,6 @@ const hasJSLettersMsg = 'Must contain letters "J" and "S".';
 const { input } = document.form;
 
 const style = { 
-    width: '100%',
     padding: '4px',
     fontSize: '12px',
     color: 'darkslategray',

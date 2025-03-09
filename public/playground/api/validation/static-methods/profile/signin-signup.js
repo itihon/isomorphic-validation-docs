@@ -11,8 +11,14 @@ const msgBoxStyle = {
     backgroundColor: 'white',
     boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, .5)',
     borderRadius: '2px',
-    width: '100%',
     zIndex: 1,
+};
+
+const invalidSignStyle = {
+    color: 'red', 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center' 
 };
 
 const validSign = {
@@ -22,7 +28,7 @@ const validSign = {
 
 const invalidSign = {
     false: { delay: 2000, value: '✖' }, // show when Validation().isValid === false, otherwise clear
-    style: { color: 'red' },
+    style: invalidSignStyle,
     position: 'LEVEL_RIGHT',
 };
 
@@ -47,7 +53,7 @@ const msgBoxEID = 'MSG_BOX'; // message box effect id, one container will be use
 /* predicate functions */
 
 const isNotTakenC = (value) => new Promise(res => { // the client side part of the predicate
-    console.log('... Making request to /check-login with the value:', value); // mock request to /check-login
+    console.log('... Making a request to /check-login with the value:', value); // mock request to /check-login
     setTimeout(res, 3000, value !== 'admin');
 });
 const isNotTakenS = (value) => { // the server side part of the predicate

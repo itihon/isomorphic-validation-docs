@@ -49,7 +49,6 @@ const msgEID = 'MSG';
 const msgBoxCfg = { 
     position: 'BELOW_CENTER', 
     mode: 'MAX_SIDE',
-    style: { width: '100%' },
 };
 
 const validityIcons = {
