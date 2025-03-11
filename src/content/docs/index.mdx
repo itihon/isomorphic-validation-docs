@@ -23,19 +23,33 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 ## Features
 
 <CardGrid stagger>
+
 	<Card title="Uniform way of writing validation logic" icon="seti:todo">
-		Both on the client and server side.
+		Allows to maintain one source of truth for both client and server side. 
 	</Card>
+
 	<Card title="Grouping and cloning" icon="seti:svg">
-		Don't repeat yourself. Write repetitive validation steps for fields of different forms for both client and server side once in one place. Allows to write validation logic of any complexity with UI side effects bound to validity states.
+		Don't repeat yourself. Write repetitive validation steps for fields of different forms for both client and server side once in one place. Allows to write validation logic of any complexity.
 	</Card>
+
 	<Card title="Straightforward API" icon="seti:happenings">
 		No need to search through a lot of method names, string constants, config options. Just think of what checks should be performed, where, and with what side effects.
 	</Card>
+
+	<Card title="Interactivity" icon="random">
+		Make user input highly interactive with little effort by connecting UI side effects to validity states.
+	</Card>
+
+	<Card title="Any validation strategy" icon="approve-check-circle">
+		Allows to implement any validation strategy: on focus out, on submit, on input. You can even make requests and perform all validations on the server side.
+	</Card>
+
 	<Card title="Functional style" icon="seti:haskell">
 		Suits for those who think everything should be a function.
 	</Card>
+	
 	<Card title="Good for educational purposes" icon="pen">
 		Eases cognitive load from using different solutions for the client and server side. Abstracts away common boilerplate code and necessary but easy-to-forget operations. 
 	</Card>
+
 </CardGrid>
