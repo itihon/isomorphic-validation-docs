@@ -46,8 +46,8 @@ Validation().constraint(Predicate(predicateFunction), options)
     <br/> When set to `true`, assigns (restores) a previous valid value or the [initial value](/api/validation/constructor/#parameters) (if there was no previous valid value) by the specified [path](/api/validation/constructor/#parameters) of the [validatable object](/api/validation/constructor/#parameters). Runs [restored](/api/predicate/instance-methods/restored/) state callbacks.
     <br/> **Default**: `false`.
     
-    - `anyData` <sup>optional</sup>
-    <br/> Any type of data under any names can be passed. It will be accessible by the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property and in [`ValidationResult`](/api/validation-result/).
+    - `...anyData` <sup>optional</sup>
+    <br/> Any type of data under any names can be passed. It will be accessible under the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property and in [`ValidationResult`](/api/validation-result/). This can be used, for instance, to associate validation error messages with `predicateFunction`.
     <br/> **Default**: `undefined`.
 
 ### Return value

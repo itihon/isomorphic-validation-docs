@@ -14,12 +14,22 @@ The Predicate() constructor creates `Predicate` objects.
 ```js
 Predicate(predicateFunction)
 Predicate(Predicate(predicateFunction))
+Predicate(predicateFunction, options)
+Predicate(Predicate(predicateFunction), options)
+Predicate(Predicate(predicateFunction, options), options)
 ```
 
 ### Parameters
 
 - `predicateFunction`
 <br/> A function which returns a `Boolean` value or a `Promise` that fulfills with a `Boolean` value.
+
+- `options` <sup>optional</sup>
+<br/> An object that specifies predicate options. The available properties are:
+
+    - `...anyData` <sup>optional</sup>
+    <br/> Any type of data under any names can be passed. It will be accessible under the specified names through the [`Validation().constraints`](/api/validation/instance-properties/constraints/) property and in [`ValidationResult`](/api/validation-result/). This can be used, for instance, to associate validation error messages with `predicateFunction`.
+    <br/> **Default**: `undefined`.
 
 ### Return value
 
@@ -31,7 +41,7 @@ If neither a function nor another `Predicate` is passed as the only parameter th
 
 ## Description
 
-Creates a new `Predicate` instance. It is just a container for a predicate function which will be unpacked in the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. The main purpose of it is attaching state callbacks to a predicate function before passing it into the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. If another `Predicate` is passed as the only parameter, a new (cloned) instance will be returned with the predicate function and state callbacks of the passed `Predicate`. 
+Creates a new `Predicate` instance. It is just a container for a predicate function which will be unpacked in the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. The main purpose of it is attaching state callbacks and any additional data (e.g. validation error messages) to a predicate function before passing it into the [`Validation().constraint()`](/api/validation/instance-methods/constraint/) method. If another `Predicate` is passed as the first parameter, a new (cloned) instance will be returned with the predicate function and state callbacks of the passed `Predicate`. If also an optional object with additional data is passed, it overrides the one from the passed `Predicate` if contains the same properties and, in turn, can be overriden by the optional object with the same property names passed in the [`Validation().constraint()`](/api/validation/instance-methods/constraint/#parameters) method.
 
 ## Examples
 
