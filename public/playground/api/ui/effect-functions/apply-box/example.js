@@ -32,4 +32,4 @@ const changeBox = () => {
 };
 
 options.addEventListener('change', changeBox);
-window.addEventListener('load', changeBox);
+changeBox();
