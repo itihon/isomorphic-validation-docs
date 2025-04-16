@@ -120,4 +120,4 @@ emailField.addEventListener('input', emailV);
 locale.addEventListener('change', (e) => i18next.changeLanguage(e.target.value));
 locale.addEventListener('change', i18nRerender);
 window.addEventListener('load', i18nRerender);
-
+i18nRerender();
