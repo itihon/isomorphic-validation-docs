@@ -59,6 +59,10 @@ export default defineConfig({
                     link: '/getting-started/',
                 },
                 {
+                    label: 'Quick introduction',
+                    link: '/quick-introduction/',
+                },
+                {
                     label: 'Concept',
                     autogenerate: { directory: 'concept' },
                 },
