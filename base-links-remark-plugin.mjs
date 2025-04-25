@@ -8,6 +8,13 @@ export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
     const isUrlContainingType = (node) => 
         ['link', 'image'].some(type => type === node.type);
 
+    const getUrlContainingHtmlAttribute = (node) => 
+        ['src', 'href'].map(
+          attrName => Array.from(Object(node.attributes)).filter(
+            ({name}) => name === attrName
+          )[0]
+        )[0];
+
     return function (tree, file) {
         const { hero } = file.data.astro.frontmatter;
 
@@ -39,6 +46,18 @@ export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
                 if (url) {
                     if (isRootRelativeURL(url)) {
                         node.url = addPrefix(url, base);
+                        return;
+                    }
+                }
+            }
+
+            let attr = getUrlContainingHtmlAttribute(node);
+            if (attr) {
+                const { value } = attr;
+
+                if (value) {
+                    if (isRootRelativeURL(value)) {
+                        attr.value = addPrefix(value, base);
                     }
                 }
             }
