@@ -8,10 +8,11 @@ export default function baseUrlModifierRemarkPlugin({ basePath = '/' }) {
     const isUrlContainingType = (node) => 
         ['link', 'image'].some(type => type === node.type);
 
+    // there may be url containing tags in mdx files
     const getUrlContainingHtmlAttribute = (node) => 
         ['src', 'href'].map(
           attrName => Array.from(Object(node.attributes)).filter(
-            ({name}) => name === attrName
+            ({name, value}) => name === attrName && typeof value === 'string'
           )[0]
         )[0];
 
