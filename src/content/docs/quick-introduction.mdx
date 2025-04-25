@@ -16,6 +16,10 @@ import quickIntroductionCSS from '../../../public/playground/quick-introduction/
 
 ## Playground
 
+:::tip
+  For convenience, you can open this playground in a separate tab by clicking on this icon <img width={'32px'} height={'32px'} style={{ display: 'inline' }} src="/livecodes-v35/livecodes/assets/images/livecodes-logo.svg"></img>, detach that tab as a separate window, and watch the video in one window and play with the code in the playground in another.
+:::
+
 <Playground client:visible  
   params={{
     console: 'closed',
@@ -26,3 +30,16 @@ import quickIntroductionCSS from '../../../public/playground/quick-introduction/
   height="500px"
   width="100%"
 />
+
+## Key ideas
+
+UI side effects can be connected with state callbacks to:
+  - single `Validation` states;
+  - group states;
+  - and also `Predicate` states.
+
+Effect function can have: 
+  - different effect values to be applied for each validity state;
+  - different delays to be applied for each validity state;
+  - the target (event target by default) to which the effect is applied and which can be overriden;
+  - a delay which can be cancelled by a later applied effect with the same effect ID.
