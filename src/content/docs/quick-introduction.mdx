@@ -8,13 +8,17 @@ sidebar:
 import Playground from '../../components/Playground.jsx';
 import quickIntroductionHTML from '../../../public/playground/quick-introduction/quick-introduction.html?raw';
 import quickIntroductionJS from '../../../public/playground/quick-introduction/quick-introduction.js?raw';
+import quickIntroductionSignupHTML from '../../../public/playground/quick-introduction/quick-introduction-signup.html?raw';
+import quickIntroductionSignupJS from '../../../public/playground/quick-introduction/quick-introduction-signup.js?raw';
 import quickIntroductionCSS from '../../../public/playground/quick-introduction/quick-introduction.css?raw';
 
-## Video tutorial
+## Creating a Sign-in form
+
+### Video tutorial
 
 <iframe width="560" height="315" style={{width: '100%', height: '415px'}} src="https://www.youtube.com/embed/XbrBfAMV7U4?si=tEaNDIRdIDErUpv-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Playground
+### Playground
 
 :::tip
   For convenience, you can open this playground in a separate tab by clicking on this icon <img width={'32px'} height={'32px'} style={{ display: 'inline' }} src="/livecodes-v35/livecodes/assets/images/livecodes-logo.svg"></img>, detach that tab as a separate window, and watch the video in one window and play with the code in the playground in another.
@@ -31,7 +35,7 @@ import quickIntroductionCSS from '../../../public/playground/quick-introduction/
   width="100%"
 />
 
-## Key ideas
+### Key ideas
 
 UI side effects can be connected with state callbacks to:
   - single `Validation` states;
@@ -43,3 +47,29 @@ Effect function can have:
   - different delays to be applied for each validity state;
   - the target (event target by default) to which the effect is applied and which can be overriden;
   - a delay which can be cancelled by a later applied effect with the same effect ID.
+
+## Creating a Sign-up form
+
+### Video tutorial
+
+<iframe width="560" height="315" style={{width: '100%', height: '415px'}}src="https://www.youtube.com/embed/yd1idwMXj1c?si=MrUx1B6SZBoOazG2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### Playground
+
+<Playground client:visible  
+  params={{
+    console: 'closed',
+    js: quickIntroductionSignupJS,
+    html: quickIntroductionSignupHTML,
+    css: quickIntroductionCSS,
+  }}
+  height="530px"
+  width="100%"
+/>
+
+### Key ideas
+
+- Parameters `next` and `debounce`;
+- "Glued" validations;
+- Clearing effects on validation start;
+- Playing with timings.

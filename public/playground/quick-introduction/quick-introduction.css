@@ -67,6 +67,7 @@ input[type="submit"]:not(:disabled):hover {
 
 .form-field {
   width: 220px;
+  padding-right: 36px;
   position: relative;
   border: 1px solid slategray;
   border-radius: 2px;
