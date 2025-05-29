@@ -120,16 +120,22 @@ form.addEventListener(
         const formField = form[idx].parentNode;
 
         return validation
-          .started(applyOutline(formField, remainedOutline, outlineEID))
-          .validated(applyOutline(formField, delayedOutline, outlineEID))
-          .changed(applyOutline(formField, changedOutline, outlineEID))
-          .started(applyBox(formField, editIcon, iconEID))
-          .started(applyBox(formField, loadIcon, iconEID))
-          .validated(applyBox(formField, validIcon, iconEID))
-          .changed(applyBox(formField, validIcon, iconEID))
-          .started(applyBox(formField, waitMsg, errMsgEID))
-          .validated(applyBox(formField, errMsg, errMsgEID))
-          .changed(applyBox(formField, changedMsg, errMsgEID));
+          .started(
+            applyOutline(formField, remainedOutline, outlineEID),
+            applyBox(formField, editIcon, iconEID),
+            applyBox(formField, loadIcon, iconEID),
+            applyBox(formField, waitMsg, errMsgEID),
+          )
+          .changed(
+            applyOutline(formField, changedOutline, outlineEID),
+            applyBox(formField, validIcon, iconEID),
+            applyBox(formField, changedMsg, errMsgEID),
+          )
+          .validated(
+            applyOutline(formField, delayedOutline, outlineEID),
+            applyBox(formField, validIcon, iconEID),
+            applyBox(formField, errMsg, errMsgEID),
+          );
       }
     )
   )

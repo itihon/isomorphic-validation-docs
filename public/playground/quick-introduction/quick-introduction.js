@@ -48,20 +48,23 @@ form.addEventListener(
 
     Validation(form.email)
       .constraint(isEmail, { err: 'Must be in the E-mail format.' })
-      .validated(applyOutline(form.email.parentNode, delayedOutline))
-      .changed(applyOutline(form.email.parentNode, changedOutline))
       .started(applyBox(form.email.parentNode, editIcon, emailIconEID))
-      .validated(applyBox(form.email.parentNode, validIcon, emailIconEID))
-      .validated(applyBox(form.email.parentNode, errMsg)),
+      .changed(applyOutline(form.email.parentNode, changedOutline))
+      .validated(
+        applyOutline(form.email.parentNode, delayedOutline),
+        applyBox(form.email.parentNode, validIcon, emailIconEID),
+        applyBox(form.email.parentNode, errMsg),
+      ),
 
     Validation(form.password)
       .constraint(isStrongPassword, { err: 'Min. 8 characters, 1 capital letter, 1 number, 1 special character.' })
-      .validated(applyOutline(form.password.parentNode, delayedOutline))
-      .changed(applyOutline(form.password.parentNode, changedOutline))
       .started(applyBox(form.password.parentNode, editIcon, pwdIconEID))
-      .validated(applyBox(form.password.parentNode, validIcon, pwdIconEID))
-      .validated(applyBox(form.password.parentNode, errMsg)),
-
+      .changed(applyOutline(form.password.parentNode, changedOutline))
+      .validated(
+        applyOutline(form.password.parentNode, delayedOutline),
+        applyBox(form.password.parentNode, validIcon, pwdIconEID),
+        applyBox(form.password.parentNode, errMsg),
+      ),
   )
   .changed(applyAccess(form.submitBtn, delayedAccess))
 );
